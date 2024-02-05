@@ -1,0 +1,281 @@
+.container {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    width: 1512px;
+    height: 982px;
+    position: relative;
+
+    // border: 1px solid #ccc;
+    margin: auto;
+}
+
+.left {
+    width: 558.11px;
+    height: 743.84px;
+    position: absolute;
+    left: 144px;
+    top: 119px;
+
+    .rectangle1 {
+        width: 263.03px;
+        height: 209.29px;
+        position: absolute;
+        top: 222px;
+        left: 0px;
+        border-radius: 0px 110px 110px 0px;
+    }
+
+    .rectangle2 {
+        width: 558.11px;
+        height: 209.29px;
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        border-radius: 110px;
+    }
+
+    .rectangle3 {
+        width: 252.66px;
+        height: 167.81px;
+        position: absolute;
+        right: 0px;
+        top: 327.14px;
+        border-radius: 83px 0px 0px 83px;
+    }
+
+    .rectangle4 {
+        width: 118px;
+        height: 168px;
+        position: absolute;
+        top: 0px;
+        left: 114.46px;
+        border-radius: 83px 0px 0px 83px;
+    }
+
+    .rectangle6 {
+        width: 220px;
+        height: 196px;
+        position: absolute;
+        top: 88px;
+        left: 122px;
+        border-radius: 31px;
+    }
+
+    .rectangle7 {
+        width: 220px;
+        height: 196px;
+        position: absolute;
+        top: 391px;
+        left: 0px;
+        border-radius: 98px;
+    }
+
+    .rectangle8 {
+        width: 128px;
+        height: 128px;
+        position: absolute;
+        top: 234px;
+        left: 387px;
+        border-radius: 61px;
+    }
+
+    .eclipse2 {
+        width: 278.11px;
+        height: 278.11px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        border-radius: 170px;
+    }
+
+    .eclipse3 {
+        height: 173.47px;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        border-radius: 83px 0px 0px 83px;
+    }
+}
+
+.right {
+    position: absolute;
+    top: 106px;
+    left: 893px;
+
+    width: 475px;
+    height: 719px;
+
+}
+
+.row1 {
+    width: 273px;
+    height: 89px;
+    text-align: center;
+    margin: auto;
+
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    .main {
+        font-weight: 500;
+        font-size: 39px;
+        color: #000000;
+        height: auto;
+    }
+
+    .sub {
+        font-weight: 300;
+        font-size: 14px;
+        color: #96A0AD;
+    }
+}
+
+.row2 {
+    margin-top: 32px;
+    width: 100%;
+
+    .formContainer {
+        width: 100%;
+
+        .form {
+            width: 361px;
+            height: 523px;
+            margin: auto;
+
+            .loginWith {
+                width: 100%;
+                text-align: center;
+
+                button {
+                    width: 361px;
+                    height: 56px;
+                    stroke: #BDC4CD;
+                    padding: 8px 40px;
+                    border-radius: 12px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    background-color: #fff;
+                    border: 1px solid #BDC4CD; //
+
+                    i {
+                        margin-right: 7px;
+                    }
+                }
+
+                .or {
+                    margin-top: 26px;
+                    color: #9FA8B2;
+                    font-size: 16px;
+                }
+
+            }
+
+
+
+            .loginForm {
+                margin-top: 40px;
+
+                .infor {
+                    width: 100%;
+                    margin-bottom: 20px;
+
+
+                    .email,
+                    .password {
+                        width: 100%;
+                        height: 82px;
+
+                        label {
+                            font-size: 14px;
+                            text-align: left;
+                        }
+
+                        input {
+                            margin-top: 8px;
+                            width: 100%;
+                            height: 56px;
+                            border-radius: 12px;
+                            padding: 8px 24px;
+
+                            border: 1px solid #ccc;
+                            font-size: 16px;
+                            box-sizing: border-box;
+
+                        }
+                    }
+
+                    .password {
+                        margin-top: 32px;
+                    }
+
+
+
+                }
+
+                .option {
+                    margin-top: 40px;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .rememberMe {
+                        display: flex;
+                        align-items: center;
+
+                        input {
+                            width: 17px;
+                            height: 17px;
+                            border-radius: 6px;
+                        }
+
+                        label {
+                            font-size: 14px;
+                        }
+                    }
+
+                    .forgotPassword {
+                        color: #2211E6;
+                        font-size: 14px;
+                    }
+                }
+
+                .buttonLogin {
+                    margin-top: 65px;
+                    text-align: center;
+                    width: 100%;
+
+                    button {
+                        border-radius: 16px;
+                        background-color: #000000;
+                        width: 100%;
+                        height: 56px;
+                        padding: 7px 71px;
+
+                        color: #fff;
+                        font-size: 18px;
+                        font-weight: bold;
+                    }
+                }
+
+
+            }
+        }
+
+        .signUp {
+            text-align: center;
+            margin-top: 55px;
+            font-size: 16px;
+
+            a {
+                color: #3213AE;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+
+
+    }
+}
+

@@ -1,0 +1,436 @@
+.menuIcon,
+.searchIcon,
+.microIcon,
+.photoIcon {
+    width: 24px;
+    stroke-width: 1.2;
+}
+
+.progressBar {
+    width: 70px;
+    height: 5px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 0.5s;
+}
+
+
+
+.container {
+    // width: 1440px;
+    width: 100%; // tạm thời thay thế width 1440px
+    font-family: 'Roboto', sans-serif;
+    margin: auto;
+    background-color: #F6F6F6;
+}
+
+.body {
+    // margin: auto 140px;
+    display: flex;
+    justify-content: space-between;
+    // margin-left: 25px;
+
+    .left {
+        width: 278px;
+
+        .user {
+            position: fixed;
+            top: 114px;
+            left: 140px;
+            border-radius: 18px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+            .background {
+                width: 278px;
+                height: 82px;
+                border-top-left-radius: 18px;
+                border-top-right-radius: 18px;
+                overflow: hidden;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .avatar {
+                position: absolute;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-color: #fff;
+                z-index: 1;
+                top: 60px;
+                left: 12px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            .infor {
+                height: 43px;
+
+                .columns {
+                    display: flex;
+                    align-items: center;
+                    /* Căn giữa chiều dọc */
+                    margin-top: 5px;
+                    width: 100%;
+                }
+
+                .column1 {
+                    flex: 1;
+                    margin-left: 63px;
+
+                    .name {
+                        font-size: 12px;
+                        font-weight: bold;
+
+                    }
+
+                    .job {
+                        font-size: 10px;
+                        color: rgba(0, 0, 0, 0.46);
+                        margin-top: 5px;
+                    }
+                }
+
+                .column2 {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+
+                    .progressBar {
+                        width: 61px;
+                        height: 5px;
+                        background-color: #ddd;
+                        border-radius: 5px;
+                        display: flex;
+                        align-items: center;
+                        padding: 0 1px;
+                    }
+
+                    .progress {
+                        height: 50%;
+                        width: 90%;
+                        background-color: #00ACFF;
+                        border-radius: 5px;
+                    }
+
+                    span {
+                        margin-left: 5px;
+                        font-size: 10px;
+                        color: #00ACFF;
+                    }
+                }
+
+
+
+
+            }
+
+            .anotherAccount {
+                border-top: 1px #F6F6F6 solid;
+                height: 43px;
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-left: 24px;
+                    font-size: 22px;
+                    color: #666666;
+                }
+
+                p {
+                    font-size: 10px;
+                    color: rgba(0, 0, 0, 0.46);
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        .menu {
+            position: fixed;
+            top: 306px;
+            left: 140px;
+            width: 278px;
+            border-radius: 16px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            padding: 24px 22px;
+
+            ul {
+                list-style: none;
+
+                li {
+                    margin-top: 24px;
+                    display: flex;
+                    align-items: center;
+
+                    i {
+                        width: 22px;
+                        height: 24px;
+                        font-size: auto;
+                    }
+
+                    .menuIcon {
+                        width: 22px;
+                        height: 24px;
+                        stroke: #666666;
+                    }
+
+                    span {
+                        font-size: 16px;
+                        color: #666666;
+                        margin-left: 20px;
+                    }
+
+                    .new {
+                        margin-left: auto;
+                        /* Hiển thị bên phải */
+                        font-size: 11px;
+                        /* Tùy chỉnh kích thước nếu cần */
+                        color: #ffffff;
+                        /* Màu sắc của phần mới */
+                        background-color: #00ACFF;
+                        padding: 1px 7px;
+                        border-radius: 8px;
+                    }
+
+                }
+
+                li:first-child {
+                    margin-top: 0;
+                }
+            }
+        }
+
+        .hashtag {
+            position: fixed;
+            top: 636px;
+            left: 140px;
+            width: 278px;
+            padding: 18px 29px;
+            border-radius: 18px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+
+            .title {
+                .span {
+                    color: #181818;
+                    font-size: 12px;
+                }
+            }
+
+            .hashtags {
+                margin-top: 5px;
+                padding: 10px 0px;
+                border-top: 1px solid #F4F4F4;
+
+                display: flex;
+                flex-wrap: wrap;
+                gap: 5px;
+
+                button {
+                    height: 22.7px;
+                    font-size: 12px;
+                    line-height: 150%;
+                    padding: 0px 8px;
+                    background-color: #E9F0F8;
+                    color: #181818;
+                    border: none;
+                    border-radius: 4px;
+                }
+            }
+        }
+
+    }
+
+
+
+    .middle {
+        width: 35%;
+        min-width: 570px;
+        background-color: #F6F6F6;
+        min-height: 100vh;
+    }
+
+    .right {
+        width: 278px;
+        margin-top: 25px;
+
+        .advertisement {
+            position: fixed;
+            top: 114px;
+            right: 140px;
+            width: 278px;
+            height: 173px;
+            border-radius: 18px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 18px;
+            }
+        }
+
+        .people {
+            position: fixed;
+            top: 306px;
+            right: 140px;
+            width: 278px;
+            height: 306px;
+            border-radius: 16px;
+            background-color: #ffffff;
+
+            .title {
+                padding: 24px 0;
+                color: #212121;
+                font-weight: 500;
+                margin: 0 13px 0 22px;
+                overflow-wrap: break-word;
+            }
+
+            .users {
+                margin: 0 13px 0 22px;
+                width: 243px;
+                display: flex;
+                flex-direction: column;
+                gap: 24px;
+
+                .user {
+                    display: flex;
+                    align-items: center;
+                    height: 40px;
+
+                    .avatar {
+                        width: 37px;
+                        height: 40px;
+                        margin-right: 14px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                        }
+                    }
+
+                    .infor {
+                        flex: 1;
+
+                        .name {
+                            font-size: 16px;
+                            font-weight: 500;
+                        }
+
+                        .job {
+                            font-size: 11px;
+                        }
+                    }
+
+                    .button {
+
+
+                        button {
+                            padding: 7px 8px;
+                            font-size: 12px;
+                            color: #00ACFF;
+                            background-color: #ffffff;
+                            border-radius: 8px;
+                            border: 1px solid #00ACFF;
+                            margin-left: auto;
+                        }
+                    }
+                }
+            }
+
+            .seeAll {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 24px;
+                border-top: 1px solid #DFDFDF;
+
+                button {
+                    width: 100%;
+                    padding: 14px 20px;
+                    background-color: #ffffff;
+                    border: none;
+                    font-size: 12px;
+                    color: #00ACFF;
+
+                    border-radius: 0 0 16px 16px;
+                }
+            }
+        }
+
+        .pages {
+            position: fixed;
+            top: 636px;
+            right: 140px;
+            width: 278px;
+            height: 168px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+
+            .page {
+                display: flex;
+                align-items: center;
+
+                .logo {
+                    width: 22px;
+                    height: 24px;
+
+                    .icon {
+                        width: 22px;
+                        height: 24px;
+                        stroke-width: 0.1;
+                        stroke: #666666;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .name {
+                    margin-left: 7px;
+                    flex: 1;
+
+                    p {
+                        color: #666666;
+                        font-weight: 400;
+                    }
+                }
+
+                .counter {
+                    margin-left: auto;
+
+                    p {
+                        color: #ffffff;
+                        background-color: #FF1930;
+                        font-size: 11px;
+                        padding: 2px 5px;
+                        border-radius: 8px;
+                    }
+                }
+
+
+            }
+        }
+    }
+}

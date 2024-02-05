@@ -1,0 +1,166 @@
+.content {
+    margin-left: 22%;
+    margin-right: 2%;
+    width: 100%;
+    // background-color: #ffffff;
+
+    .groupHeader {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #ffffff;
+        margin-bottom: 30px;
+        margin-top: -8px;
+        border-radius: 8px;
+
+        .col1 {
+            display: flex;
+            align-items: center;
+
+            .title {
+                font-size: 25px;
+                font-weight: 900;
+                color: #464646;
+            }
+        }
+
+        .col2 {
+            display: flex;
+            gap: 10px;
+
+            .search {
+                padding: 5px;
+                display: flex;
+                align-items: center;
+                width: auto;
+                background-color: #efefef;
+                border-radius: 8px;
+
+                input {
+                    padding: 7px;
+                    border: none;
+                    outline: none;
+                    background-color: #efefef;
+                }
+
+                .icon {
+                    display: flex;
+                    align-items: center;
+                    width: 20px;
+                    height: 20px;
+                    margin: 0 10px 0 5px;
+                }
+            }
+
+            button {
+                background-color: #efefef;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                border-radius: 8px;
+                border: none;
+                color: #525252;
+
+                .icon {
+                    margin-right: 5px;
+                }
+            }
+
+            .icon {
+                stroke: #525252;
+            }
+        }
+    }
+
+    .groupResult {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 30px;
+        margin-bottom: 30px;
+
+        .item {
+            background-color: #ffffff;
+            padding: 0px 0px 25px 0px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            border-radius: 13px;
+
+            .background {
+                width: 100%;
+                height: 150px;
+                margin: auto;
+                border-radius: 13px 13px 0px 0px;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 10px 10px 0px 0px;
+                }
+            }
+
+            .name {
+                font-weight: 800;
+            }
+
+            .infor {
+                padding: 0px 10px;
+                width: 100%;
+                text-align: center;
+
+                ul {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    list-style: none;
+
+                    li {
+
+                        /* Thêm padding để tạo khoảng cách giữa border và nội dung */
+                        span {
+                            font-size: 12px;
+                        }
+                    }
+
+                    .group {
+                        padding: 0px 10px;
+                        margin: 0px 10px;
+                        position: relative;
+                        border-right: 1px solid #464646;
+                        border-left: 1px solid #464646;
+                    }
+                }
+
+            }
+
+            .member {
+                p{
+                    font-size: 14px;
+                    font-weight: 400;
+                }
+            }
+
+
+
+            .button {
+                button {
+                    border-radius: 8px;
+                    padding: 9px 25px;
+                    font-size: 14px;
+                    background-color: #ffffff;
+                    border: 1px solid #dcdcdc;
+                    cursor: pointer;
+                }
+
+                button:hover {
+                    background-color: #dcdcdc;
+                }
+            }
+        }
+    }
+}

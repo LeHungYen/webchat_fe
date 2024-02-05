@@ -1,0 +1,387 @@
+.posts {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+
+    .post {
+        // width: 570px;
+        // display: flex;
+        // justify-content: center;
+        // flex-direction: column;
+        width: 70%;
+        max-width: 924px;
+        // margin: 0 auto;
+        background-color: #ffffff;
+
+        .writeNewPost {
+
+            align-items: center;
+            border-radius: 16px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            height: 173px;
+
+            .row {
+                // margin-top: 20px;
+                display: flex;
+                height: 98px;
+                align-items: center;
+                margin-bottom: 5px;
+
+                .avatar {
+                    margin: 0 0 0 16px;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    overflow: hidden;
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
+
+                .edit {
+                    flex: 1;
+                    position: relative;
+                    padding: 10px;
+
+                    textarea {
+
+                        margin: 20px 0px 0px 0px;
+                        width: 100%;
+                        padding: 10px;
+                        border: none;
+                        border-radius: 8px;
+                        resize: none;
+                        outline: none;
+                        cursor: pointer;
+                    }
+
+                    .iconPencil {
+                        position: absolute;
+                        top: 36px;
+                        left: 190px;
+                        font-size: 22px;
+                        color: #666666;
+                        stroke-width: 1;
+                    }
+                }
+
+
+
+            }
+
+            .buttons {
+
+                display: flex;
+                background-color: rgba(210, 240, 255, 0.41);
+                border-radius: 0px 0px 16px 16px;
+
+                ul {
+                    list-style: none;
+                    display: flex;
+                    justify-content: space-around;
+                    width: 100%;
+                    height: 24px;
+                    margin: 22px 25px;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+
+                        .menuIcon {
+                            width: 22px;
+                            height: 24px;
+                            stroke: #666;
+                            margin-right: 10px;
+                        }
+
+                        span {
+                            font-size: 16px;
+                            color: #666;
+                        }
+
+                        i {
+                            font-size: 24px;
+                            color: #666;
+                        }
+                    }
+                }
+
+                .iconSend {
+                    // margin-left: 25px;
+                    width: 137px;
+                    height: 70px;
+                    background-color: rgba(161, 225, 255, 0.49);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border-bottom-right-radius: 16px;
+
+                    .icon {
+                        width: 24px;
+                        height: 24px;
+                        stroke-width: 0.1;
+                    }
+                }
+            }
+        }
+
+        .news {
+            margin-top: 19px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            /* Khoảng cách giữa các tin tức */
+
+            .new {
+                padding: 18px 32px 8px 18px;
+                border-radius: 18px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                background-color: #ffffff;
+
+                .row1 {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .user {
+                        display: flex;
+                        align-items: center;
+
+                        img {
+                            width: 44px;
+                            height: 44px;
+                            border-radius: 50%;
+                            margin-right: 8px;
+                        }
+
+                        .text {
+                            .name {
+                                margin: 0;
+                                font-size: 16px;
+                                font-weight: bold;
+                            }
+
+                            .job {
+                                font-size: 14px;
+                                font-weight: bold;
+                                color: rgba(0, 0, 0, 0.46);
+                            }
+                        }
+                    }
+
+                    .menu {
+                        .icon {
+                            font-size: 20px;
+                            margin-right: -7px;
+                        }
+                    }
+                }
+
+                .row2 {
+                    margin-top: 15px;
+
+                    .content p {
+
+                        margin: 0;
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+
+                    .imgOrVideo {
+                        margin-top: 13px;
+
+                        img {
+                            border-radius: 18px;
+                            width: 100%;
+                            max-height: 400px;
+                            object-fit: cover;
+                            margin-top: 10px;
+                        }
+                    }
+                }
+
+                .row3 {
+                    margin-top: 10px;
+
+                    .interact {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .reaction {
+                            display: flex;
+                            justify-content: center;
+
+                            .likeIcon {
+                                font-size: 17px;
+                            }
+
+                            span {
+                                margin-left: 5px;
+                            }
+                        }
+
+                        .commentAndShare {
+                            display: flex;
+                            gap: 15px;
+
+                            p:hover {
+                                text-decoration: underline;
+                                cursor: pointer;
+                            }
+                        }
+                    }
+
+                    .icons {
+                        margin-top: 7px;
+                        border-top: 1px solid #666666;
+                        border-bottom: 1px solid #666666;
+                        padding: 5px 0px;
+
+                        ul {
+                            margin: 7px 0;
+                            list-style: none;
+                            display: flex;
+                            justify-content: space-around;
+                            align-items: center;
+                            text-align: center;
+
+                            li {
+
+                                .menuIcon {
+                                    stroke-width: 0.1;
+                                }
+
+                                display: flex;
+                                align-items: center;
+                            }
+                        }
+                    }
+
+                    .writeComment {
+                        margin-top: 7px;
+                        background-color: #F6F6F6;
+                        height: 42px;
+                        border-radius: 18px;
+                        display: flex;
+                        align-items: center;
+                        gap: 8px;
+                        padding: 9px;
+                    }
+
+                    img {
+                        width: 26px;
+                        height: 26px;
+                        border-radius: 50%;
+                    }
+
+                    input {
+                        flex: 1;
+                        height: 26px;
+                        border: none;
+                        outline: none;
+                        background-color: #F6F6F6;
+                    }
+
+                    .microIcon,
+                    .photoIcon {
+                        margin-left: auto;
+                        height: 20px;
+                        width: 20px;
+                        margin: 0;
+                        padding: 0;
+                    }
+
+                }
+
+            }
+
+
+
+
+        }
+
+    }
+
+    .about {
+        width: 30%;
+
+        // display: flex;
+        // justify-content: center;
+        .infor {
+            width: 80%;
+            // display: flex;
+            // justify-content: center;
+            margin: auto;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            // padding: 25px 0px 25px 20px;
+            border-radius: 18px;
+
+            .title {
+                padding: 25px 0px 0px 25px;
+
+                p {
+                    font-size: 20px;
+                    font-weight: 600;
+                }
+            }
+
+            ul {
+                padding: 0px 0px 0px 25px;
+                display: flex;
+                flex-direction: column;
+
+                gap: 10px;
+                margin-top: 15px;
+                list-style: none;
+
+                li {
+                    display: flex;
+                    align-items: center;
+                    border-top: 1px solid #ccced2;
+                    padding: 10px 0px;
+
+                    .icon {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    span {
+                        margin: 0px 10px;
+                        max-width: 90%;
+                        overflow-wrap: break-word;
+                    }
+                }
+
+                li:first-child {
+                    border: none;
+                }
+            }
+
+            .seeAll {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 10px;
+                border-top: 1px solid #DFDFDF;
+
+                button {
+                    width: 100%;
+                    padding: 14px 20px;
+                    background-color: #ffffff;
+                    border: none;
+                    font-size: 13px;
+                    color: #00ACFF;
+
+                    border-radius: 0 0 16px 16px;
+                }
+            }
+        }
+    }
+}

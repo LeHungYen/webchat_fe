@@ -1,0 +1,105 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.wellcome {
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 30px;
+}
+
+.profilePicture,
+.findPeople,
+.guideTour {
+    border-radius: 7px;
+    background-color: #ffffff;
+
+    .mainText {
+        font-size: 17px;
+        font-weight: 800;
+        margin-bottom: 3px;
+    }
+
+    .subText {
+        color: #7c7c7c;
+    }
+
+    button {
+        background-color: #00acff;
+        color: #ffffff;
+        font-weight: 500;
+        padding: 7px 25px;
+        border: none;
+        border-radius: 7px;
+        margin-top: 15px;
+    }
+}
+
+.profilePicture {
+    padding: 15px 15px 15px 30px;
+    margin-bottom: 15px;
+
+    .row {
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        .col1 {}
+
+        .col2 {
+            width: 150px;
+            height: 150px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 50%;
+                }
+            }
+        }
+    }
+
+}
+
+.findPeople {
+    padding: 30px;
+    margin-bottom: 15px;
+
+    .inputGroup {
+        margin-top: 15px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        background-color: #F6F6F6;
+        border-radius: 18px;
+
+        .icon {
+            font-size: 25px;
+            margin-left: 10px;
+        }
+
+        input {
+            flex: 1;
+            border-radius: 18px;
+            padding: 9px;
+            border: none;
+            outline: none;
+            background-color: #F6F6F6;
+        }
+    }
+}
+
+.guideTour {
+    padding: 30px;
+}

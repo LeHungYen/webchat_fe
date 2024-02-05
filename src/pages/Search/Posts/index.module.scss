@@ -1,0 +1,254 @@
+.contentt {
+    margin-left: 22%;
+    margin-right: 2%;
+    width: 100%;
+    // background-color: #ffffff;
+
+    .postHeader {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #ffffff;
+        margin-bottom: 30px;
+        margin-top: -8px;
+        border-radius: 8px;
+
+        .col1 {
+            display: flex;
+            align-items: center;
+
+            .title {
+                font-size: 25px;
+                font-weight: 900;
+                color: #464646;
+            }
+        }
+
+        .col2 {
+            display: flex;
+            gap: 10px;
+
+            .search {
+                padding: 5px;
+                display: flex;
+                align-items: center;
+                width: auto;
+                background-color: #efefef;
+                border-radius: 8px;
+
+                input {
+                    padding: 7px;
+                    border: none;
+                    outline: none;
+                    background-color: #efefef;
+                }
+
+                .icon {
+                    display: flex;
+                    align-items: center;
+                    width: 20px;
+                    height: 20px;
+                    margin: 0 10px 0 5px;
+                }
+            }
+
+            button {
+                background-color: #efefef;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                border-radius: 8px;
+                border: none;
+                color: #525252;
+
+                .icon {
+                    margin-right: 5px;
+                }
+            }
+
+            .icon {
+                stroke: #525252;
+            }
+        }
+    }
+
+    .postResult {
+        width: 50%;
+        min-width: 500px;
+        margin: 19px auto 0px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+
+        .new {
+            padding: 18px 32px 8px 18px;
+            border-radius: 18px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: #ffffff;
+
+            .row1 {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .user {
+                    display: flex;
+                    align-items: center;
+
+                    img {
+                        width: 44px;
+                        height: 44px;
+                        border-radius: 50%;
+                        margin-right: 8px;
+                    }
+
+                    .text {
+                        .name {
+                            margin: 0;
+                            font-size: 16px;
+                            font-weight: bold;
+                        }
+
+                        .job {
+                            font-size: 14px;
+                            font-weight: bold;
+                            color: rgba(0, 0, 0, 0.46);
+                        }
+                    }
+                }
+
+                .menu {
+                    .icon {
+                        font-size: 20px;
+                        margin-right: -7px;
+                    }
+                }
+            }
+
+            .row2 {
+                margin-top: 15px;
+
+                .content p {
+                    padding: 0;
+                    margin: 0;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .imgOrVideo {
+                    margin-top: 13px;
+                    width: 100%;
+                    max-height: 500px;
+                    margin-bottom: 13px;
+
+                    img {
+
+                        border-radius: 18px;
+                        width: 100%;
+                        max-height: 100%;
+                        object-fit: cover;
+                        margin-top: 10px;
+                    }
+                }
+            }
+
+            .row3 {
+                margin-top: 10px;
+
+                .interact {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .reaction {
+                        display: flex;
+                        justify-content: center;
+
+                        .likeIcon {
+                            font-size: 17px;
+                        }
+
+                        span {
+                            margin-left: 5px;
+                        }
+                    }
+
+                    .commentAndShare {
+                        display: flex;
+                        gap: 15px;
+
+                        p:hover {
+                            text-decoration: underline;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .icons {
+                    margin-top: 7px;
+                    border-top: 1px solid #666666;
+                    border-bottom: 1px solid #666666;
+
+                    ul {
+                        margin: 10px 0;
+                        list-style: none;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                        text-align: center;
+
+                        li {
+
+                            .menuIcon {
+                                stroke-width: 0.1;
+                            }
+
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+
+                .writeComment {
+                    margin-top: 7px;
+                    background-color: #F6F6F6;
+                    height: 42px;
+                    border-radius: 18px;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    padding: 9px;
+                }
+
+                img {
+                    width: 26px;
+                    height: 26px;
+                    border-radius: 50%;
+                }
+
+                input {
+                    flex: 1;
+                    height: 26px;
+                    border: none;
+                    outline: none;
+                    background-color: #F6F6F6;
+                }
+
+                .microIcon,
+                .photoIcon {
+                    margin-left: auto;
+                    height: 20px;
+                    width: 20px;
+                    margin: 0;
+                    padding: 0;
+                }
+
+            }
+
+        }
+
+
+
+
+    }
+}

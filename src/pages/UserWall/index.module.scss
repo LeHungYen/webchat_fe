@@ -1,0 +1,366 @@
+.menuIcon,
+.searchIcon,
+.microIcon,
+.photoIcon {
+    width: 24px;
+    stroke-width: 1.2;
+}
+
+.progressBar {
+    width: 70px;
+    height: 5px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    transition: width 0.5s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+
+.container {
+    // width: 1440px;
+    width: 100%; // tạm thời thay thế width 1440px
+    font-family: 'Roboto', sans-serif;
+    margin: auto;
+    background-color: #F6F6F6;
+    padding-bottom: 10px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+
+    .group {
+        height: 76px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: auto 140px;
+
+        .logo {
+            width: 278px;
+
+            p {
+                font-size: 36px;
+                color: #00ACFF;
+                font-weight: bold;
+            }
+        }
+
+        .menu {
+            width: 570px;
+
+            ul {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: space-around;
+                list-style: none;
+
+                li {
+                    .menuIcon {
+                        width: 28px;
+                        color: rgba(0, 0, 0, 0.6);
+                    }
+                }
+            }
+        }
+
+        .search {
+            width: 278px;
+            height: 45px;
+            border-left: 1px solid rgba(0, 0, 0, 0.28);
+
+            .input {
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+                background-color: rgba(0, 172, 255, 0.46);
+                border-radius: 18px;
+                height: 44px;
+                width: 267.19px;
+            }
+
+            .input input {
+                flex: 1;
+                /* Phần input chiếm phần còn lại của không gian */
+                border: none;
+                outline: none;
+                padding-left: 15px;
+                height: 44px;
+                background-color: #F6F6F6;
+                border-top-left-radius: 18px;
+                border-bottom-left-radius: 18px;
+
+                color: rgba(0, 0, 0, 0.53);
+            }
+
+            .input .searchIcon {
+                color: white;
+                width: 20px;
+                margin: 20px;
+
+            }
+
+        }
+    }
+}
+
+.userWall {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    background-color: #ffffff;
+
+    .background {
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        max-width: 100%;
+        // width: 1600px;
+        max-height: 500px;
+        margin: 0 auto;
+
+        img {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            object-position: center -200px;
+        }
+
+        .editCoverPhoto {
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+
+            button {
+                display: flex;
+                align-items: center;
+
+                .cameraIcon {
+                    width: 25px;
+                    height: 25px;
+                    margin-right: 10px;
+                }
+
+                font-size: 18px;
+                font-weight: 500;
+                padding: 10px 20px;
+                background-color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+    }
+
+    .infor {
+        position: relative;
+        padding: 20px;
+        background-color: #ffffff;
+        // box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        // border-radius: 8px;
+        height: 150px;
+
+        .avatar {
+            position: absolute;
+            top: -50px;
+            left: 30px;
+            // transform: translate(-50%, -50%);
+
+            width: 168px;
+            height: 168px;
+            padding: 4px;
+            border-radius: 50%;
+            background-color: #ffffff;
+
+            img {
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+
+            .editAvatarPhoto {
+                position: absolute;
+                bottom: 15px;
+                right: 7px;
+
+                button {
+                    padding: 5px;
+                    border-radius: 50%;
+                    background-color: #e4e6eb;
+                    border: none;
+
+                    .cameraIcon {
+                        width: 24px;
+                        height: 24px;
+                    }
+                }
+
+            }
+        }
+
+        .columns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 190px;
+
+            .column1 {
+                flex: 1;
+
+                .name {
+                    font-size: 24px;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+
+                .job {
+                    font-size: 16px;
+                    color: #555;
+                    margin-bottom: 10px;
+                }
+
+                .friend {
+                    font-size: 14px;
+                    color: #777;
+                }
+            }
+
+            .column2 {
+                display: flex;
+                align-items: top;
+                margin-bottom: auto;
+                margin-top: 10px;
+                flex-direction: column;
+                align-items: end;
+                gap: 10px;
+
+                .buttons {
+                    display: flex;
+                    gap: 10px;
+
+                }
+
+                .button {
+                    margin-left: auto;
+
+                    button {
+                        display: flex;
+                        align-items: center;
+                        background-color: #e4e6eb;
+                        color: #333;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-weight: 600;
+
+                        .icon {
+                            width: 20px;
+                            height: 20px;
+                            margin-right: 5px;
+                            font-size: 20px;
+                        }
+
+                        .iconUp,
+                        .iconDown {
+                            margin: 0;
+                        }
+                    }
+                }
+
+                // .follower {
+                //     font-size: 20px;
+                //     font-weight: 500;
+                //     color: #333;
+                //     // margin-bottom: 10px;
+                // }
+
+            }
+        }
+
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #ccced2;
+        // border-bottom: 1px solid #ccced2;
+        padding: 5px 0px;
+        margin: 0 20px;
+
+        .column1 {
+            flex: 1;
+
+            ul {
+                display: flex;
+                list-style: none;
+                justify-content: space-between;
+
+                li {
+                    button {
+                        padding: 15px 20px;
+                        border: none;
+                        background-color: #ffffff;
+                        color: #65676b;
+                        font-weight: 500;
+                        border-radius: 8px;
+                    }
+
+                    button:hover {
+                        background-color: #ccced2;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .column2 {
+            flex: 1;
+            display: flex;
+            justify-content: end;
+
+            button {
+                display: flex;
+                align-items: center;
+                padding: 2px 10px;
+                border: none;
+                border-radius: 8px;
+
+                .icon {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+
+}
+
+.content {
+    width: 100%;
+    max-width: 1440px;
+    margin: 25px auto;
+    background-color: #ffffff;
+    padding: 20px;
+
+
+
+}
