@@ -97,7 +97,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
 
     const [notifications, setNotifications] = useState([]);
 
-    const getNotifications = async () => {
+    const getNotifications = async () => {    //get
         axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
         try {
             const response = await axios.get("http://localhost:8080/notification/getNotifications");
@@ -113,6 +113,29 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
     useEffect(() => {
         getNotifications();
     }, [])
+
+    const deleteNotification = async (id) => {  // delete
+        axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
+        try {
+            const response = await axios.delete(`http://localhost:8080/notification/${id}`);
+            if (response.status === 200) {
+                getNotifications();
+            }
+        } catch (error) {
+
+        }
+    };
+
+    // handle button of notification friend request
+
+    const handleAcceptButtonFR = (item) => {
+        deleteNotification(item.notificationId);
+    }
+
+    const handleDeleteButtonFR = (item) => {
+        deleteNotification(item.notificationId);
+    }
+
 
 
 
@@ -134,24 +157,6 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
             return () => clearTimeout(timeout);
         }
     }, [notification]);
-
-
-    // handle button notification friend request
-    const handleAcceptButtonClick = (e, item) => {
-        // Ngăn chặn sự kiện click truyền ra ngoài các button
-        e.stopPropagation();
-
-        // Xử lý logic khi ấn nút Accept
-        // Ví dụ: dispatch một action để xử lý việc chấp nhận yêu cầu kết bạn
-    };
-
-    const handleDeleteButtonClick = (e, item) => {
-        // Ngăn chặn sự kiện click truyền ra ngoài các button
-        e.stopPropagation();
-
-        // Xử lý logic khi ấn nút Delete
-        // Ví dụ: dispatch một action để xử lý việc xóa thông báo
-    };
 
 
     // display block or none
@@ -205,8 +210,8 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                                             return (
                                                 <div key={index} >
                                                     {item.type === notificationType.sendFriendRequest &&
-                                                        <Link className={style.link} onClick={setNotificationRef} to={item.link} >
-                                                            <div className={style.item}>
+                                                        <div className={style.item}>
+                                                            <Link className={style.link} onClick={setNotificationRef} to={item.link} >
                                                                 <div className={style.avatar}>
                                                                     <img src='https://haycafe.vn/wp-content/uploads/2022/10/Hinh-anh-avatar-nu-dep.jpg'></img>
                                                                 </div>
@@ -219,13 +224,14 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
 
                                                                         <p className={style.time}>{calculateTimeDifference(item.createdAt)}</p>
                                                                     </div>
-                                                                    <div className={style.button}>
-                                                                        <button className={style.acceptButton} onClick={(e) => { handleAcceptButtonClick(e, item) }}>Accept</button>
-                                                                        <button className={style.deleteButton} onClick={(e) => { handleDeleteButtonClick(e, item) }}>Delete</button>
-                                                                    </div>
                                                                 </div>
+                                                            </Link>
+
+                                                            <div className={style.button}>
+                                                                <button onClick={() => handleAcceptButtonFR(item)} className={style.acceptButton}>Accept</button>
+                                                                <button onClick={() => handleDeleteButtonFR(item)} className={style.deleteButton}>Delete</button>
                                                             </div>
-                                                        </Link>
+                                                        </div>
                                                     }
                                                 </div>
                                             )
@@ -303,7 +309,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                     </div>
                 }
             </div>
-        </div>
+        </div >
     )
 }
 
