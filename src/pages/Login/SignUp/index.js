@@ -15,18 +15,17 @@ export function SignUp({ value }) {
         }))
     }
 
-    // const register = () => {
-    //     console.log(user)
-    //     const addUser = async () => {
-    //         try {
-    //             const response = await axios.post("http://localhost:8080/api/v1/auth/register", signUpForm)
-    //             setNotificationMessage("Đăng ký tài khoản thành công")
-    //         } catch (error) {
+    const register = () => {
+        const addUser = async () => {
+            try {
+                const response = await axios.post("http://localhost:8080/api/v1/auth/register", signUpForm)
+                setNotificationMessage("Đăng ký tài khoản thành công")
+            } catch (error) {
 
-    //         }
-    //     }
-    //     addUser();
-    // }
+            }
+        }
+        addUser();
+    }
 
     // thoát
     const btnExit = () => {

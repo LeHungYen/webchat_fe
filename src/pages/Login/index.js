@@ -16,13 +16,13 @@ import ForgotPassword from './ForgotPassword';
 import { routes } from '../../config/routes';
 import { SignUp } from './SignUp';
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { StoreContext, actions } from '../../store';
 function Login() {
     const navigate = useNavigate();
-
-
+    const [state, dispatch] = useContext(StoreContext);
     // login
     const [account, setAccount] = useState({ email: "", password: "" });
 
@@ -34,12 +34,26 @@ function Login() {
         setAccount((prev) => ({ ...prev, password: e.target.value }));
     };
 
+    const getUserInfor = async (token) => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
+        try {
+            const response = await axios.get("http://localhost:8080/user/getUserInfor");
+            if (response.status === 200) {
+                dispatch(actions.setUser(response.data))
+            }
+        } catch (error) {
+            console.error("Error fetching users:", error); // Log error
+        }
+    };
+
+
     const login = async () => {
 
         try {
             const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", account);
             if (response.status === 200) {
                 localStorage.setItem("userToken", JSON.stringify(response.data.token))
+                getUserInfor(response.data.token);
                 navigate(routes.home)
             }
         } catch (error) {
@@ -158,7 +172,7 @@ function Login() {
                 </div>
             </div>
 
-
+            {/* <Notification notification={notification} setNotification={setNotification} /> */}
 
             <div ref={displayForgotPassword} className={style1.displayForgotPassword}>
                 <ForgotPassword value={{ displayForgotPassword: displayForgotPassword, setShowForgotPassword: setShowForgotPassword }} ></ForgotPassword>

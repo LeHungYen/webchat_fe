@@ -12,10 +12,13 @@
     box-sizing: border-box;
     font-size: 16px;
     color: #333;
-    
+
 
 }
 
+.link {
+    text-decoration: none;
+}
 
 .container {
     // width: 1440px;
@@ -23,6 +26,7 @@
     font-family: 'Roboto', sans-serif;
     margin: auto;
     background-color: #F6F6F6;
+    position: relative;
 }
 
 .header {
@@ -43,6 +47,7 @@
 
         .logo {
             width: 278px;
+            cursor: pointer;
 
             p {
                 font-size: 36px;
@@ -79,6 +84,17 @@
 
                 .notificationMenu {
                     position: relative;
+                    padding: 0;
+
+                    .buttonMenu {
+                        padding: 5px 25px;
+
+                        .menuIcon {
+                            width: 28px;
+                            color: rgba(0, 0, 0, 0.6);
+                        }
+                    }
+
 
                     .dropdown {
                         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -119,6 +135,7 @@
                             padding-bottom: 45px;
                             height: 400px;
                             overflow: auto;
+                          
 
                             .item {
                                 display: flex;
@@ -230,10 +247,6 @@
                     }
                 }
 
-                // tạm thời
-                .notificationMenu:hover .dropdown {
-                    display: block;
-                }
             }
         }
 
@@ -270,7 +283,7 @@
                 color: white;
                 width: 20px;
                 margin: 20px;
-
+                cursor: pointer;
             }
 
         }
@@ -279,5 +292,90 @@
 
 .body {
     padding-top: 114px;
-   
+
+}
+
+.notification {
+    position: fixed;
+    left: 25px;
+    bottom: 25px;
+    display: none;
+    opacity: 0;
+
+    transition: all 1s ease;
+    /* Sử dụng transition cho opacity */
+
+    .item {
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        display: flex;
+        padding: 20px;
+        margin-bottom: 5px;
+
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background-color: #efefef;
+            border-radius: 50%;
+            margin-right: 10px;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+
+        .content {
+            flex: 1;
+
+            .infor {
+                display: flex;
+                flex-direction: column;
+
+                .text {
+                    font-size: 14px;
+
+                    span {
+                        font-size: 16px;
+                        margin-right: 7px;
+                        font-weight: 600;
+                    }
+                }
+
+                .time {
+                    margin-top: 5px;
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: #0781be;
+                }
+            }
+
+            .button {
+                margin-top: 10px;
+                display: flex;
+                gap: 10px;
+
+                button {
+                    padding: 7px 15px;
+                    border-radius: 7px;
+                    border: none;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .acceptButton {
+                    background-color: #0866ff;
+                    color: #ffffff;
+                }
+
+                .deleteButton {
+                    background-color: #dcdcdc;
+                }
+            }
+        }
+    }
 }

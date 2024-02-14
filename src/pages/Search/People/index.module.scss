@@ -3,6 +3,7 @@
     margin-right: 2%;
     width: 100%;
     // background-color: #ffffff;
+    min-height: 100vh;
 
     .friendHeader {
         display: flex;
@@ -74,10 +75,10 @@
 
     .friendResult {
         display: flex;
-        justify-content: space-between;
         flex-wrap: wrap;
-        row-gap: 30px;
+        gap: 30px;
         margin-bottom: 30px;
+
         .item {
             background-color: #ffffff;
             padding: 25px 10px;

@@ -54,9 +54,47 @@ import uiDesign from './imgs/uiDesign.jpg'
 
 import { DefaultContent } from './DefaultContent';
 import { Wellcome } from './Wellcome';
-
+import { useState, useEffect, useContext } from 'react';
+import { StoreContext, actions } from '../../store';
+import axios from 'axios';
 function Home() {
- 
+    const [state, dispatch] = useContext(StoreContext);
+    // const [user, setUser] = useState({
+    //     bio: null,
+    //     birthdate: null,
+    //     coverPhoto: null,
+    //     email: null,
+    //     fullName: null,
+    //     gender: null,
+    //     lastLogin: null,
+    //     password: null,
+    //     phoneNumber: null,
+    //     profilePicture: null,
+    //     registrationDate: null,
+    //     role: null,
+    //     status: null,
+    //     userId: null,
+    //     username: null,
+    //     website: null
+    // });
+
+    const getUserInfor = async () => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
+        try {
+            const response = await axios.get("http://localhost:8080/user/getUserInfor");
+            if (response.status === 200) {
+                dispatch(actions.setUser(response.data))
+            }
+        } catch (error) {
+
+        }
+    };
+
+    useEffect(() => {
+        getUserInfor();
+    }, [])
+
+
     return (
         <div className={style.container}>
             <div className={style.body}>
@@ -72,7 +110,7 @@ function Home() {
                         <div className={style.infor}>
                             <div className={style.columns}>
                                 <div className={style.column1}>
-                                    <p className={style.name}>Karim Saif</p>
+                                    <p className={style.name}>{state.user.fullName}</p>
                                     <p className={style.job}>UI/UX Designer</p>
                                 </div>
                                 <div className={style.column2}>
@@ -122,7 +160,7 @@ function Home() {
 
                 <div className={style.middle}>
                     {/* <DefaultContent /> */}
-                    <Wellcome />
+                    <Wellcome user={state.user} />
                 </div>
 
                 <div className={style.right}>

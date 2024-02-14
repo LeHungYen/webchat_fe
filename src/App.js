@@ -6,6 +6,7 @@ import './App.css';
 import { publicRoutes } from './routes/index'
 import DefaultLayout from './layouts/DefaultLayout';
 function App() {
+
   return (
     <BrowserRouter>
       <div className="App">
@@ -22,7 +23,7 @@ function App() {
                 <Route key={index}
                   path={route.path}
                   element={
-                    <Layout><Page/></Layout>
+                    <Layout ><Page /></Layout>
                   }>
                 </Route>
               );

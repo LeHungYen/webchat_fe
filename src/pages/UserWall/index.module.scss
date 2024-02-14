@@ -18,8 +18,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-size: 16px;
-    color: #333;
     font-family: 'Roboto', sans-serif;
 
 }
@@ -34,89 +32,6 @@
     padding-bottom: 10px;
 }
 
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background-color: #fff;
-
-    .group {
-        height: 76px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: auto 140px;
-
-        .logo {
-            width: 278px;
-
-            p {
-                font-size: 36px;
-                color: #00ACFF;
-                font-weight: bold;
-            }
-        }
-
-        .menu {
-            width: 570px;
-
-            ul {
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: space-around;
-                list-style: none;
-
-                li {
-                    .menuIcon {
-                        width: 28px;
-                        color: rgba(0, 0, 0, 0.6);
-                    }
-                }
-            }
-        }
-
-        .search {
-            width: 278px;
-            height: 45px;
-            border-left: 1px solid rgba(0, 0, 0, 0.28);
-
-            .input {
-                margin-left: 10px;
-                display: flex;
-                align-items: center;
-                background-color: rgba(0, 172, 255, 0.46);
-                border-radius: 18px;
-                height: 44px;
-                width: 267.19px;
-            }
-
-            .input input {
-                flex: 1;
-                /* Phần input chiếm phần còn lại của không gian */
-                border: none;
-                outline: none;
-                padding-left: 15px;
-                height: 44px;
-                background-color: #F6F6F6;
-                border-top-left-radius: 18px;
-                border-bottom-left-radius: 18px;
-
-                color: rgba(0, 0, 0, 0.53);
-            }
-
-            .input .searchIcon {
-                color: white;
-                width: 20px;
-                margin: 20px;
-
-            }
-
-        }
-    }
-}
 
 .userWall {
     width: 100%;
@@ -286,6 +201,49 @@
                     }
                 }
 
+                .buttonFriendRequest {
+                    position: relative;
+
+                    .response,
+                    .friendship {
+                        display: none;
+                        position: absolute;
+                        width: 300px;
+                        background-color: #ffffff;
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                        border-radius: 10px;
+                        top: 60px;
+                        transform: translateX(-50%);
+                        left: 50%;
+                        padding: 15px;
+
+                        button {
+                            background-color: #ffffff;
+                            width: 100%;
+                        }
+
+                        button:hover {
+                            background-color: #efefef;
+                        }
+                    }
+
+                    .response::before,
+                    .friendship::before {
+                        content: "";
+                        position: absolute;
+                        top: -0.7rem;
+                        // right: 1.1rem;
+                        transform: translateX(-50%);
+                        left: 48%;
+                        width: 20px;
+                        height: 20px;
+                        transform: rotate(45deg);
+                        background-color: #ffffff;
+                        border-left: 1px solid #efefef;
+                        border-top: 1px solid #efefef;
+                    }
+                }
+
                 // .follower {
                 //     font-size: 20px;
                 //     font-weight: 500;
@@ -338,17 +296,75 @@
             display: flex;
             justify-content: end;
 
-            button {
-                display: flex;
-                align-items: center;
-                padding: 2px 10px;
-                border: none;
-                border-radius: 8px;
 
-                .icon {
-                    font-size: 30px;
+            .button {
+                position: relative;
+
+                button {
+                    display: flex;
+                    align-items: center;
+                    padding: 2px 10px;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+
+                    .icon {
+                        font-size: 30px;
+                    }
+                }
+
+                .ellipsisHorizontalMenu {
+                    display: none;
+                    position: absolute;
+                    width: 300px;
+                    background-color: #ffffff;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    border-radius: 10px;
+                    top: 55px;
+                    transform: translateX(-50%);
+                    left: 50%;
+                    padding: 15px;
+
+                    button {
+                        background-color: #ffffff;
+                        width: 100%;
+                        padding: 10px;
+                        cursor: pointer;
+
+                        .icon {
+                            font-size: 16px;
+                            margin-right: 5px;
+                        }
+
+                        .iconBlock {
+                            font-size: 21px;
+                            margin-right: 4px;
+                            margin-left: -2px;
+                        }
+                    }
+
+                    button:hover {
+                        background-color: #efefef;
+                    }
+                }
+
+                .ellipsisHorizontalMenu::before {
+                    content: "";
+                    position: absolute;
+                    top: -0.7rem;
+                    // right: 1.1rem;
+                    transform: translateX(-50%);
+                    left: 48%;
+                    width: 20px;
+                    height: 20px;
+                    transform: rotate(45deg);
+                    background-color: #ffffff;
+                    border-left: 1px solid #efefef;
+                    border-top: 1px solid #efefef;
                 }
             }
+
+
         }
     }
 

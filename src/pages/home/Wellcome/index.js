@@ -2,12 +2,11 @@ import style from "./index.module.scss"
 import defaultAvatar from '../../../assets/imgs/defaultAvatar.jpg'
 import { IoIosSearch } from "react-icons/io";
 
-export function Wellcome() {
-
+export function Wellcome({user}) {
     return (
         <div className={style.container}>
             <p className={style.wellcome}>
-                Wellcome to Social Sphere, Lê Hùng Yên
+                Wellcome to Social Sphere, {user.fullName}
             </p>
 
             <div className={style.profilePicture}>

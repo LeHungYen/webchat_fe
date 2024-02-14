@@ -1,0 +1,17 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.1);
+
+    .notification {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 200px;
+        height: 200px;
+    }
+}
