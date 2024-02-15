@@ -84,7 +84,7 @@ function UserWall() {
         const headers = {
             Authorization: `Bearer ${token}`
         };
-
+ 
         client.connect(headers, () => {
             // client.subscribe('/topic/notification', (response) => {
             //     const receivedNotification = JSON.parse(response.body);
