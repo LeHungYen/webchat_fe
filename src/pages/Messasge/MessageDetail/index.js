@@ -183,8 +183,10 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           `/topic/chatMessage/${state.user.userId}`,
           (response) => {
             const receivedMessage = JSON.parse(response.body);
-            setChatHistory((prev) => [...prev, receivedMessage]);
             getChatPages(0);
+            if(receivedMessage.chatId == chatPage.chatId){
+              setChatHistory((prev) => [...prev, receivedMessage]);
+            }
           }
         );
       });
@@ -208,7 +210,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   };
   // send message
   const sendMessage = async () => {
-    if(messageInput.content.trim().length == 0){
+    if (messageInput.content.trim().length == 0) {
       return;
     }
 
@@ -255,25 +257,25 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     }
   };
 
-    // handle meida URL of chat history
-    // const handleMediaUrl = async () => {
-    //   const updatedChatHistory = await Promise.all(
-    //     chatHistory.map(async (item) => {
-    //       if (item.mediaType === chatMessageService.mediaType.IMAGE) {
-    //         const newMediaUrl = await getResourceImage(item.mediaURL);
-    //         return { ...item, mediaURL: newMediaUrl };
-    //       }
-    //       return item;
-    //     })
-    //   );
-    
-    //   // Cập nhật lại chatHistory với dữ liệu mới
-    //   setChatHistory(updatedChatHistory);
-    // };
+  // handle meida URL of chat history
+  // const handleMediaUrl = async () => {
+  //   const updatedChatHistory = await Promise.all(
+  //     chatHistory.map(async (item) => {
+  //       if (item.mediaType === chatMessageService.mediaType.IMAGE) {
+  //         const newMediaUrl = await getResourceImage(item.mediaURL);
+  //         return { ...item, mediaURL: newMediaUrl };
+  //       }
+  //       return item;
+  //     })
+  //   );
 
-    // useEffect(() => {
-    //   handleMediaUrl();
-    // }, [])
+  //   // Cập nhật lại chatHistory với dữ liệu mới
+  //   setChatHistory(updatedChatHistory);
+  // };
+
+  // useEffect(() => {
+  //   handleMediaUrl();
+  // }, [])
 
   // let parts = [];
   return (
@@ -290,7 +292,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                         <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />
                         {chatParticipant.userDTO.alreadyBeFriend &&
                           chatParticipant.userDTO.status ==
-                            userService.status.ONLINE && (
+                          userService.status.ONLINE && (
                             <GoDotFill className={style.icon} />
                           )}
                       </div>
@@ -301,7 +303,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
                         {chatParticipant.userDTO.alreadyBeFriend &&
                           chatParticipant.userDTO.status ===
-                            userService.status.ONLINE && (
+                          userService.status.ONLINE && (
                             <p
                               style={{ color: "green" }}
                               className={style.activeTime}
@@ -316,7 +318,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
                         {chatParticipant.userDTO.alreadyBeFriend &&
                           chatParticipant.userDTO.status ===
-                            userService.status.OFFLINE && (
+                          userService.status.OFFLINE && (
                             <p className={style.activeTime}> Active {calculateTimeDiff(
                               chatParticipant.userDTO.lastLogin,
                               currentTime
@@ -413,7 +415,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                   <div
                     className={
                       item.chatParticipantId ==
-                      chatPage.chatParticipantOfCurrentUser.chatParticipantId
+                        chatPage.chatParticipantOfCurrentUser.chatParticipantId
                         ? style.thisUser
                         : style.otherUser
                     }
@@ -424,7 +426,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
                     {item.mediaType == chatMessageService.mediaType.IMAGE && (
                       <img src={item.mediaURL} className={style.chatImg} ></img>
-                  )}
+                    )}
 
                     {item.content != null && item.content != "" && (
                       <p className={style.text}>{item.content}</p>
@@ -455,8 +457,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               <input
                 type="file"
                 id="messageBoxImg"
-                onChange={sendImage} 
-                style={{ display: "none" }} 
+                onChange={sendImage}
+                style={{ display: "none" }}
               />
             </form>
 

@@ -24,29 +24,29 @@ function Test() {
 
   const [stompClient, setStompClient] = useState(null);
 
-  useEffect(() => {
-      const socket = new SockJS("http://localhost:8080/ws");
-      const client = Stomp.over(socket);
+  // useEffect(() => {
+  //     const socket = new SockJS("http://localhost:8080/ws");
+  //     const client = Stomp.over(socket);
 
-      const token = JSON.parse(localStorage.getItem("userToken"));
-      const headers = {
-          Authorization: `Bearer ${token}`
-      };
+  //     const token = JSON.parse(localStorage.getItem("userToken"));
+  //     const headers = {
+  //         Authorization: `Bearer ${token}`
+  //     };
 
-      client.connect(headers, () => {
-          client.subscribe('/topic/checkOnlineStatus', (response) => {
-              const receivedNotification = JSON.parse(response.body);
-              setNotification(receivedNotification);
-          });
-      });
+  //     client.connect(headers, () => {
+  //         client.subscribe('/topic/checkOnlineStatus', (response) => {
+  //             const receivedNotification = JSON.parse(response.body);
+  //             setNotification(receivedNotification);
+  //         });
+  //     });
 
-      setStompClient(client);
+  //     setStompClient(client);
 
-      return () => {
-          client.disconnect();
-      };
+  //     return () => {
+  //         client.disconnect();
+  //     };
 
-  }, []);
+  // }, []);
 
   // const sendNotification = () => {
   //     stompClient.send("/app/notification", {}, JSON.stringify(notification));

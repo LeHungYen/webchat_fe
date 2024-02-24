@@ -45,9 +45,9 @@ function Message() {
   };
 
   // get chat page
-  const [chatPages, setChatPages] = useState(chatPageService.defaultChatPage);
+  const [chatPages, setChatPages] = useState([]);
   const [pageNumberOfChatPage, setPageNumberOfChatPage] = useState(0);
-  
+
   const getChatPages = async (pageNumber) => {
     const response = await chatPageService.get(pageNumber);
     setChatPages(response);
@@ -65,9 +65,16 @@ function Message() {
     displayMessageDetail();
   };
 
+
+  const [alreadySetChatPageFristTime, setAlreadySetChatPageFristTime] = useState(false);
   useEffect(() => {
-    if (chatPages.length > 0) {
-      setChatPage(chatPages[0]);
+    if (!alreadySetChatPageFristTime) {
+      if (chatPages.length > 0) {
+        setChatPage(chatPages[0]);
+        setAlreadySetChatPageFristTime(true)
+        console.log("Đã chạy ........................................................")
+           console.log(chatPages)
+      }
     }
   }, [chatPages]);
 
@@ -103,10 +110,10 @@ function Message() {
                               .filter((chatParticipant) => {
                                 return (
                                   chatParticipant.userDTO.userId !==
-                                    state.user.userId &&
+                                  state.user.userId &&
                                   chatParticipant.userDTO.alreadyBeFriend &&
                                   chatParticipant.userDTO.status ===
-                                    userService.status.ONLINE
+                                  userService.status.ONLINE
                                 );
                               })
                               .map((chatParticipant, index) => (
@@ -122,7 +129,7 @@ function Message() {
                                 {item.chatParticipants.map(
                                   (chatParticipant, index) =>
                                     chatParticipant.userDTO.userId !=
-                                      state.user.userId && (
+                                    state.user.userId && (
                                       <div
                                         key={index}
                                         className={style.userName}
@@ -184,6 +191,7 @@ function Message() {
 
           <div ref={newMessageRef} className={style.newMessage}>
             <NewMessage
+            // bổ sung set chat page when create new chat
               displayMessageDetail={displayMessageDetail}
               getChatPages={getChatPages}
               setPageNumberOfChatPage={setPageNumberOfChatPage}
