@@ -1,0 +1,170 @@
+.newMessage {
+  width: 100%;
+  position: relative;
+  height: calc(100vh - 76px);
+  .header {
+    border-bottom: 1px solid #dcdcdc;
+    padding: 10px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    .receivers {
+      font-size: 20px;
+      line-height: 40px;
+      span {
+        display: inline;
+        background-color: #88ccff;
+        color: #ffffff;
+        font-size: 16px;
+        padding: 7px 35px 7px 10px;
+        margin: 0px 10px;
+        border-radius: 18px;
+        position: relative;
+        .iconDelete {
+          width: 30px;
+          position: absolute;
+          transform: translateY(-50%);
+          top: 50%;
+          right: 0px;
+          padding-right: 10px;
+          cursor: pointer;
+        }
+
+        .iconDelete:hover {
+          color: rgb(63, 61, 61);
+        }
+      }
+    }
+
+    .input {
+      position: relative;
+      flex: 0.7;
+      input {
+        height: 40px;
+        padding: 5px 10px;
+        outline: none;
+        border: none;
+        background: none;
+        font-size: 18px;
+      }
+
+      .users {
+        // display: none;
+        position: absolute;
+        top: 45px;
+        left: 0px;
+
+        background-color: #ffffff;
+        border-radius: 10px;
+
+        ul {
+          list-style: none;
+          width: 300px;
+          height: 35vh;
+          overflow-y: auto;
+          padding: 15px 10px;
+          margin: 10px 0px;
+          li {
+            .user {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              padding: 10px;
+              gap: 10px;
+              border-radius: 10px;
+              cursor: pointer;
+              .avatar {
+                width: 40px;
+                height: 40px;
+                img {
+                  border-radius: 50%;
+                  width: 100%;
+                  height: 100%;
+                }
+              }
+              .infor {
+                .fullname {
+                  font-size: 15px;
+                }
+                .email {
+                  font-size: 13px;
+                }
+              }
+            }
+
+            .user:hover {
+              background-color: #efefef;
+            }
+          }
+        }
+      }
+
+      ul::-webkit-scrollbar {
+        width: 4px; /* Độ rộng của thanh cuộn */
+        background-color: #e3edf2;
+      }
+      ul::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2); /* Màu của thanh cuộn */
+        border-radius: 4px; /* Độ cong của thanh cuộn */
+      }
+    }
+  }
+
+  .messageBox {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    // transform: translateX(-50%);
+    height: 68px;
+    display: flex;
+    padding: 12px;
+    align-items: center;
+    background-color: #ffffff;
+    box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.1);
+    .messageBoxCol1 {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      .icon {
+        font-size: 25px;
+        stroke-width: 1px;
+        color: #333;
+      }
+    }
+
+    .messageBoxCol2 {
+      flex: 1;
+      margin: 0px 20px;
+      background-color: #e0f3fe;
+      border-radius: 25px;
+      display: flex !important;
+      align-items: center;
+      input {
+        flex: 1;
+        padding: 10px 16px;
+        width: 100%;
+        outline: none;
+        border: none;
+        background-color: #e0f3fe;
+        border-radius: 25px;
+      }
+
+      .icon {
+        margin-right: 20px;
+        font-size: 22px;
+        color: #0389c9;
+      }
+    }
+
+    .messageBoxCol3 {
+      display: flex;
+      align-items: center;
+        margin-right: 20px;
+      .icon {
+        font-size: 25px;
+      }
+    }
+  }
+}

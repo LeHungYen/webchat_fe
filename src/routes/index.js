@@ -5,10 +5,11 @@ import Home from "../pages/home"
 import Message from "../pages/Messasge"
 import Login from "../pages/Login"
 // import { SignUp } from '../pages/Login/SignUp'
-import UserWall from "../pages/UserWall/index.js"
+// import UserWall from "../pages/UserWall/index.js"
 import { Search } from "../pages/Search/index.js"
 import { GroupWall } from "../pages/GroupWall/index.js"
 import { NullLayout } from "../layouts/NullLayout/index.js"
+import UserWall from "../pages/UserWall/index copy"
 import Test from "../pages/Test/index.js"
 const publicRoutes = [
     { path: routes.home, component: Home },

@@ -78,23 +78,6 @@ function Home() {
     //     website: null
     // });
 
-    const getUserInfor = async () => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
-        try {
-            const response = await axios.get("http://localhost:8080/user/getUserInfor");
-            if (response.status === 200) {
-                dispatch(actions.setUser(response.data))
-            }
-        } catch (error) {
-
-        }
-    };
-
-    useEffect(() => {
-        getUserInfor();
-    }, [])
-
-
     return (
         <div className={style.container}>
             <div className={style.body}>

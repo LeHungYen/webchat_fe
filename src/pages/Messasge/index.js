@@ -1,179 +1,198 @@
-import style from './index.module.scss'
+// project
+import style from "./index.module.scss";
+import { MessageDetail } from "./MessageDetail";
+import { NewMessage } from "./NewMessage";
+import { ChatPageService } from "../../serivces/ChatPageService";
+import { ChatService } from "../../serivces/ChatService";
+import { StoreContext, actions } from "../../store";
+import { calculateTimeDiff } from "../../utils";
+import { UserService } from "../../serivces/UserService";
+// libary
+import { RiSearchLine } from "react-icons/ri";
+import { LiaEdit } from "react-icons/lia";
+import { Link } from "react-router-dom";
+import { GoDotFill } from "react-icons/go";
+import { useState, useRef, useContext, useEffect } from "react";
+
 function Message() {
+  const [state, dispatch] = useContext(StoreContext);
+  const chatPageService = new ChatPageService();
+  const chatService = new ChatService();
+  const userService = new UserService();
+  const messageDetailRef = useRef(null);
+  const newMessageRef = useRef(null);
 
-    return (
-        <div className={style.container}>
-            <div className={style.left}>
-                <div className={style.searchBar}>
-                    <div className={style.menu}>
-                        <i className="fa-solid fa-bars"></i>
-                    </div>
+  // current time
+  const [currentTime, setCurrentTime] = useState(new Date());
 
-                    <div className={style.search}>
-                        <i className={`fas fa-magnifying-glass ${style.searchIcon}`}></i>
-                        <input type="text" placeholder="Search" className={style.roundedInput} />
-                    </div>
-                </div>
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 60000);
 
-                <div className={style.chatList}>
-                    <div className={style.item}>
-                        <div className={style.avatar}>
-                            <img src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!w700wp"></img>
-                        </div>
+    return () => clearInterval(intervalId);
+  }, []);
 
-                        <div className={style.texts}>
-                            <div className={style.name}>
-                                <p className={style.title}>Chatgram</p>
-                                <p className={style.time}>19:48</p>
-                            </div>
+  // display newMessage or message detail
+  const displayNewMessage = () => {
+    newMessageRef.current.style.display = "block";
+    messageDetailRef.current.style.display = "none";
+  };
 
-                            <div className={style.message}>
-                                <p className={style.title}>Chatgram Web was updated.</p>
-                                <p className={style.number}>1</p>
-                            </div>
-                        </div>
+  const displayMessageDetail = () => {
+    newMessageRef.current.style.display = "none";
+    messageDetailRef.current.style.display = "block";
+  };
 
-                    </div>
+  // get chat page
+  const [chatPages, setChatPages] = useState(chatPageService.defaultChatPage);
+  const [pageNumberOfChatPage, setPageNumberOfChatPage] = useState(0);
+  
+  const getChatPages = async (pageNumber) => {
+    const response = await chatPageService.get(pageNumber);
+    setChatPages(response);
+  };
 
-                    <div className={style.item}>
-                        <div className={style.avatar}>
-                            <img src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!w700wp"></img>
-                        </div>
+  useEffect(() => {
+    getChatPages(pageNumberOfChatPage);
+  }, [pageNumberOfChatPage]);
 
-                        <div className={style.texts}>
-                            <div className={style.name}>
-                                <p className={style.title}>Chatgram</p>
-                                <p className={style.time}>19:48</p>
-                            </div>
+  // handle message detail input
+  const [chatPage, setChatPage] = useState({});
 
-                            <div className={style.message}>
-                                <p className={style.title}>Chatgram Web was updated.</p>
-                                <p className={style.number}>1</p>
-                            </div>
-                        </div>
+  const handleMessageDetailI = (chatPage) => {
+    setChatPage(chatPage);
+    displayMessageDetail();
+  };
 
-                    </div>
+  useEffect(() => {
+    if (chatPages.length > 0) {
+      setChatPage(chatPages[0]);
+    }
+  }, [chatPages]);
 
-                    <div className={style.item}>
-                        <div className={style.avatar}>
-                            <img src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!w700wp"></img>
-                        </div>
-
-                        <div className={style.texts}>
-                            <div className={style.name}>
-                                <p className={style.title}>Chatgram</p>
-                                <p className={style.time}>19:48</p>
-                            </div>
-
-                            <div className={style.message}>
-                                <p className={style.title}>Chatgram Web was updated.</p>
-                                <p className={style.number}>1</p>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                </div>
+  return (
+    <div className={style.container}>
+      <div className={style.containerDflex}>
+        <div className={style.col1}>
+          <div className={style.header}>
+            <div className={style.input}>
+              <RiSearchLine className={style.icon} />
+              <input placeholder="Find Friends" />
             </div>
 
-            <div className={style.right}>
-                <div className={style.topBar}>
-
-                    <div className={style.otherUser}>
-                        <div className={style.avatar}>
-                            <img src="https://img.pikbest.com/origin/09/19/03/61zpIkbEsTGjk.jpg!w700wp"></img>
-                        </div>
-
-                        <div className={style.texts}>
-                            <div className={style.name}>
-                                <p>David Moore</p>
-                            </div>
-
-                            <div className={style.lastSeen}>
-                                <p>last seen 5 mins ago</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className={style.option}>
-                        <ul>
-                            <li><i class="fa-solid fa-magnifying-glass"></i></li>
-                            <li><i class="fa-solid fa-phone"></i></li>
-                            <li><i class="fa-solid fa-ellipsis-vertical"></i></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div className={style.messages}>
-
-                    <ul>
-                        <li className={style.dateSent}>Today</li>
-
-                        <li className={style.messageOther}>
-                            <div className={style.message}>
-                                <p>OMG 😲 do you remember what you did last night at the work night out?</p>
-                                <p className={style.time}>
-                                    <i class="fa-solid fa-heart"></i>
-                                    18:12
-                                    <i class="fa-solid fa-check"></i>
-                                </p>
-                            </div>
-
-                        </li>
-
-                        <li className={style.messageOther}>
-                            <div className={style.message}>
-                                <p>OMG 😲 do you remember what you did last night at the work night out?</p>
-                                <p className={style.time}>
-                                    <i class="fa-solid fa-heart"></i>
-                                    18:12
-                                    <i class="fa-solid fa-check"></i>
-                                </p>
-                            </div>
-
-                        </li>
-                        <li className={style.messageYou}>
-                            <div className={style.message}>
-                                <p>no haha</p>
-                                <p className={style.time}>
-                                    <span>18:12</span>
-                                    <i class="fa-solid fa-check"></i>
-                                </p>
-                            </div>
-
-                        </li>
-                        <li className={style.messageYou}>
-                            <div className={style.message}>
-                                <p>i don't remember anything 😄</p>
-                                <p className={style.time}>
-                                    <span>18:12</span>
-                                    {/* <i class="fa-solid fa-check"></i> */}
-                                </p>
-                            </div>
-                        </li>
-
-                        
-
-                    </ul>
-
-                    <div className={style.inputBar}>
-                        <div className={style.icon}>
-                            <i class="fa-solid fa-face-smile"></i>
-                        </div>
-
-                        <div className={style.typing}>
-                            <input placeholder="Message"></input>
-                        </div>
-
-                        <div className={style.sendIcon}>
-                            <i class="fa-solid fa-paper-plane"></i>
-                        </div>
-                    </div>
-                </div>
+            <div className={style.newChat}>
+              <button onClick={displayNewMessage}>
+                <LiaEdit className={style.icon} />
+              </button>
             </div>
-        </div >
-    )
+          </div>
+
+          <div className={style.body}>
+            <ul>
+              {chatPages.map((item, index) => {
+                return (
+                  <li key={index} onClick={() => handleMessageDetailI(item)}>
+                    <Link className={style.link}>
+                      <div className={style.item}>
+                        <div className={style.avatar}>
+                          <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />
+                          {console.log(item.type == chatService.type.PAIR)}
+                          {item.type === chatService.type.PAIR &&
+                            item.chatParticipants
+                              .filter((chatParticipant) => {
+                                return (
+                                  chatParticipant.userDTO.userId !==
+                                    state.user.userId &&
+                                  chatParticipant.userDTO.alreadyBeFriend &&
+                                  chatParticipant.userDTO.status ===
+                                    userService.status.ONLINE
+                                );
+                              })
+                              .map((chatParticipant, index) => (
+                                <GoDotFill key={index} className={style.icon} />
+                              ))}
+                          {/* <GoDotFill className={style.icon} /> */}
+                        </div>
+
+                        <div className={style.infor}>
+                          <div className={style.row1}>
+                            {item.type == chatService.type.PAIR && (
+                              <div>
+                                {item.chatParticipants.map(
+                                  (chatParticipant, index) =>
+                                    chatParticipant.userDTO.userId !=
+                                      state.user.userId && (
+                                      <div
+                                        key={index}
+                                        className={style.userName}
+                                      >
+                                        <p>
+                                          {chatParticipant.userDTO.fullName}
+                                        </p>
+                                      </div>
+                                    )
+                                )}
+                              </div>
+                            )}
+
+                            <div className={style.timeAndRead}>
+                              {/* <p className={style.time}>2:40 PM</p> */}
+                              {/* <p className={style.time}>{item.latestChatMessage.createdAt}</p> */}
+                              {/* {item.latestChatMessage.createdAt && (
+                                <p className={style.time}>
+                                  {getTimeDifference(
+                                    item.latestChatMessage.createdAt
+                                  )}
+                                </p>
+                              )} */}
+                              {item.latestChatMessage.createdAt && (
+                                <p className={style.time}>
+                                  {calculateTimeDiff(
+                                    item.latestChatMessage.createdAt,
+                                    currentTime
+                                  )}
+                                </p>
+                              )}
+                              <GoDotFill className={style.icon} />
+                            </div>
+                          </div>
+
+                          <div className={style.row2}>
+                            <p className={style.message}>
+                              {item.latestChatMessage.content}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+
+        <div className={style.col2}>
+          <div ref={messageDetailRef} className={style.messageDetail}>
+            <MessageDetail
+              chatPage={chatPage}
+              getChatPages={getChatPages}
+              currentTime={currentTime}
+            />
+          </div>
+
+          <div ref={newMessageRef} className={style.newMessage}>
+            <NewMessage
+              displayMessageDetail={displayMessageDetail}
+              getChatPages={getChatPages}
+              setPageNumberOfChatPage={setPageNumberOfChatPage}
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-export default Message
+export default Message;
