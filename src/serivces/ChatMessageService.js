@@ -86,13 +86,13 @@ export class ChatMessageService {
   // };
 
   // get
-  getByChatId = async (chatId, pageNumber) => {
+  getByChatId = async (chatId, chatParticipantId,  pageNumber) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
       localStorage.getItem("userToken")
     )}`;
     try {
       const response = await axios.get(
-        `http://localhost:8080/chatmessage/findByChatId?chatId=${chatId}&pageNumber=${pageNumber}`
+        `http://localhost:8080/chatmessage/findByChatId?chatId=${chatId}&chatParticipantId=${chatParticipantId}&pageNumber=${pageNumber}`
       );
 
       return response.data.content;

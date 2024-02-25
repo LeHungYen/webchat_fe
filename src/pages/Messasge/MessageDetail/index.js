@@ -7,6 +7,7 @@ import { getResourceImage } from "../../../utils";
 import { routes } from "../../../config/routes";
 import { UserService } from "../../../serivces/UserService";
 import { calculateTimeDiff } from "../../../utils";
+import { ChatMessageParticipantService } from "../../../serivces/ChatMessageParticipantService";
 // project stickers / bluefogs
 import comingsoon from "../../../assets/stickers/bluefogs/comingsoon.png";
 import didyouknow_ from "../../../assets/stickers/bluefogs/didyouknow_.png";
@@ -68,6 +69,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   const chatMessageService = new ChatMessageService();
   const chatService = new ChatService();
   const userService = new UserService();
+  const chatMessageParticipantService = new ChatMessageParticipantService();
   const [stickers, setStickers] = useState([]);
   const chatHistoryUlRef = useRef(null);
 
@@ -141,11 +143,10 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
   // page number of chat history
   const [pageNumberCH, setPageNumberCH] = useState(0);
-
   // get chat history
   const [chatHistory, setChatHistory] = useState([]);
   const getChatHistory = async (chatId) => {
-    const response = await chatMessageService.getByChatId(chatId, pageNumberCH);
+    const response = await chatMessageService.getByChatId(chatId, chatPage.chatParticipantOfCurrentUser.chatParticipantId, pageNumberCH);
 
 
     // update mediaURL
@@ -164,7 +165,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     handleMediaUrl();
   };
   useEffect(() => {
-    if (chatPage) {
+    if (chatPage && chatPage.chatParticipantOfCurrentUser) {
       getChatHistory(chatPage.chatId);
     }
   }, [chatPage, pageNumberCH]);
@@ -184,8 +185,10 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           (response) => {
             const receivedMessage = JSON.parse(response.body);
             getChatPages(0);
-            if(receivedMessage.chatId == chatPage.chatId){
-              setChatHistory((prev) => [...prev, receivedMessage]);
+            if (receivedMessage.chatId == chatPage.chatId) {
+              // chatMessageParticipantService.updateStatusWatched(chatPage.chatParticipantOfCurrentUser.chatParticipantId, chatPage.chatId);
+              // setChatHistory((prev) => [...prev, receivedMessage]);
+              getChatHistory(chatPage.chatId);
             }
           }
         );

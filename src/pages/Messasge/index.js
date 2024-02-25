@@ -73,7 +73,7 @@ function Message() {
         setChatPage(chatPages[0]);
         setAlreadySetChatPageFristTime(true)
         console.log("Đã chạy ........................................................")
-           console.log(chatPages)
+        console.log(chatPages)
       }
     }
   }, [chatPages]);
@@ -182,16 +182,16 @@ function Message() {
 
         <div className={style.col2}>
           <div ref={messageDetailRef} className={style.messageDetail}>
-            <MessageDetail
+            {chatPage.chatParticipantOfCurrentUser && <MessageDetail
               chatPage={chatPage}
               getChatPages={getChatPages}
               currentTime={currentTime}
-            />
+            />}
           </div>
 
           <div ref={newMessageRef} className={style.newMessage}>
             <NewMessage
-            // bổ sung set chat page when create new chat
+              // bổ sung set chat page when create new chat
               displayMessageDetail={displayMessageDetail}
               getChatPages={getChatPages}
               setPageNumberOfChatPage={setPageNumberOfChatPage}
