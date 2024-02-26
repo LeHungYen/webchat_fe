@@ -58,7 +58,8 @@ import { useState, useEffect, useContext } from 'react';
 import { StoreContext, actions } from '../../store';
 import axios from 'axios';
 function Home() {
-    const [state, dispatch] = useContext(StoreContext);
+    const user = JSON.parse(localStorage.getItem("user"));
+    // const [state, dispatch] = useContext(StoreContext);
     // const [user, setUser] = useState({
     //     bio: null,
     //     birthdate: null,
@@ -93,7 +94,7 @@ function Home() {
                         <div className={style.infor}>
                             <div className={style.columns}>
                                 <div className={style.column1}>
-                                    <p className={style.name}>{state.user.fullName}</p>
+                                    <p className={style.name}>{user.fullName}</p>
                                     <p className={style.job}>UI/UX Designer</p>
                                 </div>
                                 <div className={style.column2}>
@@ -143,7 +144,7 @@ function Home() {
 
                 <div className={style.middle}>
                     {/* <DefaultContent /> */}
-                    <Wellcome user={state.user} />
+                    <Wellcome user={user} />
                 </div>
 
                 <div className={style.right}>

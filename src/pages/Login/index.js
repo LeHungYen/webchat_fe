@@ -40,6 +40,7 @@ function Login() {
             const response = await axios.get("http://localhost:8080/user/getUserInfor");
             if (response.status === 200) {
                 dispatch(actions.setUser(response.data))
+                localStorage.setItem("user", JSON.stringify(response.data))
             }
         } catch (error) {
             console.error("Error fetching users:", error); // Log error

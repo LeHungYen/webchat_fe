@@ -1,20 +1,21 @@
 .container {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-family: 'Roboto', sans-serif;
-    width: 1512px;
-    height: 982px;
-    position: relative;
-
-    // border: 1px solid #ccc;
+    width: 100%;
+    height: 100vh;
+    // position: relative;
     margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15%;
 }
 
 .left {
+
     width: 558.11px;
     height: 743.84px;
-    position: absolute;
-    left: 144px;
-    top: 119px;
+    position: relative;
 
     .rectangle1 {
         width: 263.03px;
@@ -98,10 +99,6 @@
 }
 
 .right {
-    position: absolute;
-    top: 106px;
-    left: 893px;
-
     width: 475px;
     height: 719px;
 
@@ -279,3 +276,49 @@
     }
 }
 
+@media screen and (max-width: 1300px) {
+    .container {
+        gap: 5%;
+    }
+}
+
+@media screen and (max-width: 1150px) {
+    .container {
+       .left{
+        display: none;
+       }
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .container {
+        .right {
+            width: 90%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            .row1{
+                .main{
+                    font-size: 30px;
+                }
+
+                .sub{
+                    font-size: 12px;
+                    word-wrap: break-word;
+                }
+            }
+
+            .row2{
+                .form{
+                    width: 100%;
+                    .loginWith{
+                        button{
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

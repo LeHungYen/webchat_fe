@@ -56,7 +56,7 @@ export class UserService {
       return response.data;
     } catch (error) {
       console.error("Error:", error);
-      return this.defaultUser;
+      throw error;
     }
   };
 

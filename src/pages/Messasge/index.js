@@ -15,12 +15,13 @@ import { GoDotFill } from "react-icons/go";
 import { useState, useRef, useContext, useEffect } from "react";
 
 function Message() {
-  const [state, dispatch] = useContext(StoreContext);
+  // const [state, dispatch] = useContext(StoreContext);
   const chatPageService = new ChatPageService();
   const chatService = new ChatService();
   const userService = new UserService();
   const messageDetailRef = useRef(null);
   const newMessageRef = useRef(null);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   // current time
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -72,8 +73,6 @@ function Message() {
       if (chatPages.length > 0) {
         setChatPage(chatPages[0]);
         setAlreadySetChatPageFristTime(true)
-        console.log("Đã chạy ........................................................")
-        console.log(chatPages)
       }
     }
   }, [chatPages]);
@@ -110,7 +109,7 @@ function Message() {
                               .filter((chatParticipant) => {
                                 return (
                                   chatParticipant.userDTO.userId !==
-                                  state.user.userId &&
+                                  user.userId &&
                                   chatParticipant.userDTO.alreadyBeFriend &&
                                   chatParticipant.userDTO.status ===
                                   userService.status.ONLINE
@@ -129,7 +128,7 @@ function Message() {
                                 {item.chatParticipants.map(
                                   (chatParticipant, index) =>
                                     chatParticipant.userDTO.userId !=
-                                    state.user.userId && (
+                                    user.userId && (
                                       <div
                                         key={index}
                                         className={style.userName}

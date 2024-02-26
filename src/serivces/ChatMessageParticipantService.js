@@ -12,16 +12,16 @@ export class ChatMessageParticipantService {
 
 
     // update Status Watched
-    updateStatusWatched = async (chatParticipantId, chatId) => {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
-            localStorage.getItem("userToken")
-        )}`;
-        try {
-            const response = await axios.put(
-                `http://localhost:8080/chatMessageParticipant/updateStatusWatched/${chatParticipantId}/${chatId}`);
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
+    // updateStatusWatched = async (chatParticipantId, chatId) => {
+    //     axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+    //         localStorage.getItem("userToken")
+    //     )}`;
+    //     try {
+    //         const response = await axios.put(
+    //             `http://localhost:8080/chatMessageParticipant/updateStatusWatched/${chatParticipantId}/${chatId}`);
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //     }
+    // };
 
 }

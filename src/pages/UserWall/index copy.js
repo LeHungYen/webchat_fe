@@ -55,14 +55,14 @@ import { NotificationService } from "../../serivces/NotificationService";
 
 function UserWall() {
   const navigate = useNavigate();
-  const [state, dispatch] = useContext(StoreContext);
+  // const [state, dispatch] = useContext(StoreContext);
 
   const userService = new UserService();
   const friendRequestService = new FriendRequestService();
   const friendshipService = new FriendshipService();
   const userFollowingService = new UserFollowingService();
   const notificationService = new NotificationService();
-
+  const currentUser = JSON.parse(localStorage.getItem("user"));
   // get id from url
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -123,7 +123,7 @@ function UserWall() {
   const getFriendRequestBySenderIdAndReceiveId = () => {
     const fetchData = async () => {
       const response = await friendRequestService.getBySenderIdAndReceiveId(
-        state.user.userId,
+        currentUser.userId,
         userId
       );
       setFriendRequest(response);
@@ -151,7 +151,7 @@ function UserWall() {
     if (friendRequest.requestId == null) {
       const fetchData = async () => {
         const response = await friendRequestService.saveFriendRequest(
-          state.user.userId,
+          currentUser.userId,
           userId
         );
         setFriendRequest(response);
@@ -180,14 +180,14 @@ function UserWall() {
   };
 
   const refuseFriendRequest = () => {
-    if (state.user.userId == friendRequest.senderUserId) {
+    if (currentUser.userId == friendRequest.senderUserId) {
       const updatedFriendRequest = {
         ...friendRequest,
         status: friendRequestService.status.THE_SENDER_CANCELED,
       };
       setFriendRequest(updatedFriendRequest);
       friendRequestService.updateFriendRequest(updatedFriendRequest);
-    } else if (state.user.userId == friendRequest.receiverUserId) {
+    } else if (currentUser.userId == friendRequest.receiverUserId) {
       const updatedFriendRequest = {
         ...friendRequest,
         status: friendRequestService.status.THE_RECEIVER_CANCELED,
@@ -207,7 +207,7 @@ function UserWall() {
   const saveUserFollowing = () => {
     const fetchData = async () => {
       const response = await userFollowingService.saveUserFollowing(
-        state.user.userId,
+        currentUser.userId,
         userId
       );
       setUserFollowing(response);
@@ -219,7 +219,7 @@ function UserWall() {
     const fetchData = async () => {
       const response =
         await userFollowingService.getUserFollowingByUserIdAndFollowingUserId(
-          state.user.userId,
+          currentUser.userId,
           userId
         );
       setUserFollowing(response);
@@ -265,7 +265,7 @@ function UserWall() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await friendshipService.getFriendShipByUserId1AndUserId2(
-        state.user.userId,
+        currentUser.userId,
         userId
       );
       setFriendShip(response);
@@ -357,7 +357,7 @@ function UserWall() {
             </div>
 
             {/* owner */}
-            {state.user.userId == userId && (
+            {currentUser.userId == userId && (
               <div className={style.column2}>
                 <div className={style.buttons}>
                   <div className={style.button}>
@@ -381,7 +381,7 @@ function UserWall() {
             )}
 
             {/* other user */}
-            {state.user.userId != userId && (
+            {currentUser.userId != userId && (
               <div className={style.column2}>
                 <div className={style.buttons}>
                   <div
@@ -395,14 +395,14 @@ function UserWall() {
                       )}
 
                     {friendRequest.status == "THE_SENDER_CANCELED" &&
-                      state.user.userId == friendRequest.senderUserId && (
+                      currentUser.userId == friendRequest.senderUserId && (
                         <button onClick={addFriendRequest}>
                           <HiUserAdd className={style.icon} /> Add friend
                         </button>
                       )}
 
                     {friendRequest.status == "THE_RECEIVER_CANCELED" &&
-                      state.user.userId == friendRequest.receiverUserId && (
+                      currentUser.userId == friendRequest.receiverUserId && (
                         <button onClick={addFriendRequest}>
                           <HiUserAdd className={style.icon} /> Add friend
                         </button>
@@ -411,7 +411,7 @@ function UserWall() {
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
                         "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
-                      state.user.userId == friendRequest.senderUserId && (
+                        currentUser.userId == friendRequest.senderUserId && (
                         <button onClick={deleteFriendRequest}>
                           <MdCancelScheduleSend className={style.icon} /> Cancel
                           request
@@ -421,7 +421,7 @@ function UserWall() {
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
                         "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
-                      state.user.userId == friendRequest.receiverUserId && (
+                        currentUser.userId == friendRequest.receiverUserId && (
                         <button onClick={deleteFriendRequest}>
                           <MdCancelScheduleSend className={style.icon} /> Cancel
                           request
@@ -431,7 +431,7 @@ function UserWall() {
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
                         "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
-                      state.user.userId == friendRequest.receiverUserId && (
+                        currentUser.userId == friendRequest.receiverUserId && (
                         <button
                           onClick={() => setResponseDisplay((prev) => !prev)}
                         >
@@ -442,7 +442,7 @@ function UserWall() {
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
                         "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
-                      state.user.userId == friendRequest.senderUserId && (
+                        currentUser.userId == friendRequest.senderUserId && (
                         <button
                           onClick={() => setResponseDisplay((prev) => !prev)}
                         >
@@ -459,9 +459,9 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status == "THE_SENDER_CANCELED" &&
-                      state.user.userId == friendRequest.receiverUserId &&
+                      currentUser.userId == friendRequest.receiverUserId &&
                       userFollowing != null &&
-                      userFollowing.userId == state.user.userId && (
+                      userFollowing.userId == currentUser.userId && (
                         <button onClick={deleteUserFollowing}>
                           <SlUserFollowing className={style.icon} /> Following
                         </button>
@@ -469,9 +469,9 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status == "THE_RECEIVER_CANCELED" &&
-                      state.user.userId == friendRequest.senderUserId &&
+                      currentUser.userId == friendRequest.senderUserId &&
                       userFollowing != null &&
-                      userFollowing.userId == state.user.userId && (
+                      userFollowing.userId == currentUser.userId && (
                         <button onClick={deleteUserFollowing}>
                           <SlUserFollowing className={style.icon} /> Following
                         </button>
@@ -479,7 +479,7 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status == "THE_SENDER_CANCELED" &&
-                      state.user.userId == friendRequest.receiverUserId &&
+                      currentUser.userId == friendRequest.receiverUserId &&
                       userFollowing.followingId == null && (
                         <button onClick={saveUserFollowing}>
                           <SlUserFollow className={style.icon} /> Follow
@@ -488,7 +488,7 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status == "THE_RECEIVER_CANCELED" &&
-                      state.user.userId == friendRequest.senderUserId &&
+                      currentUser.userId == friendRequest.senderUserId &&
                       userFollowing.followingId == null && (
                         <button onClick={saveUserFollowing}>
                           <SlUserFollow className={style.icon} /> Follow
@@ -584,7 +584,7 @@ function UserWall() {
               >
                 {friendRequest.requestId != null &&
                   friendRequest.status == "THE_RECEIVER_CANCELED" &&
-                  state.user.userId != friendRequest.senderUserId &&
+                  currentUser.userId != friendRequest.senderUserId &&
                   userFollowing.followingId == null && (
                     <button onClick={saveUserFollowing}>
                       <SlUserFollow className={style.icon} /> Follow
@@ -593,7 +593,7 @@ function UserWall() {
 
                 {friendRequest.requestId != null &&
                   friendRequest.status == "THE_SENDER_CANCELED" &&
-                  state.user.userId != friendRequest.receiverUserId &&
+                  currentUser.userId != friendRequest.receiverUserId &&
                   userFollowing.followingId == null && (
                     <button onClick={saveUserFollowing}>
                       <SlUserFollow className={style.icon} /> Follow
@@ -602,9 +602,9 @@ function UserWall() {
 
                 {friendRequest.requestId != null &&
                   friendRequest.status == "THE_SENDER_CANCELED" &&
-                  state.user.userId != friendRequest.receiverUserId &&
+                  currentUser.userId != friendRequest.receiverUserId &&
                   userFollowing.followingId != null &&
-                  userFollowing.userId == state.user.userId && (
+                  userFollowing.userId == currentUser.userId && (
                     <button onClick={deleteUserFollowing}>
                       <SlUserFollowing className={style.icon} /> Unfollow
                     </button>
@@ -612,9 +612,9 @@ function UserWall() {
 
                 {friendRequest.requestId != null &&
                   friendRequest.status == "THE_RECEIVER_CANCELED" &&
-                  state.user.userId != friendRequest.senderUserId &&
+                  currentUser.userId != friendRequest.senderUserId &&
                   userFollowing.followingId != null &&
-                  userFollowing.userId == state.user.userId && (
+                  userFollowing.userId == currentUser.userId && (
                     <button onClick={deleteUserFollowing}>
                       <SlUserFollowing className={style.icon} /> Unfollow
                     </button>

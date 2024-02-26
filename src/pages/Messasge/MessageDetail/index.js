@@ -54,6 +54,7 @@ import { MdBlock } from "react-icons/md";
 import { IoFlagOutline } from "react-icons/io5";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
+import { BsThreeDots } from "react-icons/bs";
 import { GiCheckMark } from "react-icons/gi";
 import { LuSticker } from "react-icons/lu";
 import { IoAdd } from "react-icons/io5";
@@ -65,14 +66,14 @@ import SockJS from "sockjs-client";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 export function MessageDetail({ chatPage, getChatPages, currentTime }) {
-  const [state, dispath] = useContext(StoreContext);
+  // const [state, dispath] = useContext(StoreContext);
   const chatMessageService = new ChatMessageService();
   const chatService = new ChatService();
   const userService = new UserService();
   const chatMessageParticipantService = new ChatMessageParticipantService();
   const [stickers, setStickers] = useState([]);
   const chatHistoryUlRef = useRef(null);
-
+  const user = JSON.parse(localStorage.getItem("user"));
   // handle sticker
 
   useEffect(() => {
@@ -181,7 +182,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
       };
       client.connect(headers, () => {
         client.subscribe(
-          `/topic/chatMessage/${state.user.userId}`,
+          `/topic/chatMessage/${user.userId}`,
           (response) => {
             const receivedMessage = JSON.parse(response.body);
             getChatPages(0);
@@ -260,27 +261,6 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     }
   };
 
-  // handle meida URL of chat history
-  // const handleMediaUrl = async () => {
-  //   const updatedChatHistory = await Promise.all(
-  //     chatHistory.map(async (item) => {
-  //       if (item.mediaType === chatMessageService.mediaType.IMAGE) {
-  //         const newMediaUrl = await getResourceImage(item.mediaURL);
-  //         return { ...item, mediaURL: newMediaUrl };
-  //       }
-  //       return item;
-  //     })
-  //   );
-
-  //   // Cập nhật lại chatHistory với dữ liệu mới
-  //   setChatHistory(updatedChatHistory);
-  // };
-
-  // useEffect(() => {
-  //   handleMediaUrl();
-  // }, [])
-
-  // let parts = [];
   return (
     <div className={style.messageDetail}>
       <div className={style.chatContent}>
@@ -289,7 +269,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
             <div>
               {chatPage.chatParticipants.map(
                 (chatParticipant, index) =>
-                  chatParticipant.userDTO.userId != state.user.userId && (
+                  chatParticipant.userDTO.userId != user.userId && (
                     <div key={index} className={style.userInfor}>
                       <div className={style.avatar}>
                         <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />
@@ -327,8 +307,6 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                               currentTime
                             )} ago</p>
                           )}
-
-                        {/* <p className={style.activeTime}>active 10m ago</p> */}
                       </div>
                     </div>
                   )
@@ -354,64 +332,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           </div>
         </div>
 
-        {/* {productDetails?.data?.map((item, index) => {
-                        let list = [];
-                        if (item && item.images && Array.isArray(item.images)) {
-                            if (item.images.length > 0) {
-                                for (let i = 0; i < item.images.length; i++) {
-                                    let imageLink = window.location.origin + "/image/" + item.images[i]?.name;
-                                    list.push(imageLink);
-                                }
-                            }
-                        } else {
-                            console.log("mainProduct.images is not available");
-                            list = ["https://ananas.vn/wp-content/uploads/Pro_AV00174_1.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_2.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_3.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_4.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_5.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_6.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_7.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_8.jpeg",
-                                "https://ananas.vn/wp-content/uploads/Pro_AV00174_9.jpeg"
-                            ]
-                        }
-
-                        return <div key={index} className={clsx(style.item)}>
-                            <Link to={`/productDetails/${item.id}/${item.colorDTO.name}`} onClick={scrollToTop}>
-
-                                {item.promotionValue > 0 &&
-                                    <div className={style.itemImg}>
-                                        <img src={list[0]}></img>
-                                        <p className={clsx(style.text)}>-{item.promotionValue / 1 * 100}%</p>
-                                        <button className={clsx(style.btnInsideImg, style.btnHidden)}>Mua ngay</button>
-                                    </div>
-                                }
-                                {item.promotionValue === 0 &&
-                                    <div className={style.itemImg}>
-                                        <img src={list[0]}></img>
-                                        <button className={clsx(style.btnInsideImg, style.btnHidden)}>Mua ngay</button>
-                                    </div>
-                                }
-                            </Link>
-                            {item.isBestSeller !== 0 && <p className={clsx(style.productStatus)}>Best Seller</p>}
-                            {item.isNew !== 0 && <p className={clsx(style.productStatus)}>New Arrival</p>}
-                            <Link to={`/productDetails/${item.id}/${item.colorDTO.name}`} onClick={scrollToTop} className={style.link}>
-                                <p className={clsx(style.productName)}>{item.name}</p>
-                            </Link>
-                            <p className={clsx(style.productColor)}>{item.colorDTO.name}</p>
-                            {item.promotionValue > 0 &&
-                                <div className={style.promotion}>
-                                    <p className={clsx(style.realPrice)}>{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                                    <p className={clsx(style.promotionalPrice)}>{(item.price * (1 - item.promotionValue)).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
-                                </div>
-                            }
-                            {item.promotionValue === 0 && <p className={clsx(style.productPrice)}>{item.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>}
-                        </div>
-                    })} */}
-
         <div className={style.chatHistory}>
-          <ul ref={chatHistoryUlRef}>
+          {/* <ul ref={chatHistoryUlRef}>
             {chatHistory.map((item, index) => {
               return (
                 <li key={index}>
@@ -437,12 +359,85 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
                     <div className={style.chatDetails}>
                       <p className={style.time}>
-                        {" "}
+                        {formatTime(item.createdAt)} 
+                      </p>
+                    </div>
+
+                    <div className={style.iconMessageMenu}>
+                      <BsThreeDots className={style.icon} />
+                    </div>
+
+                    {item.chatMessageParticipantDTOs.map((chatMessageParticipantDTO, index) => (
+                      chatMessageParticipantDTO.lastViewedAt && (
+                        <div key={index} className={style.peopleViewed}>
+                          <p >{chatMessageParticipantDTO.userParticipantName} đã xem</p>
+                        </div>
+                      )
+                    ))}
+                  </div>
+
+
+                </li>
+              );
+            })}
+          </ul> */}
+
+          <ul className={style.chatHistoryUl} ref={chatHistoryUlRef}>
+            {chatHistory.map((item, index) => {
+              return (
+                <li key={index}>
+                  <div
+                    className={
+                      item.chatParticipantId ==
+                        chatPage.chatParticipantOfCurrentUser.chatParticipantId
+                        ? style.thisUser
+                        : style.otherUser
+                    }
+                  >
+
+                    <div className={style.avatarChat}>
+                      <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                    </div>
+
+                    {item.mediaType == chatMessageService.mediaType.STICKER && (
+                      <img src={item.mediaURL} className={style.sticker}></img>
+                    )}
+
+                    {item.mediaType == chatMessageService.mediaType.IMAGE && (
+                      <img src={item.mediaURL} className={style.chatImg} ></img>
+                    )}
+
+                    {item.content != null && item.content != "" && (
+                      <p className={style.text}>{item.content}</p>
+                    )}
+
+                    <div className={style.chatDetails}>
+                      <p className={style.time}>
                         {formatTime(item.createdAt)}
                       </p>
-                      <GiCheckMark className={style.iconSend} />
+                    </div>
+
+                    <div className={style.iconMessageMenu}>
+                      <button> <BsThreeDots className={style.icon} /></button>
                     </div>
                   </div>
+
+
+                  <ul className={style.peopleViewed}>
+                    {item.chatMessageParticipantDTOs.map((chatMessageParticipantDTO, index) => (
+                      chatMessageParticipantDTO.lastViewedAt && (
+                        <li key={index}>
+                          <div className={style.peopleViewedDetail}>
+                            <span>{chatMessageParticipantDTO.userParticipantName} đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
+                          </div>
+                          <div className={style.avatarPeopleViewed}>
+                            <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                          </div>
+                        </li>
+                      )
+                    ))}
+                  </ul>
+
                 </li>
               );
             })}
@@ -555,7 +550,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         {chatPage.type === chatService.type.PAIR &&
           chatPage.chatParticipants.map(
             (item, index) =>
-              item.userId !== state.user.userId && (
+              item.userId !== user.userId && (
                 <div className={style.otherUserInfor}>
                   <div className={style.avatar}>
                     <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
