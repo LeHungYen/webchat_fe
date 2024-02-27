@@ -19,12 +19,20 @@ import { SignUp } from './SignUp';
 import { useState, useRef, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
+import { useGoogleLogin, GoogleLogin } from '@react-oauth/google';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { StoreContext, actions } from '../../store';
+import { jwtDecode } from 'jwt-decode';
+import { UserService } from '../../serivces/UserService';
+
+
 function Login() {
     const navigate = useNavigate();
     const [state, dispatch] = useContext(StoreContext);
+    const userService = new UserService();
     // login
     const [account, setAccount] = useState({ email: "", password: "" });
+    const [loginException, setLoginException] = useState(null);
 
     const handleEmail = (e) => {
         setAccount((prev) => ({ ...prev, email: e.target.value }));
@@ -34,28 +42,32 @@ function Login() {
         setAccount((prev) => ({ ...prev, password: e.target.value }));
     };
 
-    const getUserInfor = async (token) => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(localStorage.getItem("userToken"))}`;
-        try {
-            const response = await axios.get("http://localhost:8080/user/getUserInfor");
-            if (response.status === 200) {
-                dispatch(actions.setUser(response.data))
-                localStorage.setItem("user", JSON.stringify(response.data))
-            }
-        } catch (error) {
-            console.error("Error fetching users:", error); // Log error
-        }
-    };
+    const getUserInfor = async () => {
+        const response = await userService.getCurrentUser();
+        await localStorage.setItem("user", JSON.stringify(response))
+    }
 
 
     const login = async () => {
-
         try {
             const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", account);
             if (response.status === 200) {
-                localStorage.setItem("userToken", JSON.stringify(response.data.token))
-                getUserInfor(response.data.token);
-                navigate(routes.home)
+                await localStorage.setItem("userToken", JSON.stringify(response.data.token))
+                await getUserInfor(response.data.token);
+                await navigate(routes.home)
+            }
+        } catch (error) {
+            setLoginException(error.response.data.message)
+        }
+    };
+
+    const loginWithGoogle = async (request) => {
+        try {
+            const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate/google", request);
+            if (response.status === 200) {
+                await localStorage.setItem("userToken", JSON.stringify(response.data.token))
+                await getUserInfor(response.data.token);
+                await navigate(routes.home)
             }
         } catch (error) {
 
@@ -102,6 +114,49 @@ function Login() {
         };
     }, []);
 
+    // login google
+    const gg_client_id = "346474773447-md0spfuk433e23pr14ccdjcchrgava8n.apps.googleusercontent.com"
+
+    // const handleLogin1 = (credentialResponse) => {
+    //     var obj = jwtDecode(credentialResponse.credential);
+    //     var data = JSON.stringify(obj);
+    //     console.log(data);
+    // }
+
+    // new 
+    const google = window.google;
+
+    const handleCallbackResponse = (response) => {
+        if (response.credential) {
+            var userObject = jwtDecode(response.credential)
+
+            const request = {
+                firstName: userObject.family_name,
+                lastName: userObject.given_name,
+                email: userObject.email,
+            }
+            loginWithGoogle(request);
+        } else {
+            console.error('Google login error:', response.error);
+        }
+    }
+
+    const handleSignOutGoogle = (event) => {
+
+    }
+
+    useEffect(() => {
+        google.accounts.id.initialize({
+            client_id: "346474773447-md0spfuk433e23pr14ccdjcchrgava8n.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            { theme: "outline", size: "large" }
+        )
+    }, [])
+
     return (
         <div className={style.container}>
 
@@ -127,15 +182,28 @@ function Login() {
                     <div className={style.formContainer}>
                         <div className={style.form}>
                             <div className={style.loginWith}>
-                                <div className={style.button}>
-                                    <button><i className="fa-brands fa-google"></i> Log in with Google</button>
-                                </div>
+
+
+                                <div className={style.adddddd} id='signInDiv'></div>
+                                {/* <GoogleOAuthProvider clientId={"sada"}>
+                                    <GoogleLogin
+                                        onSuccess={handleLogin1}
+                                        text='Log in with Google'
+                                    />
+                                </GoogleOAuthProvider> */}
+
+                                {/* <div className={style.button}>
+                                        <button onClick={() => googleLogin()}>
+                                            <i className="fa-brands fa-google"></i> Log in with Google
+                                        </button>
+                                    </div> */}
 
                                 <p className={style.or}>or</p>
                             </div>
 
                             <div className={style.loginForm}>
                                 <div className={style.infor}>
+                                    {loginException && <p className={style.loginException}>{loginException}</p>}
                                     <div className={style.email}>
                                         <label>Email</label>
                                         <input onChange={(e) => handleEmail(e)} value={account.email} placeholder="Enter your email"></input>
@@ -143,11 +211,17 @@ function Login() {
 
                                     <div className={style.password}>
                                         <label>Password</label>
-                                        <input onChange={(e) => handlePassword(e)} value={account.password} type='password' placeholder="Enter your password"></input>
+                                        <input
+                                            onChange={(e) => handlePassword(e)}
+                                            value={account.password}
+                                            type='password'
+                                            onKeyDown={(e) => e.key === "Enter" && login()}
+                                            placeholder="Enter your password">
+                                        </input>
                                     </div>
                                 </div>
 
-                                <div className={style.option}>
+                                {/* <div className={style.option}>
                                     <div className={style.rememberMe}>
                                         <input type='checkbox'></input>
                                         <label>Remember Me</label>
@@ -156,7 +230,7 @@ function Login() {
                                     <div className={style.forgotPassword}>
                                         <p onClick={() => setShowForgotPassword(true)}>ForgotPassword</p>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className={style.buttonLogin}>
                                     <button onClick={login}>Log in</button>
@@ -166,7 +240,7 @@ function Login() {
                         </div>
 
                         <div className={style.signUp}>
-                            <p>Don't have an account yet? <a onClick={() => setShowSignUp(true)}>Sign up</a> now to join our community</p>
+                            <p>Don't have an account yet? <span onClick={() => setShowSignUp(true)}>Sign up</span> now to join our community</p>
                         </div>
 
                     </div>

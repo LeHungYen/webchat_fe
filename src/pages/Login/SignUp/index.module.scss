@@ -1,4 +1,5 @@
-.displaySignUp , .displayForgotPassword{
+.displaySignUp,
+.displayForgotPassword {
 
     position: fixed;
     z-index: 9;
@@ -12,6 +13,7 @@
     align-items: center;
     display: none;
     margin: auto;
+    overflow: auto;
 
     .btnExit {
         border: none;
@@ -33,7 +35,7 @@
         padding: 2%;
         background-color: #fff;
         border-radius: 20px;
-        padding-bottom: 90px;
+        padding-bottom: 20px;
 
 
         .rowSignUp {
@@ -62,18 +64,14 @@
                             position: relative;
 
                             .iconLeft {
-                                i {
+                                .icon {
                                     position: absolute;
-                                    top: 50%;
-                                    left: 10px;
-                                    transform: translateY(-50%);
-                                    padding-bottom: 10px;
+                                    font-size: 20px;
                                 }
                             }
 
-
-
-                            input {
+                            input,
+                            select {
                                 width: 100%;
                                 border-top: 0;
                                 border-left: 0;
@@ -103,15 +101,9 @@
                                 }
                             }
 
-                            .iconRightWrong {
-                                i {
-                                    position: absolute;
-                                    top: 50%;
-                                    right: 0px;
-                                    transform: translateY(-50%);
-                                    padding-bottom: 10px;
-                                    color: red;
-                                }
+                            .wrong {
+                                color: red;
+                                font-size: 13px;
                             }
 
                             .iconRightPassword {
@@ -172,5 +164,8 @@
         }
     }
 
-
+    .wrong {
+        color: red;
+        font-size: 13px;
+    }
 }

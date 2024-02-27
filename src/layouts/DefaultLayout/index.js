@@ -1,5 +1,5 @@
 import style from "./index.module.scss";
-
+import { FiSearch } from "react-icons/fi";
 import {
   HomeIcon as OutlineHomeIcon,
   UserGroupIcon as OutlineUserGroupIcon,
@@ -8,13 +8,6 @@ import {
   ChatIcon as OutlineChatIcon,
   UserIcon as OutlineUserIcon,
   SearchIcon as OutlineSearchIcon,
-  UserAddIcon as OutlineUserAddIcon,
-  CogIcon as OutlineCogIcon,
-  PhotographIcon as OutlinePhotoIcon,
-  VideoCameraIcon as OutlineVideoCameraIcon,
-  CalendarIcon as OutlineCalendarIcon,
-  ShareIcon as OutlineShareIcon,
-  MicrophoneIcon as OutlineMicrophoneIcon,
 } from "@heroicons/react/outline";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useNavigate, Link } from "react-router-dom";
@@ -37,8 +30,8 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   const notificationService = new NotificationService();
   const friendRequestService = new FriendRequestService();
   const userService = new UserService();
-  const userIdRef = useRef(null); // contain userId
   const user = JSON.parse(localStorage.getItem("user"));
+  const userIdRef = useRef(user.userId); // contain userId
 
   // get current user infor
   const getUserInfor = async () => {
@@ -315,7 +308,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                                               : "black",
                                           }}
                                         >
-                                          {item.sender.fullName}
+                                          {item.sender.firstName + " " + item.sender.lastName}
                                         </span>
                                         sent you a friend request
                                       </p>
@@ -395,7 +388,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                 onChange={(e) => dispatch(actions.setKeySearch(e.target.value))}
                 placeholder="Search for anything"
               ></input>
-              <OutlineSearchIcon
+              <FiSearch
                 onClick={() => navigate(routes.search)}
                 className={style.searchIcon}
               />
@@ -421,7 +414,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
               <div className={style.content}>
                 <div className={style.infor}>
                   <p className={style.text}>
-                    <span>{notification.sender.fullName}</span>
+                    <span>{notification.sender.firstName + " " + notification.sender.lastName}</span>
                     sent you a friend request
                   </p>
 

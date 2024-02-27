@@ -143,12 +143,11 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   };
 
   // page number of chat history
-  const [pageNumberCH, setPageNumberCH] = useState(0);
+  const [pageNumberCH, setPageNumberCH] = useState(0);   
   // get chat history
   const [chatHistory, setChatHistory] = useState([]);
   const getChatHistory = async (chatId) => {
     const response = await chatMessageService.getByChatId(chatId, chatPage.chatParticipantOfCurrentUser.chatParticipantId, pageNumberCH);
-
 
     // update mediaURL
     const handleMediaUrl = async () => {
@@ -281,7 +280,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                       </div>
                       <div className={style.dflexColumn}>
                         <p className={style.username}>
-                          {chatParticipant.userDTO.fullName}
+                          {chatParticipant.userDTO.firstName + " " + chatParticipant.userDTO.lastName}
                         </p>
 
                         {chatParticipant.userDTO.alreadyBeFriend &&
@@ -428,7 +427,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                       chatMessageParticipantDTO.lastViewedAt && (
                         <li key={index}>
                           <div className={style.peopleViewedDetail}>
-                            <span>{chatMessageParticipantDTO.userParticipantName} đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
+                            <span>{chatMessageParticipantDTO.lastName} đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
                           </div>
                           <div className={style.avatarPeopleViewed}>
                             <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
@@ -555,7 +554,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                   <div className={style.avatar}>
                     <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
                   </div>
-                  <p className={style.name}>{item.userDTO.fullName}</p>
+                  <p className={style.name}>{item.userDTO.firstName + " " + item.userDTO.lastName}</p>
                   <p className={style.gmail}>{item.userDTO.email}</p>
                   <Link
                     className="link"

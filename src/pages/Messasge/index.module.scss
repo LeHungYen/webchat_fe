@@ -10,9 +10,7 @@
 
   .col1 {
     width: 400px;
-    // width: 20%;
-
-    // background-color: red;
+    border-right: 1px solid #efefef;
 
     .header {
       display: flex;
@@ -57,7 +55,7 @@
         justify-content: center;
         align-items: center;
         button {
-          background-color: #0389c9;
+          background-image: linear-gradient(to bottom, #56e8e7, #779ff2);
           border: none;
           width: 100%;
           height: 100%;
@@ -75,7 +73,7 @@
       background-color: #ffffff;
       ul {
         overflow-y: auto;
-        max-height: calc(100vh - 156px);
+        height: calc(100vh - 156px);
         li {
           .link {
             text-decoration: none;

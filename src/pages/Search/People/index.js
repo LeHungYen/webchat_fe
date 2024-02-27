@@ -60,7 +60,7 @@ export function People() {
                 </div>
 
                 <div className={style.infor}>
-                  <p className={style.name}>{item.fullName}</p>
+                  <p className={style.name}>{item.firstName + " " + item.lastName}</p>
                   <p className={style.sub}>{item.email}</p>
                 </div>
 

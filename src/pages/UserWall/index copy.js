@@ -350,7 +350,7 @@ function UserWall() {
 
           <div className={style.columns}>
             <div className={style.column1}>
-              <p className={style.name}>{user.fullName}</p>
+              <p className={style.name}>{user.firstName + " " + user.lastName}</p>
               {/* <p className={style.job}>UI/UX Designer</p> */}
               <p className={style.job}>{user.email}</p>
               {/* <p className={style.friend}>216 friends</p> */}

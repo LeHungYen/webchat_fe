@@ -134,7 +134,7 @@ function Message() {
                                         className={style.userName}
                                       >
                                         <p>
-                                          {chatParticipant.userDTO.fullName}
+                                          {chatParticipant.userDTO.firstName + " " + chatParticipant.userDTO.lastName}
                                         </p>
                                       </div>
                                     )

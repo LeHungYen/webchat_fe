@@ -36,6 +36,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 
   .group {
+
     height: 76px;
     display: flex;
     justify-content: space-between;
@@ -47,7 +48,10 @@
       cursor: pointer;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 7px;
+      border-right: 1px solid rgba(0, 0, 0, 0.28);
+
       img {
         width: 45px;
         height: 45px;
@@ -55,7 +59,11 @@
 
       p {
         font-size: 26px;
-        color: #00acff;
+        // color: #00acff;
+        background-image: linear-gradient(to bottom, #56e8e7, #779ff2);
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
         font-weight: bold;
       }
     }
@@ -270,12 +278,14 @@
       width: 278px;
       height: 45px;
       border-left: 1px solid rgba(0, 0, 0, 0.28);
+      display: flex;
+      justify-content: center;
 
       .input {
         margin-left: 10px;
         display: flex;
         align-items: center;
-        background-color: rgba(0, 172, 255, 0.46);
+        background-image: linear-gradient(to bottom, #56e8e7, #779ff2);
         border-radius: 18px;
         height: 44px;
         width: 267.19px;
@@ -296,9 +306,10 @@
       }
 
       .input .searchIcon {
+
         color: white;
-        width: 20px;
         margin: 20px;
+        font-size: 20px;
         cursor: pointer;
       }
     }
@@ -325,6 +336,7 @@
     background-color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 18px;
+
     .title {
       font-size: 21px;
       font-weight: 500;
@@ -360,10 +372,12 @@
         flex: 1;
         padding-bottom: 40px;
         padding-right: 30px;
+
         .infor {
           display: flex;
           flex-direction: column;
           color: #333;
+
           .text {
             font-size: 15px;
 
@@ -422,6 +436,144 @@
 
       .deleteButton:hover {
         background-color: #c8c8c8;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1480px) {
+  .header {
+    .group {
+      margin: 0px 70px;
+    }
+  }
+}
+
+@media screen and (max-width: 1380px) {
+  .header {
+    .group {
+      margin: auto;
+
+      .logo {
+        width: 20%;
+      }
+
+      .search {
+        width: 20%;
+
+        .input {
+          width: 80%;
+
+          input {
+            width: 80%;
+          }
+
+          .searchIcon {
+            margin: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1165px) {
+  .header {
+    .group {
+      margin: auto;
+
+      .logo {
+        width: auto;
+        padding: 0px 20px;
+
+        p {
+          display: none;
+        }
+      }
+
+      .menu {
+        margin: auto;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+
+        ul {
+          width: 90%;
+        }
+      }
+
+      .search {
+        width: 25%;
+
+        .input {
+          width: 90%;
+
+          input {
+            width: 80%;
+          }
+
+          .searchIcon {
+            margin: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .header {
+    .group {
+      margin: auto;
+
+      .menu {
+        margin: auto;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+
+        ul {
+          width: 90%;
+
+          li {
+            padding: 5px 15px;
+          }
+        }
+      }
+
+      .search {
+        width: 30%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .header {
+    .group {
+      margin: auto;
+
+      .logo{
+        display: none;
+      }
+
+      .menu {
+        margin: auto;
+        flex: 1;
+        display: flex;
+        justify-content: center;
+
+        ul {
+          width: 90%;
+
+          li {
+            padding: 5px 15px;
+          }
+        }
+      }
+
+      .search {
+        display: none;
       }
     }
   }

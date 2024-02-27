@@ -35,7 +35,7 @@ export class UserService {
       if (response.status === 200) {
         if (response.data !== null) {
           return response.data;
-        }
+        } 
         return this.defaultUser;
       }
     } catch (error) {

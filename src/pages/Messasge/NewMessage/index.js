@@ -21,7 +21,9 @@ export function NewMessage({
   getChatPages,
   setPageNumberOfChatPage,
 }) {
-  const [state, dispatch] = useContext(StoreContext);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  // const [state, dispatch] = useContext(StoreContext);
   const [keySearch, setKeySearch] = useState("");
   const [users, setUsers] = useState([]);
   const userService = new UserService();
@@ -131,7 +133,7 @@ export function NewMessage({
     const chatParticipantRequestBody = {
       chatParticipantId: null,
       chatId: newChat.chatId,
-      userId: state.user.userId,
+      userId: user.userId,
       joinedAt: null,
     };
     const newChatParticipant = await chatParticipantService.save(
@@ -175,7 +177,7 @@ export function NewMessage({
           {receivers.map((item, index) => {
             return (
               <span key={index}>
-                {item.fullName}{" "}
+                {item.firstName + " " + item.lastName}{" "}
                 <FaDeleteLeft
                   onClick={() => removeReceiver(index)}
                   className={style.iconDelete}
@@ -203,7 +205,7 @@ export function NewMessage({
                       </div>
 
                       <div className={style.infor}>
-                        <p className={style.fullname}>{item.fullName}</p>
+                        <p className={style.fullname}>{item.firstName + " " + item.lastName}</p>
                         <p className={style.email}>{item.email}</p>
                       </div>
                     </div>

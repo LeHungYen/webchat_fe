@@ -11,6 +11,14 @@
     gap: 15%;
 }
 
+.adddddd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 50px !important;
+}
+
 .left {
 
     width: 558.11px;
@@ -146,7 +154,7 @@
                 text-align: center;
 
                 button {
-                    width: 361px;
+                    width: 561px;
                     height: 56px;
                     stroke: #BDC4CD;
                     padding: 8px 40px;
@@ -178,6 +186,10 @@
                     width: 100%;
                     margin-bottom: 20px;
 
+                    .loginException {
+                        font-size: 14px;
+                        color: red;
+                    }
 
                     .email,
                     .password {
@@ -253,6 +265,7 @@
                         color: #fff;
                         font-size: 18px;
                         font-weight: bold;
+                        cursor: pointer;
                     }
                 }
 
@@ -265,9 +278,9 @@
             margin-top: 55px;
             font-size: 16px;
 
-            a {
-                color: #3213AE;
-                text-decoration: none;
+            span {
+                color: blue;
+                text-decoration: underline;
                 cursor: pointer;
             }
         }
@@ -284,9 +297,9 @@
 
 @media screen and (max-width: 1150px) {
     .container {
-       .left{
-        display: none;
-       }
+        .left {
+            display: none;
+        }
     }
 }
 
@@ -298,22 +311,23 @@
             flex-direction: column;
             justify-content: center;
 
-            .row1{
-                .main{
+            .row1 {
+                .main {
                     font-size: 30px;
                 }
 
-                .sub{
+                .sub {
                     font-size: 12px;
                     word-wrap: break-word;
                 }
             }
 
-            .row2{
-                .form{
+            .row2 {
+                .form {
                     width: 100%;
-                    .loginWith{
-                        button{
+
+                    .loginWith {
+                        button {
                             width: 100%;
                         }
                     }

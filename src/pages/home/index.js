@@ -94,7 +94,7 @@ function Home() {
                         <div className={style.infor}>
                             <div className={style.columns}>
                                 <div className={style.column1}>
-                                    <p className={style.name}>{user.fullName}</p>
+                                    <p className={style.name}>{user.firstName +" "+ user.lastName}</p>
                                     <p className={style.job}>UI/UX Designer</p>
                                 </div>
                                 <div className={style.column2}>

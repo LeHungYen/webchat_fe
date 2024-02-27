@@ -6,7 +6,7 @@ export function Wellcome({user}) {
     return (
         <div className={style.container}>
             <p className={style.wellcome}>
-                Wellcome to Social Sphere, {user.fullName}
+                Wellcome to Social Sphere, {user.firstName + " " + user.lastName}
             </p>
 
             <div className={style.profilePicture}>
