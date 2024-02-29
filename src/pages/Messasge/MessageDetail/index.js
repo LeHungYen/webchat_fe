@@ -7,6 +7,7 @@ import { getResourceImage } from "../../../utils";
 import { routes } from "../../../config/routes";
 import { UserService } from "../../../serivces/UserService";
 import { calculateTimeDiff } from "../../../utils";
+import ChangeChatName from "./ChangeChatNamePopUp";
 import { ChatMessageParticipantService } from "../../../serivces/ChatMessageParticipantService";
 // project stickers / bluefogs
 import comingsoon from "../../../assets/stickers/bluefogs/comingsoon.png";
@@ -37,8 +38,16 @@ import image_12 from "../../../assets/stickers/afrohead/image_12.png";
 import image_13 from "../../../assets/stickers/afrohead/image_13.png";
 import image_14 from "../../../assets/stickers/afrohead/image_14.png";
 import image_15 from "../../../assets/stickers/afrohead/image_15.png";
-
+// project sticker icon
+import sticker from "../../../assets/stickers/sticker.png";
+import cool from "../../../assets/emoji/cool.png";
+import picture from "../../../assets/picture.png";
+import customize from "../../../assets/projectIcon/customize.png";
 // libary
+import { CiEdit } from "react-icons/ci";
+import { PiGooglePhotosLogoLight } from "react-icons/pi";
+import { PiTextAaLight } from "react-icons/pi";
+import { IoIosArrowDown } from "react-icons/io";
 import { IoCallOutline } from "react-icons/io5";
 import { ImImages } from "react-icons/im";
 import { IoVideocamOutline } from "react-icons/io5";
@@ -55,7 +64,7 @@ import { IoFlagOutline } from "react-icons/io5";
 import { GrPrevious } from "react-icons/gr";
 import { GrNext } from "react-icons/gr";
 import { BsThreeDots } from "react-icons/bs";
-import { GiCheckMark } from "react-icons/gi";
+import { GiCheckMark, GiM3GreaseGun } from "react-icons/gi";
 import { LuSticker } from "react-icons/lu";
 import { IoAdd } from "react-icons/io5";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -74,8 +83,9 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   const [stickers, setStickers] = useState([]);
   const chatHistoryUlRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
-  // handle sticker
+  const [changeChatNamePopup, setChangeChatNamePopup] = useState(false)
 
+  // handle sticker
   useEffect(() => {
     const bluefogs = [
       comingsoon,
@@ -142,8 +152,23 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     }
   };
 
+  // display block or none customize chat menu
+  const customizeChatRef = useRef(null);
+  const displaycustomizeChatRefRef = () => {
+    const currentDisplay = window.getComputedStyle(
+      customizeChatRef.current
+    ).display;
+
+    if (currentDisplay == "none") {
+      customizeChatRef.current.style.display = "block";
+    } else {
+      customizeChatRef.current.style.display = "none";
+    }
+  };
+
+
   // page number of chat history
-  const [pageNumberCH, setPageNumberCH] = useState(0);   
+  const [pageNumberCH, setPageNumberCH] = useState(0);
   // get chat history
   const [chatHistory, setChatHistory] = useState([]);
   const getChatHistory = async (chatId) => {
@@ -154,7 +179,11 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
       const updatedChatHistory = await Promise.all(
         response.map(async (item) => {
           if (item.mediaType == chatMessageService.mediaType.IMAGE) {
-            const newMediaUrl = await getResourceImage(item.mediaURL);
+            const newMediaUrl = await getResourceImage(`imgs/${item.mediaURL}`);
+            return { ...item, mediaURL: newMediaUrl };
+          }
+          if (item.mediaType == chatMessageService.mediaType.EMOJI) {
+            const newMediaUrl = await getResourceImage(`emoji/${item.mediaURL}`);
             return { ...item, mediaURL: newMediaUrl };
           }
           return item;
@@ -182,14 +211,12 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
       client.connect(headers, () => {
         client.subscribe(
           `/topic/chatMessage/${user.userId}`,
-          (response) => {
-            const receivedMessage = JSON.parse(response.body);
-            getChatPages(0);
-            if (receivedMessage.chatId == chatPage.chatId) {
-              // chatMessageParticipantService.updateStatusWatched(chatPage.chatParticipantOfCurrentUser.chatParticipantId, chatPage.chatId);
-              // setChatHistory((prev) => [...prev, receivedMessage]);
-              getChatHistory(chatPage.chatId);
+          async (response) => {
+            const chatId = JSON.parse(response.body);
+            if (chatId == chatPage.chatId) {
+              await getChatHistory(chatPage.chatId);
             }
+            getChatPages(0);
           }
         );
       });
@@ -222,7 +249,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
       chatId: chatPage.chatId,
       chatParticipantId:
         chatPage.chatParticipantOfCurrentUser.chatParticipantId,
-      status: chatMessageService.status.SENDED,
+      type: chatMessageService.type.MESSAGE
+      // status: chatMessageService.status.SENDED,
     };
     await chatMessageService.save(requestBody);
     setMessageInput(chatMessageService.defaultChatMessage);
@@ -248,6 +276,25 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     }, 500);
   };
 
+  const sendEmoji = async (mediaName) => {
+    const requestBody = {
+      ...messageInput,
+      chatId: chatPage.chatId,
+      chatParticipantId:
+        chatPage.chatParticipantOfCurrentUser.chatParticipantId,
+      mediaType: chatMessageService.mediaType.EMOJI,
+      mediaURL: mediaName,
+      status: chatMessageService.status.SENDED,
+    };
+    await chatMessageService.save(requestBody);
+    setMessageInput(chatMessageService.defaultChatMessage);
+    // displayStickerIconRef();
+    setTimeout(() => {
+      chatHistoryUlRef.current.scrollTop =
+        chatHistoryUlRef.current.scrollHeight;
+    }, 500);
+  };
+
   const sendImage = async (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -257,6 +304,23 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         file
       );
       setMessageInput(chatMessageService.defaultChatMessage);
+      event.target.value = null;
+    }
+  };
+
+  // change photo of group chat
+  const changePhotoGroupChat = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+
+      await chatService.saveImg(
+        chatPage.chatId,
+        chatPage.chatParticipantOfCurrentUser.chatParticipantId,
+        file
+      );
+
+      // await getChatPages(0);
+      event.target.value = null;
     }
   };
 
@@ -313,6 +377,22 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
             </div>
           )}
 
+          {chatPage.type == chatService.type.GROUP && (
+            <div>
+              <div className={style.userInfor}>
+                <div className={style.avatar}>
+                  <img src={chatPage.newAvatar} />
+                  {/* <GoDotFill className={style.icon} /> */}
+                </div>
+                <div className={style.dflexColumn}>
+                  <p className={style.username}>
+                    {chatPage.name}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className={style.menuOption}>
             <ul>
               <li>
@@ -332,102 +412,115 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         </div>
 
         <div className={style.chatHistory}>
-          {/* <ul ref={chatHistoryUlRef}>
-            {chatHistory.map((item, index) => {
-              return (
-                <li key={index}>
-                  <div
-                    className={
-                      item.chatParticipantId ==
-                        chatPage.chatParticipantOfCurrentUser.chatParticipantId
-                        ? style.thisUser
-                        : style.otherUser
-                    }
-                  >
-                    {item.mediaType == chatMessageService.mediaType.STICKER && (
-                      <img src={item.mediaURL} className={style.sticker}></img>
-                    )}
-
-                    {item.mediaType == chatMessageService.mediaType.IMAGE && (
-                      <img src={item.mediaURL} className={style.chatImg} ></img>
-                    )}
-
-                    {item.content != null && item.content != "" && (
-                      <p className={style.text}>{item.content}</p>
-                    )}
-
-                    <div className={style.chatDetails}>
-                      <p className={style.time}>
-                        {formatTime(item.createdAt)} 
-                      </p>
-                    </div>
-
-                    <div className={style.iconMessageMenu}>
-                      <BsThreeDots className={style.icon} />
-                    </div>
-
-                    {item.chatMessageParticipantDTOs.map((chatMessageParticipantDTO, index) => (
-                      chatMessageParticipantDTO.lastViewedAt && (
-                        <div key={index} className={style.peopleViewed}>
-                          <p >{chatMessageParticipantDTO.userParticipantName} đã xem</p>
-                        </div>
-                      )
-                    ))}
-                  </div>
-
-
-                </li>
-              );
-            })}
-          </ul> */}
-
           <ul className={style.chatHistoryUl} ref={chatHistoryUlRef}>
             {chatHistory.map((item, index) => {
+
               return (
                 <li key={index}>
-                  <div
-                    className={
-                      item.chatParticipantId ==
-                        chatPage.chatParticipantOfCurrentUser.chatParticipantId
-                        ? style.thisUser
-                        : style.otherUser
-                    }
-                  >
-
-                    <div className={style.avatarChat}>
-                      <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                  {item.type === chatMessageService.type.CHANGE_AVATAR && (
+                    <div className={style.changeSth}>
+                      <p>{item.lastName} changed the group photo to </p>
+                      <img src={item.mediaURL}></img>
                     </div>
+                  )}
 
-                    {item.mediaType == chatMessageService.mediaType.STICKER && (
-                      <img src={item.mediaURL} className={style.sticker}></img>
-                    )}
-
-                    {item.mediaType == chatMessageService.mediaType.IMAGE && (
-                      <img src={item.mediaURL} className={style.chatImg} ></img>
-                    )}
-
-                    {item.content != null && item.content != "" && (
-                      <p className={style.text}>{item.content}</p>
-                    )}
-
-                    <div className={style.chatDetails}>
-                      <p className={style.time}>
-                        {formatTime(item.createdAt)}
-                      </p>
+                  {item.type === chatMessageService.type.CHANGE_NAME && (
+                    <div className={style.changeSth}>
+                      <p>{item.lastName} has set the group name to {item.content}</p>
                     </div>
+                  )}
 
-                    <div className={style.iconMessageMenu}>
-                      <button> <BsThreeDots className={style.icon} /></button>
-                    </div>
-                  </div>
+                  {
+                    (item.type == null || item.type == chatMessageService.type.MESSAGE) && (
 
+
+                      <div
+                        className={
+                          item.chatParticipantId ==
+                            chatPage.chatParticipantOfCurrentUser.chatParticipantId
+                            ? style.thisUser
+                            : style.otherUser
+                        }
+                      >
+                        <div className={style.avatarChat}>
+                          <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                        </div>
+
+                        {chatPage.type === chatService.type.PAIR && (
+                          <div>
+                            {item.mediaType === chatMessageService.mediaType.STICKER && (
+                              <img src={item.mediaURL} className={style.sticker} alt="Sticker" />
+                            )}
+
+                            {item.mediaType === chatMessageService.mediaType.EMOJI && (
+                              <div className={style.emoji}>
+                                <img src={item.mediaURL} alt="Emoji" />
+                              </div>
+                            )}
+
+                            {item.mediaType === chatMessageService.mediaType.IMAGE && (
+                              <img src={item.mediaURL} className={style.chatImg} alt="Image" />
+                            )}
+
+                            {item.content != null && item.content !== "" && (
+                              <p className={style.text}>{item.content}</p>
+                            )}
+                          </div>
+                        )}
+
+                        {chatPage.type === chatService.type.GROUP && (
+                          <div className={style.chatGroup}>
+
+                            {item.chatParticipantId !=
+                              chatPage.chatParticipantOfCurrentUser.chatParticipantId &&
+                              <div className={style.name}>
+                                <p>{item.lastName}</p>
+                              </div>
+                            }
+
+                            <div className={style.chat}>
+                              {item.mediaType === chatMessageService.mediaType.STICKER && (
+                                <img src={item.mediaURL} className={style.sticker} alt="Sticker" />
+                              )}
+
+                              {item.mediaType === chatMessageService.mediaType.EMOJI && (
+                                <div className={style.emoji}>
+                                  <img src={item.mediaURL} alt="Emoji" />
+                                </div>
+                              )}
+
+                              {item.mediaType === chatMessageService.mediaType.IMAGE && (
+                                <img src={item.mediaURL} className={style.chatImg} alt="Image" />
+                              )}
+
+                              {item.content != null && item.content !== "" && (
+                                <p className={style.text}>{item.content}</p>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+
+                        <div className={style.chatDetails}>
+                          <p className={style.time}>
+                            {formatTime(item.createdAt)}
+                          </p>
+                        </div>
+
+                        <div className={style.iconMessageMenu}>
+                          <button> <BsThreeDots className={style.icon} /></button>
+                        </div>
+                      </div>
+                    )
+                  }
 
                   <ul className={style.peopleViewed}>
                     {item.chatMessageParticipantDTOs.map((chatMessageParticipantDTO, index) => (
-                      chatMessageParticipantDTO.lastViewedAt && (
+                      chatMessageParticipantDTO.lastViewedAt &&
+                      chatMessageParticipantDTO.chatParticipantId != chatPage.chatParticipantOfCurrentUser.chatParticipantId && (
                         <li key={index}>
                           <div className={style.peopleViewedDetail}>
-                            <span>{chatMessageParticipantDTO.lastName} đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
+                            <span>{chatMessageParticipantDTO.lastName}   đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
                           </div>
                           <div className={style.avatarPeopleViewed}>
                             <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
@@ -438,7 +531,10 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                   </ul>
 
                 </li>
-              );
+              )
+
+
+
             })}
           </ul>
         </div>
@@ -447,9 +543,10 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           <div className={style.messageBoxCol1}>
             {/* <SlPlus className={style.icon} /> */}
 
-            <form action="/upload" method="POST" enctype="multipart/form-data">
+            <form action="/upload" method="POST" encType="multipart/form-data">
               <label htmlFor="messageBoxImg" className={style.icon}>
-                <ImImages />
+                {/* <ImImages /> */}
+                <img src={picture} className={style.imgIcon} ></img>
               </label>
               <input
                 type="file"
@@ -459,13 +556,11 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               />
             </form>
 
-            <FaRegFaceSmileBeam className={style.icon} />
+            <img src={cool} className={style.imgIcon}></img>
 
             <div className={style.sticker}>
-              <LuSticker
-                className={style.icon}
-                onClick={displayStickerIconRef}
-              />
+              <img src={sticker} className={style.imgIcon} onClick={displayStickerIconRef}></img>
+
 
               <div className={style.stickerIconMenu} ref={stickerIconRef}>
                 <div className={style.stickerIconMenuHeader}>
@@ -536,7 +631,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           </div>
 
           <div className={style.messageBoxCol3}>
-            <GoHeart className={style.icon} />
+            {/* <GoHeart className={style.icon} /> */}
+            <img src={chatPage.newEmoji} onClick={() => sendEmoji(chatPage.emoji)}></img>
           </div>
         </div>
       </div>
@@ -550,7 +646,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           chatPage.chatParticipants.map(
             (item, index) =>
               item.userId !== user.userId && (
-                <div className={style.otherUserInfor}>
+                <div key={index} className={style.otherUserInfor}>
                   <div className={style.avatar}>
                     <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
                   </div>
@@ -559,7 +655,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                   <Link
                     className="link"
                     to={`${routes.userWall}?id=${item.userId}`}
-                    key={index}
+
                   >
                     <button>View profile</button>
                   </Link>
@@ -567,7 +663,76 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               )
           )}
 
+        {chatPage.type === chatService.type.GROUP &&
+          <div className={style.otherUserInfor}>
+            <div className={style.avatar}>
+              <img src={chatPage.newAvatar}></img>
+            </div>
+            <p className={style.name}>{chatPage.name}</p>
+          </div>
+        }
+
         <ul>
+          <li className={style.dropDownMenu} >
+            <div className={style.dflex} onClick={displaycustomizeChatRefRef}>
+              <img src={customize}></img>
+              <p>Customize Chat</p>
+              <IoIosArrowDown />
+            </div>
+
+            <ul ref={customizeChatRef} className={style.customizeChat}>
+
+              {chatPage.type === chatService.type.GROUP &&
+                <li onClick={() => setChangeChatNamePopup(true)}>
+                  <div className={style.dflex}>
+                    <CiEdit className={style.icon} />
+                    <p>Change chat name</p>
+                  </div>
+                </li>
+              }
+
+              {chatPage.type === chatService.type.GROUP &&
+                <li>
+                  <form action="" method="POST" encType="multipart/form-data">
+                    <label htmlFor="messageBoxImg1" className={style.icon}>
+                      <div className={style.dflex}>
+                        <PiGooglePhotosLogoLight className={style.icon} />
+                        <p>Change photo</p>
+                      </div>
+                    </label>
+                    <input
+                      type="file"
+                      id="messageBoxImg1"
+                      onChange={changePhotoGroupChat}
+                      style={{ display: "none" }}
+                    />
+                  </form>
+                </li>
+
+
+              }
+
+
+
+
+
+
+              <li>
+                <div className={style.dflex}>
+                  <GoBellSlash className={style.icon} />
+                  <p>Change emoji</p>
+                </div>
+              </li>
+
+              <li>
+                <div className={style.dflex}>
+                  <PiTextAaLight className={style.icon} />
+                  <p>Edit nicknames</p>
+                </div>
+              </li>
+            </ul>
+          </li>
+
           <li>
             <div className={style.dflex}>
               <GoBellSlash className={style.icon} />
@@ -597,6 +762,13 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           </li>
         </ul>
       </div>
-    </div>
+
+
+      <ChangeChatName
+        changeChatNamePopup={changeChatNamePopup}
+        setChangeChatNamePopup={setChangeChatNamePopup}
+        chatpage={chatPage}
+        getChatPages={getChatPages} />
+    </div >
   );
 }

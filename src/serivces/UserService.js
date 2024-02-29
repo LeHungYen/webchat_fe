@@ -35,7 +35,7 @@ export class UserService {
       if (response.status === 200) {
         if (response.data !== null) {
           return response.data;
-        } 
+        }
         return this.defaultUser;
       }
     } catch (error) {
@@ -72,6 +72,22 @@ export class UserService {
       return response.data;
     } catch (error) {
       console.error("Error fetching users:", error); // Log error
+    }
+  };
+
+  // update last chat id
+  updateLastChatId = async (userId, chatId) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+      localStorage.getItem("userToken")
+    )}`;
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/user/updateLastChatId/${userId}/${chatId}`
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
     }
   };
 }

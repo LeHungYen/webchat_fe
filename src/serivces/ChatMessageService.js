@@ -7,10 +7,18 @@ export class ChatMessageService {
     chatParticipantId: null,
     replyToMessageId: null,
     content: "",
+    type: null,
     mediaType: null,
     mediaURL: null,
     createdAt: null,
     status: null,
+  };
+
+  type = {
+    CHANGE_AVATAR: "CHANGE_AVATAR",
+    CHANGE_NAME: "CHANGE_NAME",
+    CHANGE_EMOJI: "CHANGE_EMOJI",
+    MESSAGE: "MESSAGE"
   };
 
   mediaType = {
@@ -18,6 +26,7 @@ export class ChatMessageService {
     IMAGE: "IMAGE",
     VIDEO: "VIDEO",
     STICKER: "STICKER",
+    EMOJI: "EMOJI",
   };
 
   status = {
@@ -44,22 +53,22 @@ export class ChatMessageService {
   };
 
   // save img
-  saveImg = async (chatId , chatParticipantId, file) => {
+  saveImg = async (chatId, chatParticipantId, file) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
       localStorage.getItem("userToken")
     )}`;
 
     const formData = new FormData();
-    formData.append("chatId" , chatId);
-    formData.append("chatParticipantId" , chatParticipantId);
-    formData.append("file" , file);
+    formData.append("chatId", chatId);
+    formData.append("chatParticipantId", chatParticipantId);
+    formData.append("file", file);
     try {
       const response = await axios.post(
         "http://localhost:8080/chatmessage/saveImg",
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", 
+            "Content-Type": "multipart/form-data",
           },
         }
       );
@@ -86,7 +95,7 @@ export class ChatMessageService {
   // };
 
   // get
-  getByChatId = async (chatId, chatParticipantId,  pageNumber) => {
+  getByChatId = async (chatId, chatParticipantId, pageNumber) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
       localStorage.getItem("userToken")
     )}`;

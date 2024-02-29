@@ -7,6 +7,7 @@ import { ChatService } from "../../serivces/ChatService";
 import { StoreContext, actions } from "../../store";
 import { calculateTimeDiff } from "../../utils";
 import { UserService } from "../../serivces/UserService";
+import { getResourceImage } from "../../utils";
 // libary
 import { RiSearchLine } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
@@ -21,7 +22,7 @@ function Message() {
   const userService = new UserService();
   const messageDetailRef = useRef(null);
   const newMessageRef = useRef(null);
-  const user = JSON.parse(localStorage.getItem("user"));
+  let user = JSON.parse(localStorage.getItem("user"));
 
   // current time
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -51,7 +52,37 @@ function Message() {
 
   const getChatPages = async (pageNumber) => {
     const response = await chatPageService.get(pageNumber);
-    setChatPages(response);
+    user = JSON.parse(localStorage.getItem("user"));
+
+    // update mediaURL
+    const handleMediaUrl = async () => {
+      const updatedChatPages = await Promise.all(
+        response.map(async (item) => {
+          if (item.type == chatService.type.GROUP) {
+            const newAvatar = await getResourceImage(`imgs/${item.avatar}`);
+            const newEmoji = await getResourceImage(`emoji/${item.emoji}`)
+
+            if (user.lastChatId == item.chatId) {
+              await setChatPage({ ...item, newAvatar: newAvatar, newEmoji: newEmoji })
+            }
+
+            return { ...item, newAvatar: newAvatar, newEmoji: newEmoji };
+          }
+          if (item.type == chatService.type.PAIR) {
+            const newEmoji = await getResourceImage(`emoji/${item.emoji}`)
+
+            if (user.lastChatId == item.chatId) {
+              await setChatPage({ ...item, newEmoji: newEmoji })
+            }
+
+            return { ...item, newEmoji: newEmoji };
+          }
+          return item;
+        })
+      );
+      setChatPages(updatedChatPages);
+    };
+    handleMediaUrl();
   };
 
   useEffect(() => {
@@ -61,21 +92,24 @@ function Message() {
   // handle message detail input
   const [chatPage, setChatPage] = useState({});
 
-  const handleMessageDetailI = (chatPage) => {
+  const handleMessageDetailI = async (chatPage) => {
+    // update last chat id
+    const userResponse = await userService.updateLastChatId(user.userId, chatPage.chatId);
+    await localStorage.setItem("user", JSON.stringify(userResponse))
     setChatPage(chatPage);
     displayMessageDetail();
   };
 
 
-  const [alreadySetChatPageFristTime, setAlreadySetChatPageFristTime] = useState(false);
-  useEffect(() => {
-    if (!alreadySetChatPageFristTime) {
-      if (chatPages.length > 0) {
-        setChatPage(chatPages[0]);
-        setAlreadySetChatPageFristTime(true)
-      }
-    }
-  }, [chatPages]);
+  // const [alreadySetChatPageFristTime, setAlreadySetChatPageFristTime] = useState(false);
+  // useEffect(() => {
+  //   if (!alreadySetChatPageFristTime) {
+  //     if (chatPages.length > 0) {
+  //       setChatPage(chatPages[0]);
+  //       setAlreadySetChatPageFristTime(true)
+  //     }
+  //   }
+  // }, [chatPages]);
 
   return (
     <div className={style.container}>
@@ -102,8 +136,11 @@ function Message() {
                     <Link className={style.link}>
                       <div className={style.item}>
                         <div className={style.avatar}>
-                          <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />
-                          {console.log(item.type == chatService.type.PAIR)}
+
+                          {item.type === chatService.type.GROUP && <img src={item.newAvatar} />}
+
+                          {item.type === chatService.type.PAIR && <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />}
+
                           {item.type === chatService.type.PAIR &&
                             item.chatParticipants
                               .filter((chatParticipant) => {
@@ -118,6 +155,21 @@ function Message() {
                               .map((chatParticipant, index) => (
                                 <GoDotFill key={index} className={style.icon} />
                               ))}
+
+                          {/* {item.type === chatService.type.GROUP &&
+                            item.chatParticipants
+                              .filter((chatParticipant) => {
+                                return (
+                                  chatParticipant.userDTO.userId !==
+                                  user.userId &&
+                                  chatParticipant.userDTO.alreadyBeFriend &&
+                                  chatParticipant.userDTO.status ===
+                                  userService.status.ONLINE
+                                );
+                              })
+                              .map((chatParticipant, index) => (
+                                <GoDotFill key={index} className={style.icon} />
+                              ))} */}
                           {/* <GoDotFill className={style.icon} /> */}
                         </div>
 
@@ -133,7 +185,7 @@ function Message() {
                                         key={index}
                                         className={style.userName}
                                       >
-                                        <p>
+                                        <p style={{ fontWeight: item.alreadyRead ? "400" : "500" }}>
                                           {chatParticipant.userDTO.firstName + " " + chatParticipant.userDTO.lastName}
                                         </p>
                                       </div>
@@ -142,16 +194,19 @@ function Message() {
                               </div>
                             )}
 
+                            {item.type == chatService.type.GROUP && (
+                              <div>
+
+
+                                <div className={style.userName}>
+                                  <p style={{ fontWeight: item.alreadyRead ? "400" : "500" }}>
+                                    {item.name}
+                                  </p>
+                                </div>
+                              </div>
+                            )}
+
                             <div className={style.timeAndRead}>
-                              {/* <p className={style.time}>2:40 PM</p> */}
-                              {/* <p className={style.time}>{item.latestChatMessage.createdAt}</p> */}
-                              {/* {item.latestChatMessage.createdAt && (
-                                <p className={style.time}>
-                                  {getTimeDifference(
-                                    item.latestChatMessage.createdAt
-                                  )}
-                                </p>
-                              )} */}
                               {item.latestChatMessage.createdAt && (
                                 <p className={style.time}>
                                   {calculateTimeDiff(
@@ -160,12 +215,18 @@ function Message() {
                                   )}
                                 </p>
                               )}
-                              <GoDotFill className={style.icon} />
+
+                              {!item.alreadyRead && <GoDotFill className={style.icon} />}
+
                             </div>
                           </div>
 
                           <div className={style.row2}>
-                            <p className={style.message}>
+                            <p style={{
+                              color: item.alreadyRead ? "#333" : "#000",
+                              fontWeight: item.alreadyRead ? "300" : "400",
+                              fontSize: item.alreadyRead ? "14px" : "16px"
+                            }} className={style.message}>
                               {item.latestChatMessage.content}
                             </p>
                           </div>
@@ -198,7 +259,7 @@ function Message() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

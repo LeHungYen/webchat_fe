@@ -15,6 +15,7 @@ import { FaDeleteLeft } from "react-icons/fa6";
 import { useState, useEffect, useRef, useContext } from "react";
 import SockJS from "sockjs-client";
 import Stomp from "stompjs";
+import { ImImages } from "react-icons/im";
 
 export function NewMessage({
   displayMessageDetail,
@@ -118,16 +119,32 @@ export function NewMessage({
 
   const sendMessage = async () => {
     // create newChat
-    const chatRequestBody = {
-      chatId: null,
-      type:
-        receivers.length > 2 ? chatService.type.GROUP : chatService.type.PAIR,
-      name: null,
-      createdAt: null,
-    };
+    let chatRequestBody;
+    if (receivers.length > 1) {
+      chatRequestBody = {
+        chatId: null,
+        type: chatService.type.GROUP,
+        name: receivers[0].lastName + ", " + receivers[1].lastName + ` and  ${receivers.length - 1} other people`,
+        avatar: "defaultGroupChat.png",
+        emoji: "heart.png",
+        createdAt: null,
+      };
+    } else {
+      chatRequestBody = {
+        chatId: null,
+        type: chatService.type.PAIR,
+        name: null,
+        emoji: "heart.png",
+        createdAt: null,
+      };
+    }
+
 
     const newChat = await chatService.save(chatRequestBody);
 
+    // update last chat id
+    const userResponse = await userService.updateLastChatId(user.userId, newChat.chatId);
+    await localStorage.setItem("user", JSON.stringify(userResponse))
     // add participant
 
     const chatParticipantRequestBody = {
@@ -236,6 +253,102 @@ export function NewMessage({
           <GoHeart className={style.icon} />
         </div>
       </div>
+
+      {/* <div ref={messageBoxRef} className={style.messageBox}>
+        <div className={style.messageBoxCol1}>
+
+          <form action="/upload" method="POST" encType="multipart/form-data">
+            <label htmlFor="messageBoxImg" className={style.icon}>
+              <ImImages />
+            </label>
+            <input
+              type="file"
+              id="messageBoxImg"
+              onChange={sendImage}
+              style={{ display: "none" }}
+            />
+          </form>
+
+          <FaRegFaceSmileBeam className={style.icon} />
+
+          <div className={style.sticker}>
+            <LuSticker
+              className={style.icon}
+              onClick={displayStickerIconRef}
+            />
+
+            <div className={style.stickerIconMenu} ref={stickerIconRef}>
+              <div className={style.stickerIconMenuHeader}>
+                <ul>
+                  <li className={style.stickerHeader}>
+                    <p>Stickers</p>
+                  </li>
+                  <li className={style.iconHeader}>
+                    <p>Emoji</p>
+                  </li>
+                  <li className={style.iconHeader}>
+                    <p>Gif</p>
+                  </li>
+                </ul>
+              </div>
+
+              <div className={style.stickerMenuBody}>
+                {stickers &&
+                  stickers[indexStickers]?.map((item, index) => {
+                    return (
+                      <img
+                        key={index}
+                        src={item}
+                        onClick={() => sendSticker(item)}
+                      ></img>
+                    );
+                  })}
+              </div>
+
+              <div className={style.stickerMenuFooter}>
+                <ul>
+                  <li className={style.prev}>
+                    <GrPrevious className={style.icon} />
+                  </li>
+
+                  {stickers &&
+                    stickers.map((item, index) => {
+                      return (
+                        <li
+                          className={style.liMenu}
+                          key={index}
+                          onClick={() => setIndexStickers(index)}
+                        >
+                          <img src={item[0]} />
+                        </li>
+                      );
+                    })}
+                  <li className={style.next}>
+                    <GrNext className={style.icon} />
+                  </li>
+                </ul>
+
+                <div className={style.addSticker}>
+                  <IoAdd className={style.icon} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className={style.messageBoxCol2}>
+          <input
+            value={messageInput.content}
+            onChange={(e) => handleMessageInput("content", e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          />
+          <BiSend className={style.icon} />
+        </div>
+
+        <div className={style.messageBoxCol3}>
+          <GoHeart className={style.icon} />
+        </div>
+      </div> */}
     </div>
   );
 }

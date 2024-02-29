@@ -18,12 +18,14 @@ import SockJS from "sockjs-client";
 import axios from "axios";
 
 // project files
+import NotificationPopup from "./NotificationPopup";
 import { StoreContext, actions } from "../../store";
 import { calculateTimeDifference } from "../../utils";
 import { NotificationService } from "../../serivces/NotificationService";
 import { FriendRequestService } from "../../serivces/FriendRequestService";
 import { UserService } from "../../serivces/UserService";
 import Logo_SocialSphere from "../../assets/logo/Logo_SocialSphere.png";
+
 function DefaultLayout({ children, keySearch, setKeySearch }) {
   const navigate = useNavigate();
   const [state, dispatch] = useContext(StoreContext);
@@ -32,6 +34,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   const userService = new UserService();
   const user = JSON.parse(localStorage.getItem("user"));
   const userIdRef = useRef(user.userId); // contain userId
+  const [locationPopupOpen, setLocationPopupOpen] = useState(false);
 
   // get current user infor
   const getUserInfor = async () => {
@@ -80,6 +83,40 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
     setStompClient(client);
     return () => {
       client.disconnect();
+    };
+  }, []);
+
+  // get location of icon notification to display popup notification
+  const [notificationLocation, setNotificationLocation] = useState({
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  })
+
+  useEffect(() => {
+    const handleResize = () => {
+      const element = notificationRef.current;
+
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const location = {
+          top: rect.top,
+          bottom: rect.bottom,
+          left: rect.left,
+          right: rect.right
+        }
+        setNotificationLocation(location);
+
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -216,22 +253,17 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   // display block or none
   const notificationRef = useRef();
 
-  const setNotificationRef = () => {
-    const currentDisplay = window.getComputedStyle(
-      notificationRef.current
-    ).display;
-    if (currentDisplay === "none") {
+  const handleLocationPopupOpen = () => {
+    if (!locationPopupOpen) {
       getNotifications();
-      notificationRef.current.style.display = "block";
-    } else {
-      notificationRef.current.style.display = "none";
     }
+
+    setLocationPopupOpen(prev => !prev);
   };
 
   // click on notification
   const handleClickNotification = (item) => {
-    setNotificationRef();
-
+    setLocationPopupOpen(false)
     if (!item.isRead) {
       const updatedNotification = { ...item, read: true };
       notificationService.updateNotification(updatedNotification);
@@ -261,7 +293,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
               <li>
                 <OutlineShopingBagIcon className={style.menuIcon} />
               </li>
-              <li className={style.notificationMenu}>
+              {/* <li className={style.notificationMenu}>
                 <div onClick={setNotificationRef} className={style.buttonMenu}>
                   <OutlineBellIcon className={style.menuIcon} />
                 </div>
@@ -348,7 +380,34 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                       );
                     })}
 
-                    {/* <div className={style.item}>
+                  </div>
+
+                  <div className={style.dropdownFooter}>
+                    <p>View Notifications</p>
+                  </div>
+                </div>
+              </li> */}
+
+              <li className={style.notificationMenu}>
+                <div onClick={handleLocationPopupOpen} className={style.buttonMenu}>
+                  <OutlineBellIcon ref={notificationRef} className={style.menuIcon} />
+                </div>
+
+                <NotificationPopup
+                  className={style.notificationPopup}
+                  notificationLocation={notificationLocation}
+                  setLocationPopupOpen={setLocationPopupOpen}
+                  locationPopupOpen={locationPopupOpen}
+                  handleDeleteButtonFR={handleDeleteButtonFR}
+                  handleAcceptButtonFR={handleAcceptButtonFR}
+                  notifications={notifications}
+                  handleClickNotification={handleClickNotification}
+                  notificationService={notificationService}
+                />
+
+              </li>
+
+              {/* <div className={style.item}>
                                             <div className={style.avatar}>
                                                 <img src='https://haycafe.vn/wp-content/uploads/2022/10/Hinh-anh-avatar-nu-dep.jpg'></img>
                                             </div>
@@ -363,13 +422,6 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                                                 </div>
                                             </div>
                                         </div> */}
-                  </div>
-
-                  <div className={style.dropdownFooter}>
-                    <p>View Notifications</p>
-                  </div>
-                </div>
-              </li>
               <li onClick={() => navigate(routes.message)}>
                 <OutlineChatIcon className={style.menuIcon} />
               </li>
@@ -442,6 +494,9 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
           </div>
         )}
       </div>
+
+
+
     </div>
   );
 }

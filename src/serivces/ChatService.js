@@ -5,6 +5,8 @@ export class ChatService {
     chatId: null,
     type: null,
     name: null,
+    avatar: null,
+    emoji: null,
     createdAt: null,
   };
 
@@ -30,20 +32,49 @@ export class ChatService {
     }
   };
 
-  // // update
-  // updateFriendRequest = async (requestBody) => {
-  //   axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
-  //     localStorage.getItem("userToken")
-  //   )}`;
-  //   try {
-  //     const response = await axios.put(
-  //       `http://localhost:8080/friendrequest/${requestBody.requestId}`,
-  //       requestBody
-  //     );
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
+  // update
+  update = async (requestBody) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+      localStorage.getItem("userToken")
+    )}`;
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/chat/${requestBody.chatId}`,
+        requestBody
+      );
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  // update photo of chat group
+  saveImg = async (chatId, chatParticipantId, file) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+      localStorage.getItem("userToken")
+    )}`;
+
+    const formData = new FormData();
+    formData.append("chatId", chatId);
+    formData.append("chatParticipantId", chatParticipantId);
+    formData.append("file", file);
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/chat/saveImg",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return this.defaultChatMessage;
+    }
+  };
+
+
   // // get
   // getBySenderIdAndReceiveId = async (senderUserId, receiverUserId) => {
   //   axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(

@@ -27,7 +27,7 @@ export const calculateTimeDifference = (javaDateTime) => {
   }
 };
 
-export const calculateTimeDiff = (javaDateTime , currentTime) => {
+export const calculateTimeDiff = (javaDateTime, currentTime) => {
   const createdAtDate = new Date(javaDateTime);
   const now = new Date();
   const timeDiff = now - createdAtDate;
@@ -55,33 +55,36 @@ export const formatTime = (createdAt) => {
   const now = new Date();
   const createdDate = new Date(createdAt);
   const diffTime = now - createdDate;
-  
+
   // Check if the message was sent today
   if (createdDate.toDateString() === now.toDateString()) {
-    return `${createdDate.getHours()}:${(createdDate.getMinutes()<10?'0':'') + createdDate.getMinutes()}`;
+    return `${createdDate.getHours()}:${(createdDate.getMinutes() < 10 ? '0' : '') + createdDate.getMinutes()}`;
   }
-  
+
   // Check if the message was sent within the last week
   const daysAgo = Math.floor(diffTime / (1000 * 60 * 60 * 24));
   if (daysAgo < 7) {
-    return `${createdDate.toLocaleDateString('en-US', { weekday: 'short' })} ${createdDate.getHours()}:${(createdDate.getMinutes()<10?'0':'') + createdDate.getMinutes()}`;
+    return `${createdDate.toLocaleDateString('en-US', { weekday: 'short' })} ${createdDate.getHours()}:${(createdDate.getMinutes() < 10 ? '0' : '') + createdDate.getMinutes()}`;
   }
-  
+
   // Otherwise, return the full date and time
-  return `${createdDate.toLocaleDateString('en-US', { weekday: 'short' })}, ${createdDate.toLocaleDateString()} ${createdDate.getHours()}:${(createdDate.getMinutes()<10?'0':'') + createdDate.getMinutes()}`;
+  return `${createdDate.toLocaleDateString('en-US', { weekday: 'short' })}, ${createdDate.toLocaleDateString()} ${createdDate.getHours()}:${(createdDate.getMinutes() < 10 ? '0' : '') + createdDate.getMinutes()}`;
 };
 
 export async function getResourceImage(urlName) {
   try {
-      // const resourceModule = await import(urlName);
-      const resourceModule = await import( `../../src/assets/imgs/${urlName}`);
-     
-      console.log(resourceModule);
-      return resourceModule.default;
+    // const resourceModule = await import(urlName);
+
+    console.log(`../../src/assets/${urlName}`)
+
+    const resourceModule = await import(`../../src/assets/${urlName}`);
+
+    console.log(resourceModule);
+    return resourceModule.default;
   } catch (ex) {
-      console.log(ex)
-      const resourceModule = await import("../../src/assets/loading.gif");
-      return resourceModule.default;
+    console.log(ex)
+    const resourceModule = await import("../../src/assets/loading.gif");
+    return resourceModule.default;
   }
 }
 

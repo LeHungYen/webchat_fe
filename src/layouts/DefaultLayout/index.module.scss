@@ -31,7 +31,7 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1000;
+  z-index: 99;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
 
@@ -82,6 +82,7 @@
           cursor: pointer;
           padding: 5px 25px;
           border-radius: 10px;
+          user-select: none;
 
           .menuIcon {
             width: 28px;
@@ -553,7 +554,7 @@
     .group {
       margin: auto;
 
-      .logo{
+      .logo {
         display: none;
       }
 

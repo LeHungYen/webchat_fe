@@ -1,6 +1,8 @@
 .messageDetail {
   display: flex;
   position: relative;
+  // overflow: hidden;
+  // overflow-y: hidden;
 
   .chatContent {
     flex: 1;
@@ -8,6 +10,7 @@
     position: relative;
 
     .row1 {
+      user-select: none;
       padding: 20px;
       display: flex;
       justify-content: space-between;
@@ -25,11 +28,14 @@
           position: relative;
           margin-right: 10px;
 
+
           img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
+            background-color: #ffffff;
+            border: 1px solid #efefef;
           }
 
           .icon {
@@ -58,6 +64,8 @@
       }
 
       .menuOption {
+        user-select: none;
+
         ul {
           display: flex;
           list-style: none;
@@ -75,154 +83,6 @@
       }
     }
 
-    // .chatHistory {
-    //   position: relative;
-    //   height: calc(100vh - 162px);
-
-    //   ul {
-    //     max-height: calc(100vh - 232px);
-    //     padding: 10px 20px 30px 20px;
-    //     width: 100%;
-    //     position: absolute;
-    //     bottom: 68px;
-    //     list-style: none;
-    //     overflow-y: auto;
-
-    //     display: flex;
-    //     flex-direction: column-reverse;
-
-    //     gap: 30px;
-    //     transition: all 2.3s ease-in-out;
-
-    //     //   background-color: #a2bcc9;
-    //     li {
-    //       max-width: 100% !important;
-    //       display: flex;
-
-    //       .otherUser,
-    //       .thisUser {
-    //         max-width: 60%;
-    //         border-radius: 18px;
-    //         position: relative;
-    //         display: flex;
-
-    //         .text {
-    //           max-width: 100%;
-    //           padding: 12px 18px;
-    //           background-color: #ffffff;
-    //           word-wrap: break-word;
-    //           border-radius: 15px;
-    //         }
-
-    //         .sticker {
-    //           width: 96px;
-    //           height: 96px;
-    //           object-fit: cover;
-    //         }
-
-    //         .chatImg {
-    //           max-width: 300px;
-    //           max-height: 300px;
-    //           object-fit: cover;
-    //         }
-    //       }
-
-    //       .otherUser {
-    //         display: flex;
-    //         align-items: center;
-
-    //         .iconMessageMenu {
-    //           margin-left: 10px;
-    //           padding: 2px 5px;
-    //           display: flex;
-    //           align-items: center;
-    //           border-radius: 10px;
-    //           cursor: pointer;
-    //           .icon {
-    //             font-size: 20px;
-
-    //             border-radius: 10px;
-    //           }
-    //         }
-
-    //         .iconMessageMenu:hover{
-    //           background-color: #ffffff;
-    //         }
-
-
-    //         .chatDetails {
-    //           position: absolute;
-    //           bottom: -25px;
-    //           left: 10px;
-    //           display: flex;
-    //           gap: 10px;
-    //           align-items: center;
-
-    //           .time {
-    //             font-size: 13px;
-    //           }
-
-    //           .icon {
-    //             font-size: 13px;
-    //           }
-    //         }
-
-    //       } 
-
-    //       .thisUser { 
-    //         margin-left: auto;
-    //         width: auto !important;
-    //         position: relative;
-    //         .iconMessageMenu {
-    //           position: absolute;
-    //           transform: translateY(-50%);
-    //           top: 50%;
-    //           left: -40px;
-    //           padding: 2px 5px;
-    //           border-radius: 10px;
-    //           display: flex;
-    //           align-items: center;
-    //           cursor: pointer;
-    //           .icon {
-    //             font-size: 20px;
-
-    //             border-radius: 10px;
-    //           }
-    //         }
-
-    //         .iconMessageMenu:hover{
-    //           background-color: #ffffff;
-    //         }
-
-    //         .text {
-    //           background-color: #0389c9;
-    //           color: #ffffff;
-    //           margin-left: auto;
-    //         }
-
-    //         .chatDetails {
-    //           position: absolute;
-    //           bottom: -25px;
-    //           right: 10px;
-    //           display: flex;
-    //           gap: 10px;
-    //           align-items: center;
-
-    //           .time {
-    //             font-size: 13px;
-    //             white-space: nowrap;
-    //           }
-
-    //           .icon {
-    //             font-size: 13px;
-    //           }
-    //         }
-    //       }
-
-
-    //     }
-    //   }
-    // }
 
     .chatHistory {
       position: relative;
@@ -240,12 +100,28 @@
         display: flex;
         flex-direction: column-reverse;
 
-        gap: 15px;
+        gap: 5px;
         transition: all 2.3s ease-in-out;
 
         //   background-color: #a2bcc9;
         li {
           max-width: 100% !important;
+
+          .changeSth {
+            text-align: center;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              margin-left: 10px;
+              width: 25px;
+              height: 25px;
+              object-fit: cover;
+              border-radius: 50%;
+            }
+          }
 
           .otherUser,
           .thisUser {
@@ -256,16 +132,29 @@
 
             .text {
               max-width: 100%;
-              padding: 12px 18px;
+              padding: 10px 18px;
               background-color: #ffffff;
               word-wrap: break-word;
-              border-radius: 15px;
+              border-radius: 5px;
             }
 
             .sticker {
               width: 96px;
               height: 96px;
               object-fit: cover;
+            }
+
+            .emoji {
+              height: 40px;
+              width: 40px;
+              display: flex;
+              align-items: center;
+
+              img {
+                width: 25px;
+                height: 25px;
+                object-fit: cover;
+              }
             }
 
             .chatImg {
@@ -277,7 +166,11 @@
 
           .otherUser {
             display: flex;
-            align-items: center;
+            align-items: end;
+
+            .name {
+              font-size: 13px;
+            }
 
             .avatarChat {
               width: 40px;
@@ -298,6 +191,7 @@
               display: none;
               align-items: center;
               margin-left: 5px;
+              margin-bottom: 12px;
 
               button {
                 display: flex;
@@ -325,6 +219,7 @@
               align-items: center;
               justify-content: end;
               margin-left: 10px;
+              margin-bottom: 12px;
 
               .time {
                 font-size: 13px;
@@ -477,6 +372,7 @@
       background-color: #ffffff;
       box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.1);
 
+
       .messageBoxCol1 {
         display: flex;
         align-items: center;
@@ -491,10 +387,11 @@
         }
 
 
-        .icon {
-          font-size: 25px;
-          stroke-width: 1px;
-          color: #333;
+        .imgIcon {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          cursor: pointer;
         }
 
         .sticker {
@@ -502,13 +399,14 @@
           align-items: center;
           position: relative;
 
-          .icon {
-            font-size: 26px;
-            stroke-width: 1px;
-            color: #333;
-            stroke-width: 2px;
+          .imgIcon {
+            width: 25px;
+            height: 25px;
+            object-fit: cover;
             cursor: pointer;
           }
+
+
 
           .stickerIconMenu {
             position: absolute;
@@ -525,6 +423,8 @@
             display: flex;
             flex-direction: column;
             display: none;
+
+
 
             .stickerIconMenuHeader {
               border-bottom: 1px solid #dcdcdc;
@@ -634,24 +534,6 @@
                 }
               }
             }
-
-            // .stickerMenuBody::-webkit-scrollbar {
-            //   width: 7px;
-            // }
-
-            // .stickerMenuBody::-webkit-scrollbar-track {
-            //   border-radius: 0px 0px 10px 0px;
-            //   background-color: #efefef;
-            // }
-
-            // .stickerMenuBody::-webkit-scrollbar-thumb {
-            //   background-color: #bdbdbd;
-            //   border-radius: 10px;
-            // }
-
-            // .stickerMenuBody::-webkit-scrollbar-thumb:hover {
-            //   background-color: #989898;
-            // }
           }
         }
       }
@@ -672,6 +554,7 @@
           border: none;
           background-color: #e0f3fe;
           border-radius: 25px;
+
         }
 
         .icon {
@@ -688,6 +571,13 @@
         .icon {
           font-size: 25px;
         }
+
+        img {
+          width: 25px;
+          height: 25px;
+          object-fit: cover;
+          cursor: pointer;
+        }
       }
     }
   }
@@ -697,6 +587,7 @@
     background-color: #ffffff;
     border-left: 1px solid #e3edf2;
     position: relative;
+    animation: dropleft .3s linear;
 
     .exit {
       position: absolute;
@@ -726,6 +617,7 @@
           height: 100%;
           border-radius: 50%;
           object-fit: cover;
+          border: 1px solid #efefef;
         }
       }
 
@@ -756,14 +648,27 @@
       padding: 12px;
       list-style: none;
 
+
       li {
         cursor: pointer;
         padding: 12px;
+        user-select: none;
+
+        .customizeChat {
+          animation: dropTop .3s linear;
+          display: none;
+        }
 
         .dflex {
           display: flex;
           align-items: center;
           gap: 24px;
+
+          img {
+            width: 24px;
+            height: 24px;
+            object-fit: cover;
+          }
 
           .icon {
             font-size: 24px;
@@ -774,7 +679,37 @@
       li:hover {
         background-color: #efefef;
       }
+
+      .dropDownMenu:hover {
+        background-color: transparent;
+
+
+      }
     }
+  }
+}
+
+@keyframes dropTop {
+  0% {
+    transform: translateY(-15%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+@keyframes dropleft {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
   }
 }
 
