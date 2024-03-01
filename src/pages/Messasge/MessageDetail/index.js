@@ -9,6 +9,8 @@ import { UserService } from "../../../serivces/UserService";
 import { calculateTimeDiff } from "../../../utils";
 import ChangeChatName from "./ChangeChatNamePopUp";
 import { ChatMessageParticipantService } from "../../../serivces/ChatMessageParticipantService";
+import EmojiPopup from "../EmojiPopup";
+import ChangeEmojiPopup from "../ChangeEmojiPopup";
 // project stickers / bluefogs
 import comingsoon from "../../../assets/stickers/bluefogs/comingsoon.png";
 import didyouknow_ from "../../../assets/stickers/bluefogs/didyouknow_.png";
@@ -74,6 +76,7 @@ import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import clsx from "clsx";
 export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   // const [state, dispath] = useContext(StoreContext);
   const chatMessageService = new ChatMessageService();
@@ -84,7 +87,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   const chatHistoryUlRef = useRef(null);
   const user = JSON.parse(localStorage.getItem("user"));
   const [changeChatNamePopup, setChangeChatNamePopup] = useState(false)
-
+  const [emojiPopup, setEmojiPopup] = useState(false)
+  const [changeEmojiPopup, setChangeEmojiPopup] = useState(false)
   // handle sticker
   useEffect(() => {
     const bluefogs = [
@@ -137,6 +141,41 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
       stickerIconRef.current.style.display = "none";
     }
   };
+
+  // get location of icon emoji to display popup emoji
+  const emojiRef = useRef(null);
+  const [emojiLocation, setEmojiLocation] = useState({
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  })
+
+  useEffect(() => {
+    const handleResize = () => {
+      const element = emojiRef.current;
+
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        const location = {
+          top: rect.top,
+          bottom: rect.bottom,
+          left: rect.left,
+          right: rect.right
+        }
+        setEmojiLocation(location);
+
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // display block or none chatInfor
   const chatInforRef = useRef(null);
@@ -204,6 +243,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
     if (chatPage.chatId) {
       const socket = new SockJS("http://localhost:8080/ws");
       const client = Stomp.over(socket);
+      client.debug = false;
       const token = JSON.parse(localStorage.getItem("userToken"));
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -225,7 +265,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         client.disconnect();
       };
     }
-  }, [chatPage]);
+  }, []);
 
   // handle mesage input
   const [messageInput, setMessageInput] = useState(
@@ -277,6 +317,9 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   };
 
   const sendEmoji = async (mediaName) => {
+    if (emojiPopup) {
+      setEmojiPopup(false)
+    }
     const requestBody = {
       ...messageInput,
       chatId: chatPage.chatId,
@@ -294,6 +337,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         chatHistoryUlRef.current.scrollHeight;
     }, 500);
   };
+
 
   const sendImage = async (event) => {
     const file = event.target.files[0];
@@ -421,6 +465,12 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                     <div className={style.changeSth}>
                       <p>{item.lastName} changed the group photo to </p>
                       <img src={item.mediaURL}></img>
+                    </div>
+                  )}
+
+                  {item.type === chatMessageService.type.CHANGE_EMOJI && (
+                    <div className={style.changeSth}>
+                      <p>{item.lastName} change the quick reaction  </p>
                     </div>
                   )}
 
@@ -556,7 +606,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               />
             </form>
 
-            <img src={cool} className={style.imgIcon}></img>
+            <img ref={emojiRef} src={cool} onClick={() => setEmojiPopup(prev => !prev)} className={style.imgIcon}></img>
 
             <div className={style.sticker}>
               <img src={sticker} className={style.imgIcon} onClick={displayStickerIconRef}></img>
@@ -627,7 +677,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               onChange={(e) => handleMessageInput("content", e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage()}
             />
-            <BiSend className={style.icon} />
+            <BiSend onClick={sendMessage} className={style.icon} />
           </div>
 
           <div className={style.messageBoxCol3}>
@@ -718,14 +768,14 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
 
               <li>
-                <div className={style.dflex}>
-                  <GoBellSlash className={style.icon} />
+                <div className={style.dflex} onClick={() => setChangeEmojiPopup(true)}>
+                  <img src={chatPage.newEmoji}></img>
                   <p>Change emoji</p>
                 </div>
               </li>
 
               <li>
-                <div className={style.dflex}>
+                <div className={clsx(style.dflex, style.disable)} >
                   <PiTextAaLight className={style.icon} />
                   <p>Edit nicknames</p>
                 </div>
@@ -734,28 +784,28 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           </li>
 
           <li>
-            <div className={style.dflex}>
+            <div className={clsx(style.dflex, style.disable)} >
               <GoBellSlash className={style.icon} />
               <p>Mute Notification</p>
             </div>
           </li>
 
           <li>
-            <div className={style.dflex}>
+            <div className={clsx(style.dflex, style.disable)} >
               <IoFlagOutline className={style.icon} />
               <p>Report</p>
             </div>
           </li>
 
           <li>
-            <div className={style.dflex}>
+            <div className={clsx(style.dflex, style.disable)} >
               <MdBlock className={style.icon} />
               <p>Block</p>
             </div>
           </li>
 
           <li>
-            <div className={style.dflex}>
+            <div className={clsx(style.dflex, style.disable)} >
               <IoTrashOutline className={style.icon} />
               <p>Delete Chat</p>
             </div>
@@ -768,7 +818,26 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
         changeChatNamePopup={changeChatNamePopup}
         setChangeChatNamePopup={setChangeChatNamePopup}
         chatpage={chatPage}
-        getChatPages={getChatPages} />
+      // getChatPages={getChatPages} 
+      />
+
+      <EmojiPopup
+        emojiPopup={emojiPopup}
+        setEmojiPopup={setEmojiPopup}
+        emojiLocation={emojiLocation}
+        sendEmoji={sendEmoji}
+      />
+
+      <ChangeEmojiPopup
+        changeEmojiPopup={changeEmojiPopup}
+        setChangeEmojiPopup={setChangeEmojiPopup}
+        sendEmoji={sendEmoji}
+        chatpage={chatPage}
+      />
+
+
     </div >
+
+
   );
 }

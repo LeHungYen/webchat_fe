@@ -1,0 +1,63 @@
+.overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.0);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    width: 95%;
+    max-width: 330px;
+    min-width: 200px;
+    height: 400px;
+    padding: 20px 10px;
+    animation: dropTop .3s linear;
+
+    .header {
+        p {
+            font-size: 15px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+        }
+    }
+
+    .body {
+        padding: 10px;
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        overflow-y: auto;
+        height: 300px;
+
+        img {
+            width: 30px;
+            height: 30px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+    }
+
+    .footer {}
+}
+
+
+@keyframes dropTop {
+    0% {
+        transform: translateY(-100%) scale(0);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0%) scale(1);
+        opacity: 1;
+    }
+}

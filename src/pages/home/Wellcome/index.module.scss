@@ -103,3 +103,31 @@
 .guideTour {
     padding: 30px;
 }
+
+.disable {
+    user-select: none;
+    color: #dcdcdc !important;
+    background-color: #efefef !important;
+
+    button {
+        color: #dcdcdc !important;
+
+    }
+
+    li {
+        color: #dcdcdc !important;
+    }
+
+    span {
+        color: #dcdcdc !important;
+    }
+
+    i {
+        color: #333 !important;
+    }
+
+    p {
+        color: #dcdcdc !important;
+    }
+
+}

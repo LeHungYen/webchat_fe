@@ -306,3 +306,17 @@
         }
     }
 }
+
+.disable {
+    color: #dcdcdc !important;
+
+    .button {
+        color: #dcdcdc !important;
+    }
+
+    li,
+    p,
+    span {
+        color: #dcdcdc !important;
+    }
+}

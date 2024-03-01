@@ -1,0 +1,76 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dcdcdc;
+
+    .form {
+        border-radius: 5px;
+        background-color: #ffffff;
+        width: 95%;
+        min-width: 300px;
+        max-width: 600px;
+
+        .header {
+            padding: 20px;
+            font-weight: 500;
+            font-size: 20px;
+        }
+
+        .body {
+            .text {
+                border-top: 1px solid #bdbdbd;
+                padding: 20px;
+                font-size: 14px;
+            }
+
+            .formInput {
+                position: relative;
+                padding: 0px 20px;
+
+                label {
+                    position: absolute;
+                    left: 30px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                input {
+                    width: 200px;
+                    padding: 13px 35px;
+                }
+            }
+
+            .message{
+                padding: 0px 20px;
+                font-size: 14px;
+                color: red;
+            }
+
+            .resendEmail {
+                padding: 20px;
+                color: blue;
+                font-size: 15px;
+                cursor: pointer;
+            }
+        }
+
+        .footer {
+            border-top: 1px solid #bdbdbd;
+            padding: 20px;
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+
+            button{
+                padding: 10px 20px;
+                border-radius: 8px;
+                border: none;
+                cursor: pointer;
+                font-weight: 500;
+            }
+        }
+    }
+}

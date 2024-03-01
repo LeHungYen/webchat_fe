@@ -331,7 +331,7 @@ function UserWall() {
             alt="background img"
           ></img>
           <div className={style.editCoverPhoto}>
-            <button>
+            <button disabled>
               <SolidCameraIcon className={style.cameraIcon} />
               Edit Cover Photo
             </button>
@@ -342,7 +342,7 @@ function UserWall() {
           <div className={style.avatar}>
             <img src="https://antimatter.vn/wp-content/uploads/2022/04/hinh-anh-avatar-nu.jpg"></img>
             <div className={style.editAvatarPhoto}>
-              <button>
+              <button disabled>
                 <SolidCameraIcon className={style.cameraIcon} />
               </button>
             </div>
@@ -361,12 +361,12 @@ function UserWall() {
               <div className={style.column2}>
                 <div className={style.buttons}>
                   <div className={style.button}>
-                    <button>
+                    <button className={style.disable}>
                       <SolidPencilIcon className={style.icon} /> Edit Profile
                     </button>
                   </div>
                   <div className={style.button}>
-                    <button>
+                    <button className={style.disable}>
                       <SolidShareIcon className={style.icon} /> Share
                     </button>
                   </div>
@@ -410,8 +410,8 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
-                        "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
-                        currentUser.userId == friendRequest.senderUserId && (
+                      "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
+                      currentUser.userId == friendRequest.senderUserId && (
                         <button onClick={deleteFriendRequest}>
                           <MdCancelScheduleSend className={style.icon} /> Cancel
                           request
@@ -420,8 +420,8 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
-                        "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
-                        currentUser.userId == friendRequest.receiverUserId && (
+                      "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
+                      currentUser.userId == friendRequest.receiverUserId && (
                         <button onClick={deleteFriendRequest}>
                           <MdCancelScheduleSend className={style.icon} /> Cancel
                           request
@@ -430,8 +430,8 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
-                        "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
-                        currentUser.userId == friendRequest.receiverUserId && (
+                      "WAITING_FOR_THE_RECEIVER_TO_RESPONSE" &&
+                      currentUser.userId == friendRequest.receiverUserId && (
                         <button
                           onClick={() => setResponseDisplay((prev) => !prev)}
                         >
@@ -441,8 +441,8 @@ function UserWall() {
 
                     {friendRequest.requestId != null &&
                       friendRequest.status ==
-                        "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
-                        currentUser.userId == friendRequest.senderUserId && (
+                      "WAITING_FOR_THE_SENDER_TO_RESPONSE" &&
+                      currentUser.userId == friendRequest.senderUserId && (
                         <button
                           onClick={() => setResponseDisplay((prev) => !prev)}
                         >
@@ -525,7 +525,7 @@ function UserWall() {
                   </div>
 
                   <div className={style.button}>
-                    <button>
+                    <button className={style.disable}>
                       <IoMdMail className={style.icon} /> Message
                     </button>
                   </div>
@@ -629,7 +629,7 @@ function UserWall() {
         </div>
       </div>
 
-      <div className={style.content}>
+      <div className={clsx(style.content, style.disable)}>
         {content == "posts" && <Posts />}
 
         {content == "followers" && <Followers />}

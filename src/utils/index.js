@@ -75,11 +75,8 @@ export async function getResourceImage(urlName) {
   try {
     // const resourceModule = await import(urlName);
 
-    console.log(`../../src/assets/${urlName}`)
-
     const resourceModule = await import(`../../src/assets/${urlName}`);
 
-    console.log(resourceModule);
     return resourceModule.default;
   } catch (ex) {
     console.log(ex)

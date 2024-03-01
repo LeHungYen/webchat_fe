@@ -64,10 +64,11 @@ import {
 } from '@heroicons/react/solid'
 
 import { Members } from './Members';
+import clsx from 'clsx';
 export function GroupWall() {
 
     return (
-        <div className={style.container}>
+        <div className={clsx(style.container, style.disable)}>
             <div className={style.groupWall}>
                 <div className={style.background}>
                     <img src="https://images.alphacoders.com/133/1339872.png" alt='background img'></img>

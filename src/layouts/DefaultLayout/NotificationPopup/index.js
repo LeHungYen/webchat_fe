@@ -6,7 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { calculateTimeDifference } from "../../../utils";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { NotificationService } from "../../../serivces/NotificationService";
-
+import { PiBellZThin } from "react-icons/pi";
 function NotificationPopup({ notificationLocation, setLocationPopupOpen, locationPopupOpen, handleDeleteButtonFR, handleAcceptButtonFR, notifications, handleClickNotification, notificationService }) {
 
     return (
@@ -110,6 +110,14 @@ function NotificationPopup({ notificationLocation, setLocationPopupOpen, locatio
                                         </div>
                                     );
                                 })}
+
+                                {
+                                    notifications.length == 0 && <div className={style.nullNotification}>
+                                        <PiBellZThin className={style.icon} />
+                                        <p>You have no notifications</p>
+                                    </div>
+                                }
+
                             </div>
 
                             <div className={style.dropdownFooter}>

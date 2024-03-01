@@ -62,7 +62,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   useEffect(() => {
     const socket = new SockJS("http://localhost:8080/ws");
     const client = Stomp.over(socket);
-
+    client.debug = false;
     const token = JSON.parse(localStorage.getItem("userToken"));
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -439,6 +439,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
                 value={state.keySearch}
                 onChange={(e) => dispatch(actions.setKeySearch(e.target.value))}
                 placeholder="Search for anything"
+                onKeyDown={(e) => e.key === "Enter" && navigate(routes.search)}
               ></input>
               <FiSearch
                 onClick={() => navigate(routes.search)}

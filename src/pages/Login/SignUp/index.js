@@ -21,16 +21,13 @@ export function SignUp({ value }) {
         await localStorage.setItem("user", JSON.stringify(response))
     }
 
-    const register = () => {
+    const authenticationEmail = () => {
         const addUser = async () => {
             try {
-                const response = await axios.post("http://localhost:8080/api/v1/auth/register", signUpForm)
-                await localStorage.setItem("userToken", JSON.stringify(response.data.token))
-                await getUserInfor();
+                const response = await axios.post("http://localhost:8080/api/v1/auth/authenticationEmail", signUpForm)
                 handleDefaultValue();
-                navigate(routes.home)
+                navigate(`${routes.authenticationEmail}?email=${signUpForm.email}`)
             } catch (error) {
-                console.log(error.response.data.message)
                 setValidateForm((prev) => ({
                     ...prev,
                     email: 1
@@ -39,6 +36,25 @@ export function SignUp({ value }) {
         }
         addUser();
     }
+
+    // const register = () => {
+    //     const addUser = async () => {
+    //         try {
+    //             const response = await axios.post("http://localhost:8080/api/v1/auth/register", signUpForm)
+    //             await localStorage.setItem("userToken", JSON.stringify(response.data.token))
+    //             await getUserInfor();
+    //             handleDefaultValue();
+    //             navigate(routes.home)
+    //         } catch (error) {
+    //             console.log(error.response.data.message)
+    //             setValidateForm((prev) => ({
+    //                 ...prev,
+    //                 email: 1
+    //             }));
+    //         }
+    //     }
+    //     addUser();
+    // }
 
     // sign up
     const [signUpForm, setSignUpForm] = useState({ firstName: "", lastName: "", gender: "", email: "", phoneNumber: "", password: "", agreeTerm: "" })
@@ -219,7 +235,7 @@ export function SignUp({ value }) {
 
 
         if (isValid) {
-            register();
+            authenticationEmail();
         }
     };
 

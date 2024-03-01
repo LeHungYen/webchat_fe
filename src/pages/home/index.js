@@ -1,4 +1,5 @@
 import style from './index.module.scss'
+import clsx from 'clsx';
 import { BsSend } from "react-icons/bs";
 import { LuPencilLine } from "react-icons/lu";
 import { HiOutlineNewspaper } from "react-icons/hi2";
@@ -83,7 +84,7 @@ function Home() {
         <div className={style.container}>
             <div className={style.body}>
                 <div className={style.left}>
-                    <div className={style.user}>
+                    <div className={clsx(style.user, style.disable)}>
                         <div className={style.background}>
                             <img src={background} alt='background img'></img>
                         </div>
@@ -94,7 +95,7 @@ function Home() {
                         <div className={style.infor}>
                             <div className={style.columns}>
                                 <div className={style.column1}>
-                                    <p className={style.name}>{user.firstName +" "+ user.lastName}</p>
+                                    <p className={style.name}>{user.firstName + " " + user.lastName}</p>
                                     <p className={style.job}>UI/UX Designer</p>
                                 </div>
                                 <div className={style.column2}>
@@ -107,12 +108,12 @@ function Home() {
                         </div>
 
                         <div className={style.anotherAccount}>
-                            <i class="fa-regular fa-square-plus"></i>
+                            <i className="fa-regular fa-square-plus"></i>
                             <p>Add another account</p>
                         </div>
                     </div>
 
-                    <div className={style.menu}>
+                    <div className={clsx(style.menu, style.disable)}>
                         <ul>
                             <li> <i className="fa-regular fa-circle-play"></i> <span>Video</span></li>
                             <li><i className="fa-solid fa-rotate-left"></i> <span>Memory</span></li>
@@ -123,12 +124,12 @@ function Home() {
                         </ul>
                     </div>
 
-                    <div className={style.hashtag}>
+                    <div className={clsx(style.hashtag, style.disable)}>
                         <div className={style.title}>
                             <span>Followed hashtags</span>
                         </div>
 
-                        <div className={style.hashtags}>
+                        <div className={clsx(style.hashtags)}>
                             <button>#work</button>
                             <button>#business</button>
                             <button>#hr</button>
@@ -152,7 +153,7 @@ function Home() {
                         <img src={advertisement}></img>
                     </div>
 
-                    <div className={style.people}>
+                    <div className={clsx(style.people, style.disable)}>
                         <p className={style.title}>People you may know:</p>
                         <div className={style.users}>
 
@@ -201,7 +202,7 @@ function Home() {
                         </div>
                     </div>
 
-                    <div className={style.pages}>
+                    <div className={clsx(style.pages, style.disable)}>
                         <div className={style.page}>
                             <div className={style.logo}>
                                 <img src={uxDesign}></img>

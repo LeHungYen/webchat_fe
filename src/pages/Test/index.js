@@ -1,11 +1,8 @@
 import axios from "axios";
 import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Stomp from "stompjs";
-import SockJS from "sockjs-client";
-import ChangeChatName from "../Messasge/MessageDetail/ChangeChatNamePopUp";
-import StickerPopup from "../Messasge/MessageDetail/StickerPopup";
-import NotificationPopup from "../../layouts/DefaultLayout/NotificationPopup";
+
+import EmojiPopup from "../Messasge/EmojiPopup";
 function Test() {
   // const userId = 34;
   // // notification
@@ -106,7 +103,7 @@ function Test() {
 
   return (
     <div>
-      <NotificationPopup></NotificationPopup>
+      <EmojiPopup></EmojiPopup>
     </div>
   );
 }

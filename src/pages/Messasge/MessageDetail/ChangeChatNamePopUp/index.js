@@ -4,7 +4,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { useState } from "react";
 import { ChatService } from "../../../../serivces/ChatService";
 import { ChatMessageService } from "../../../../serivces/ChatMessageService";
-function ChangeChatName({ changeChatNamePopup, setChangeChatNamePopup, chatpage, getChatPages }) {
+function ChangeChatName({ changeChatNamePopup, setChangeChatNamePopup, chatpage }) {
     const [isOpenPopup, setIsOpenPopup] = useState(false);
     const chatService = new ChatService();
     const chatMessageService = new ChatMessageService();
@@ -23,7 +23,7 @@ function ChangeChatName({ changeChatNamePopup, setChangeChatNamePopup, chatpage,
             chatParticipantId: chatpage.chatParticipantOfCurrentUser.chatParticipantId
         }
         await chatService.update(newChat)
-        await getChatPages(0);
+        // await getChatPages(0);
         setChangeChatNamePopup(false);
     }
 
