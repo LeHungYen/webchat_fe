@@ -4,6 +4,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import EmojiPopup from "../Messasge/EmojiPopup";
 function Test() {
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log(user)
+
   // const userId = 34;
   // // notification
   // const notificationType = {
@@ -103,7 +106,6 @@ function Test() {
 
   return (
     <div>
-      <EmojiPopup></EmojiPopup>
     </div>
   );
 }

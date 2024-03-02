@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/outline";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { useNavigate, Link } from "react-router-dom";
+
 import { routes } from "../../config/routes";
 import { useState, useContext, useRef, useEffect } from "react";
 import Stomp from "stompjs";
@@ -32,10 +33,10 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   const notificationService = new NotificationService();
   const friendRequestService = new FriendRequestService();
   const userService = new UserService();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userIdRef = useRef(user.userId); // contain userId
+  let user = JSON.parse(localStorage.getItem("user"));
+  // const userIdRef = useRef(user.userId); // contain userId
+  const userIdRef = useRef(null); // contain userId
   const [locationPopupOpen, setLocationPopupOpen] = useState(false);
-
   // get current user infor
   const getUserInfor = async () => {
     try {
@@ -43,13 +44,14 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
       localStorage.setItem("user", JSON.stringify(response))
       user = JSON.parse(localStorage.getItem("user"));
     } catch {
-      navigate(routes.login);
+      window.location.assign("http://localhost:3000/login")
     }
   };
+  getUserInfor();
 
-  // useEffect(() => {
-  //   getUserInfor();
-  // }, [])
+
+
+
 
 
   // notification
@@ -244,7 +246,7 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
       const timeout = setTimeout(() => {
         fastNotificationRef.current.style.opacity = "0";
         fastNotificationRef.current.style.display = "none";
-      }, 55000);
+      }, 5000);
 
       return () => clearTimeout(timeout);
     }

@@ -75,26 +75,25 @@ export class ChatService {
   };
 
 
-  // // get
-  // getBySenderIdAndReceiveId = async (senderUserId, receiverUserId) => {
-  //   axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
-  //     localStorage.getItem("userToken")
-  //   )}`;
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:8080/friendrequest/findBySenderIdAndReceiverId/?senderId=${senderUserId}&receiverId=${receiverUserId}`
-  //     );
-
-  //     if (response.data != null) {
-  //       return response.data;
-  //     } else {
-  //       return this.defaultFriendRequest;
-  //     }
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //     return this.defaultFriendRequest;
-  //   }
-  // };
+  // get
+  getByType = async (userId1, userId2, type) => {
+    axios.defaults.headers.common["Authorization"] = `Bearer ${JSON.parse(
+      localStorage.getItem("userToken")
+    )}`;
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/chat/getByType/${userId1}/${userId2}/${type}`
+      );
+      if (response.data != null) {
+        return response.data;
+      } else {
+        return this.defaultChat;
+      }
+    } catch (error) {
+      console.log("Error:", error);
+      return this.defaultChat;
+    }
+  };
 
   // // delete
   // deleteFriendRequest = async (requestId) => {

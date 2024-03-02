@@ -14,12 +14,14 @@ import { LiaEdit } from "react-icons/lia";
 import { Link } from "react-router-dom";
 import { GoDotFill } from "react-icons/go";
 import { useState, useRef, useContext, useEffect } from "react";
+import { ChatMessageService } from "../../serivces/ChatMessageService";
 
 function Message() {
   // const [state, dispatch] = useContext(StoreContext);
   const chatPageService = new ChatPageService();
   const chatService = new ChatService();
   const userService = new UserService();
+  const chatMessageService = new ChatMessageService();
   const messageDetailRef = useRef(null);
   const newMessageRef = useRef(null);
   let user = JSON.parse(localStorage.getItem("user"));
@@ -96,7 +98,8 @@ function Message() {
     // update last chat id
     const userResponse = await userService.updateLastChatId(user.userId, chatPage.chatId);
     await localStorage.setItem("user", JSON.stringify(userResponse))
-    setChatPage(chatPage);
+    await setChatPage(chatPage);
+    // console.log("Chat page Id " + chatPage.chatId)
     displayMessageDetail();
   };
 
@@ -118,7 +121,7 @@ function Message() {
           <div className={style.header}>
             <div className={style.input}>
               <RiSearchLine className={style.icon} />
-              <input placeholder="Find Friends" />
+              <input placeholder="Find chats" />
             </div>
 
             <div className={style.newChat}>
@@ -200,7 +203,7 @@ function Message() {
 
                                 <div className={style.userName}>
                                   <p style={{ fontWeight: item.alreadyRead ? "400" : "500" }}>
-                                    {item.name}
+                                    {item.name.length > 28 ? item.name.substring(0, 28) + "..." : item.name}
                                   </p>
                                 </div>
                               </div>
@@ -227,7 +230,28 @@ function Message() {
                               fontWeight: item.alreadyRead ? "300" : "400",
                               fontSize: item.alreadyRead ? "14px" : "16px"
                             }} className={style.message}>
-                              {item.latestChatMessage.content}
+
+                              {item.latestChatMessage.type == chatMessageService.type.CHANGE_AVATAR && `${item.latestChatMessage.lastName}: changed chat avatar`}
+
+                              {item.latestChatMessage.type == chatMessageService.type.CHANGE_NAME && `${item.latestChatMessage.lastName}: changed chat name`}
+
+                              {item.latestChatMessage.type == chatMessageService.type.CHANGE_EMOJI && `${item.latestChatMessage.lastName}: changed chat emoji`}
+
+                              {(item.latestChatMessage.type == chatMessageService.type.MESSAGE || item.latestChatMessage.type == null) &&
+                                item.latestChatMessage.mediaType == chatMessageService.mediaType.STICKER && `${item.latestChatMessage.lastName}: sent a sticker`
+                              }
+
+                              {(item.latestChatMessage.type == chatMessageService.type.MESSAGE || item.latestChatMessage.type == null) &&
+                                item.latestChatMessage.mediaType == chatMessageService.mediaType.IMAGE && `${item.latestChatMessage.lastName}: sent a photo`
+                              }
+
+                              {(item.latestChatMessage.type == chatMessageService.type.MESSAGE || item.latestChatMessage.type == null) &&
+                                item.latestChatMessage.mediaType == chatMessageService.mediaType.EMOJI && `${item.latestChatMessage.lastName}: sent a emoji`
+                              }
+                              {(item.latestChatMessage.type == chatMessageService.type.MESSAGE || item.latestChatMessage.type == null) &&
+                                (item.latestChatMessage.mediaType == chatMessageService.mediaType.TEXT || item.latestChatMessage.mediaType == null) &&
+                                `${item.latestChatMessage.lastName}: ${item.latestChatMessage.content}`
+                              }
                             </p>
                           </div>
                         </div>

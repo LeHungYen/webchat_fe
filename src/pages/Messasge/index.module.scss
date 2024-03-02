@@ -46,6 +46,7 @@
           border-radius: 0px 25px 25px 0px;
         }
       }
+
       .newChat {
         margin-left: 20px;
         border-radius: 100%;
@@ -55,6 +56,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         button {
           background-image: linear-gradient(to bottom, #56e8e7, #779ff2);
           border: none;
@@ -62,6 +64,7 @@
           height: 100%;
           border-radius: 100%;
           cursor: pointer;
+
           .icon {
             font-size: 18px;
             color: #ffffff;
@@ -72,12 +75,15 @@
 
     .body {
       background-color: #ffffff;
+
       ul {
         overflow-y: auto;
         height: calc(100vh - 156px);
+
         li {
           .link {
             text-decoration: none;
+
             .item {
               padding: 15px 20px;
               border-bottom: 1px dashed #dcdcdc;
@@ -89,12 +95,14 @@
                 height: 56px;
                 position: relative;
                 margin-right: 20px;
+
                 img {
                   width: 100%;
                   height: 100%;
                   border-radius: 50%;
                   border: 1px solid #efefef;
                 }
+
                 .icon {
                   position: absolute;
                   font-size: 25px;
@@ -118,6 +126,7 @@
 
                   .userName {
                     flex: 1;
+
                     p {
                       font-weight: 500;
                       color: #000;
@@ -147,9 +156,12 @@
                   .message {
                     width: 100%;
                     color: #000;
-                    text-overflow: ellipsis; /* Hiển thị ba dấu chấm khi văn bản tràn ra */
-                    overflow: hidden; /* Ẩn bất kỳ nội dung tràn ra ngoài */
-                    white-space: nowrap; /* Ngăn văn bản ngắt dòng */
+                    text-overflow: ellipsis;
+                    /* Hiển thị ba dấu chấm khi văn bản tràn ra */
+                    overflow: hidden;
+                    /* Ẩn bất kỳ nội dung tràn ra ngoài */
+                    white-space: nowrap;
+                    /* Ngăn văn bản ngắt dòng */
                   }
                 }
               }
@@ -163,12 +175,16 @@
       }
 
       ul::-webkit-scrollbar {
-        width: 4px; /* Độ rộng của thanh cuộn */
+        width: 4px;
+        /* Độ rộng của thanh cuộn */
         background-color: #e3edf2;
       }
+
       ul::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2); /* Màu của thanh cuộn */
-        border-radius: 4px; /* Độ cong của thanh cuộn */
+        background-color: rgba(0, 0, 0, 0.2);
+        /* Màu của thanh cuộn */
+        border-radius: 4px;
+        /* Độ cong của thanh cuộn */
       }
     }
   }
@@ -181,7 +197,7 @@
     }
 
     .newMessage {
-      display: none; 
+      display: none;
     }
   }
 }

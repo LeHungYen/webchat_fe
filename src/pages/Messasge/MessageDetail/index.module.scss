@@ -16,6 +16,7 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      width: 100%;
 
       .userInfor {
         height: 45px;
@@ -53,6 +54,11 @@
 
           .username {
             font-weight: 500;
+            // max-width: 90% !important;
+            // min-width: 20vw !important;
+            // text-overflow: ellipsis;
+            // overflow: hidden;
+            // white-space: nowrap;
           }
 
           .activeTime {
@@ -113,6 +119,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+
+            p {
+              max-width: 80%;
+              text-overflow: ellipsis;
+              overflow: hidden;
+            }
 
             img {
               margin-left: 10px;
@@ -627,6 +639,9 @@
         margin-top: 20px;
         font-size: 20px;
         font-weight: 500;
+        word-wrap: break-word;
+        max-width: 90%;
+        text-align: center;
       }
 
       button {
@@ -743,8 +758,8 @@
   }
 }
 
-.disable{
-    p{
-      color: #dcdcdc;
-    }
+.disable {
+  p {
+    color: #dcdcdc;
+  }
 }

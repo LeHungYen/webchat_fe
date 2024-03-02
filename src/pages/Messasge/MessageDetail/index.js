@@ -85,7 +85,7 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
   const chatMessageParticipantService = new ChatMessageParticipantService();
   const [stickers, setStickers] = useState([]);
   const chatHistoryUlRef = useRef(null);
-  const user = JSON.parse(localStorage.getItem("user"));
+  let user = JSON.parse(localStorage.getItem("user"));
   const [changeChatNamePopup, setChangeChatNamePopup] = useState(false)
   const [emojiPopup, setEmojiPopup] = useState(false)
   const [changeEmojiPopup, setChangeEmojiPopup] = useState(false)
@@ -253,8 +253,12 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
           `/topic/chatMessage/${user.userId}`,
           async (response) => {
             const chatId = JSON.parse(response.body);
-            if (chatId == chatPage.chatId) {
-              await getChatHistory(chatPage.chatId);
+
+            user = JSON.parse(localStorage.getItem("user"));
+            const currentChatId = user.lastChatId;
+
+            if (chatId == currentChatId) {
+              await getChatHistory(currentChatId);
             }
             getChatPages(0);
           }
@@ -430,7 +434,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                 </div>
                 <div className={style.dflexColumn}>
                   <p className={style.username}>
-                    {chatPage.name}
+                    {/* {chatPage.name} */}
+                    {chatPage.name.length > 28 ? chatPage.name.substring(0, 28) + "..." : chatPage.name}
                   </p>
                 </div>
               </div>
@@ -476,7 +481,8 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
 
                   {item.type === chatMessageService.type.CHANGE_NAME && (
                     <div className={style.changeSth}>
-                      <p>{item.lastName} has set the group name to {item.content}</p>
+                      {/* <p>{item.lastName} has set the group name to {item.content}</p> */}
+                      <p>{item.lastName} has set the group name to {item.content.length > 20 ? item.content.substring(0, 20) + "..." : item.content}</p>
                     </div>
                   )}
 

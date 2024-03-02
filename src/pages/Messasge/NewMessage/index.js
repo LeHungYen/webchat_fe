@@ -6,8 +6,10 @@ import { ChatParticipantService } from "../../../serivces/ChatParticipant";
 import { ChatMessageService } from "../../../serivces/ChatMessageService";
 import { StoreContext, actions } from "../../../store";
 import { getResourceImage } from "../../../utils";
+import { formatTime } from "../../../utils";
 // libary
 import { SlPlus } from "react-icons/sl";
+import { BsThreeDots } from "react-icons/bs";
 import { FaRegFaceSmileBeam } from "react-icons/fa6";
 import { BiSend } from "react-icons/bi";
 import { GoHeart } from "react-icons/go";
@@ -38,39 +40,14 @@ export function NewMessage({
   // chatMessage websocket
   const [stompClient, setStompClient] = useState(null);
 
-  // useEffect(() => {
-  //   const socket = new SockJS("http://localhost:8080/ws");
-  //   const client = Stomp.over(socket);
-
-  //   const token = JSON.parse(localStorage.getItem("userToken"));
-  //   const headers = {
-  //     Authorization: `Bearer ${token}`,
-  //   };
-
-  //   client.connect(headers, () => {
-  //     client.subscribe("/topic/message", (response) => {
-  //       // const receivedNotification = JSON.parse(response.body);
-  //       // setNotification(receivedNotification);
-  //     });
-  //   });
-
-  //   setStompClient(client);
-
-  //   return () => {
-  //     client.disconnect();
-  //   };
-  // }, []);
-
-  // const sendChatMessage = (data) => {
-  //   stompClient.send("/app/chatMessage", {}, JSON.stringify(data));
-  //   // setChatMessage(defaultNotification);
-  // };
-
   // find user
   const getUsersByKeySearch = () => {
     const fetchData = async () => {
       const response = await userService.findUserByKey(keySearch);
-      setUsers(response);
+      if (Array.isArray(response)) {
+        const filteredUsers = response.filter(user => !receivers.some(receiver => receiver.userId === user.userId));
+        setUsers(filteredUsers);
+      }
     };
 
     fetchData();
@@ -103,12 +80,15 @@ export function NewMessage({
       return newReceivers;
     });
   };
+  // check chat already exist
 
-  useEffect(() => {
-    if(receivers.length == 1){
-      
-    }
-  }, [receivers])
+  // useEffect(() => {
+  //   const fetchData = async () => {
+
+  //   }
+
+  //   fetchData();
+  // }, [receivers])
 
   // display block or none message box
   useEffect(() => {
@@ -117,13 +97,47 @@ export function NewMessage({
     } else {
       messageBoxRef.current.style.display = "none";
     }
-  });
+  }, [receivers]);
 
   // send message to receiver
   // const [chat, setChat] = useState(chatService.defaultChat);
   const [message, setMessage] = useState("");
 
   const sendMessage = async () => {
+    if (message.trim().length == 0) {
+      return;
+    }
+
+    if (receivers.length == 1) {
+      const response = await chatService.getByType(user.userId, receivers[0].userId, chatService.type.PAIR);
+      if (response.chatId) {
+        const chat = response;
+
+        const requestBody = {
+          chatMessageId: null,
+          chatId: chat.chatId,
+          chatParticipantId: chat.chatParticipantId,
+          replyToMessageId: null,
+          content: message,
+          mediaType: chatMessageService.mediaType.TEXT,
+          mediaURL: null,
+          createdAt: null,
+        };
+
+        // update last chat id
+        const userResponse = await userService.updateLastChatId(user.userId, chat.chatId);
+        await localStorage.setItem("user", JSON.stringify(userResponse))
+
+
+        await chatMessageService.save(requestBody);
+        setMessage("");
+        setReceivers([]);
+        displayMessageDetail();
+        return;
+      }
+    }
+
+
     // create newChat
     let chatRequestBody;
     if (receivers.length > 1) {
