@@ -67,14 +67,29 @@ import ryanRoslansky from '../imgs/ryanRoslansky.jpg'
 import dylanField from '../imgs/dylanField.jpg'
 import uxDesign from '../imgs/uxDesign.jpg'
 import uiDesign from '../imgs/uiDesign.jpg'
-
+import defaultAvatar from '../../../assets/imgs/defaultAvatar.jpg'
 function Posts() {
+    const user = JSON.parse(localStorage.getItem("user"));
     return <div className={style.posts}>
         <div className={style.post}>
             <div className={style.writeNewPost}>
                 <div className={style.row}>
                     <div className={style.avatar}>
-                        <img src={avatar}></img>
+                        {
+                            user.gender == "male" &&
+                            <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                        }
+
+                        {
+                            user.gender == "female" &&
+                            <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                        }
+
+                        {
+                            (user.gender == "other" || user.gender == null) &&
+                            <img src={defaultAvatar}></img>
+                        }
+
                     </div>
 
                     <div className={style.edit}>
@@ -100,7 +115,20 @@ function Posts() {
                 <div className={style.new}>
                     <div className={style.row1}>
                         <div className={style.user}>
-                            <img src={avatar}></img>
+
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
+
                             <div className={style.text}>
                                 <p className={style.name}>Karim Saif</p>
                                 <p className={style.job}>UI/UX Designer</p>
@@ -143,7 +171,18 @@ function Posts() {
                         </div>
 
                         <div className={style.writeComment}>
-                            <img src={avatar}></img>
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
                             <input placeholder='Write a comment'></input>
                             <OutlineMicrophoneIcon className={style.microIcon}></OutlineMicrophoneIcon>
                             <OutlinePhotoIcon className={style.photoIcon}></OutlinePhotoIcon>
@@ -154,61 +193,20 @@ function Posts() {
                 <div className={style.new}>
                     <div className={style.row1}>
                         <div className={style.user}>
-                            <img src={avatar}></img>
-                            <div className={style.text}>
-                                <p className={style.name}>Karim Saif</p>
-                                <p className={style.job}>UI/UX Designer</p>
-                            </div>
-                        </div>
-                        <div className={style.menu}>
-                            <BsThreeDotsVertical className={style.icon} />
-                        </div>
-                    </div>
 
-                    <div className={style.row2}>
-                        <div className={style.content}>
-                            <p>-Healthy Tracking App </p>
-                        </div>
-                        <div className={style.imgOrVideo}>
-                            <img src={photoIsPerfect}></img>
-                        </div>
-                    </div>
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
 
-                    <div className={style.row3}>
-                        <div className={style.interact}>
-                            <div className={style.reaction}>
-                                {/* <BiLike className={style.likeIcon}/> */}
-                                <BiSolidLike className={style.likeIcon} />
-                                {/* <i class="fa-regular fa-thumbs-up"></i> */}
-                                <span>32</span>
-                            </div>
-                            <div className={style.commentAndShare}>
-                                <p>5 bình luận</p>
-                                <p>1 lượt chia sẻ</p>
-                            </div>
-                        </div>
-
-                        <div className={style.icons}>
-                            <ul>
-                                <li> <BiLike className={style.menuIcon} /> <span>Like</span></li>
-                                <li><FaRegCommentDots className={style.menuIcon} /> <span>Comment</span></li>
-                                <li><IoShareSocialOutline className={style.menuIcon} /> <span>Share</span></li>
-                            </ul>
-                        </div>
-
-                        <div className={style.writeComment}>
-                            <img src={avatar}></img>
-                            <input placeholder='Write a comment'></input>
-                            <OutlineMicrophoneIcon className={style.microIcon}></OutlineMicrophoneIcon>
-                            <OutlinePhotoIcon className={style.photoIcon}></OutlinePhotoIcon>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={style.new}>
-                    <div className={style.row1}>
-                        <div className={style.user}>
-                            <img src={avatar}></img>
                             <div className={style.text}>
                                 <p className={style.name}>Karim Saif</p>
                                 <p className={style.job}>UI/UX Designer</p>
@@ -251,7 +249,18 @@ function Posts() {
                         </div>
 
                         <div className={style.writeComment}>
-                            <img src={avatar}></img>
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
                             <input placeholder='Write a comment'></input>
                             <OutlineMicrophoneIcon className={style.microIcon}></OutlineMicrophoneIcon>
                             <OutlinePhotoIcon className={style.photoIcon}></OutlinePhotoIcon>
@@ -262,7 +271,20 @@ function Posts() {
                 <div className={style.new}>
                     <div className={style.row1}>
                         <div className={style.user}>
-                            <img src={avatar}></img>
+
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
+
                             <div className={style.text}>
                                 <p className={style.name}>Karim Saif</p>
                                 <p className={style.job}>UI/UX Designer</p>
@@ -305,7 +327,96 @@ function Posts() {
                         </div>
 
                         <div className={style.writeComment}>
-                            <img src={avatar}></img>
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
+                            <input placeholder='Write a comment'></input>
+                            <OutlineMicrophoneIcon className={style.microIcon}></OutlineMicrophoneIcon>
+                            <OutlinePhotoIcon className={style.photoIcon}></OutlinePhotoIcon>
+                        </div>
+                    </div>
+                </div>
+
+                <div className={style.new}>
+                    <div className={style.row1}>
+                        <div className={style.user}>
+
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
+
+                            <div className={style.text}>
+                                <p className={style.name}>Karim Saif</p>
+                                <p className={style.job}>UI/UX Designer</p>
+                            </div>
+                        </div>
+                        <div className={style.menu}>
+                            <BsThreeDotsVertical className={style.icon} />
+                        </div>
+                    </div>
+
+                    <div className={style.row2}>
+                        <div className={style.content}>
+                            <p>-Healthy Tracking App </p>
+                        </div>
+                        <div className={style.imgOrVideo}>
+                            <img src={healthyTrackingApp}></img>
+                        </div>
+                    </div>
+
+                    <div className={style.row3}>
+                        <div className={style.interact}>
+                            <div className={style.reaction}>
+                                {/* <BiLike className={style.likeIcon}/> */}
+                                <BiSolidLike className={style.likeIcon} />
+                                {/* <i class="fa-regular fa-thumbs-up"></i> */}
+                                <span>32</span>
+                            </div>
+                            <div className={style.commentAndShare}>
+                                <p>5 bình luận</p>
+                                <p>1 lượt chia sẻ</p>
+                            </div>
+                        </div>
+
+                        <div className={style.icons}>
+                            <ul>
+                                <li> <BiLike className={style.menuIcon} /> <span>Like</span></li>
+                                <li><FaRegCommentDots className={style.menuIcon} /> <span>Comment</span></li>
+                                <li><IoShareSocialOutline className={style.menuIcon} /> <span>Share</span></li>
+                            </ul>
+                        </div>
+
+                        <div className={style.writeComment}>
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
                             <input placeholder='Write a comment'></input>
                             <OutlineMicrophoneIcon className={style.microIcon}></OutlineMicrophoneIcon>
                             <OutlinePhotoIcon className={style.photoIcon}></OutlinePhotoIcon>

@@ -8,6 +8,7 @@ import { StoreContext, actions } from "../../store";
 import { calculateTimeDiff } from "../../utils";
 import { UserService } from "../../serivces/UserService";
 import { getResourceImage } from "../../utils";
+import defaultAvatar from '../../assets/imgs/defaultAvatar.jpg'
 // libary
 import { RiSearchLine } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
@@ -142,7 +143,50 @@ function Message() {
 
                           {item.type === chatService.type.GROUP && <img src={item.newAvatar} />}
 
-                          {item.type === chatService.type.PAIR && <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />}
+                          {console.log(item)}
+
+                          {item.type === chatService.type.PAIR &&
+                            item.chatParticipants.map((chatParticipant, index) => {
+                              return (
+                                chatParticipant.userId !== user.userId && (
+                                  <div key={index}>
+                                    {chatParticipant.userDTO.gender === "male" && (
+                                      <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1" alt="Male Avatar" />
+                                    )}
+                                    {chatParticipant.userDTO.gender === "female" && (
+                                      <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg" alt="Female Avatar" />
+                                    )}
+                                    {(chatParticipant.userDTO.gender === "other" || chatParticipant.userDTO.gender == null) && (
+                                      <img src={defaultAvatar} alt="Default Avatar" />
+                                    )}
+                                  </div>
+                                )
+                              );
+                            })
+                          }
+
+
+
+
+
+
+                          {/* {item.type === chatService.type.PAIR && (
+                            {
+                              item.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+
+{
+                            item.gender == "female" &&
+                            <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                          }
+
+                          {
+                            (item.gender == "other" || item.gender == null) &&
+                            <img src={defaultAvatar}></img>
+                          }
+                          )
+                          } */}
 
                           {item.type === chatService.type.PAIR &&
                             item.chatParticipants

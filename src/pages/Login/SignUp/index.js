@@ -334,9 +334,9 @@ export function SignUp({ value }) {
                                 <div className={style.iconLeft}> <FaTransgender className={style.icon} /></div>
                                 <select value={signUpForm.gender} onChange={(e) => handleInput("gender", e.target.value)}>
                                     <option value="">Select Gender</option>
-                                    <option value="male">Nam</option>
-                                    <option value="female">Nữ</option>
-                                    <option value="other">Không xác định</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
                                 </select>
                             </div>
 

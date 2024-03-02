@@ -52,7 +52,7 @@ import ryanRoslansky from './imgs/ryanRoslansky.jpg'
 import dylanField from './imgs/dylanField.jpg'
 import uxDesign from './imgs/uxDesign.jpg'
 import uiDesign from './imgs/uiDesign.jpg'
-
+import defaultAvatar from '../../assets/imgs/defaultAvatar.jpg'
 import { DefaultContent } from './DefaultContent';
 import { Wellcome } from './Wellcome';
 import { useState, useEffect, useContext } from 'react';
@@ -89,7 +89,23 @@ function Home() {
                             <img src={background} alt='background img'></img>
                         </div>
                         <div className={style.avatar}>
-                            <img src={avatar}></img>
+
+                            {
+                                user.gender == "male" &&
+                                <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+
+                            {
+                                user.gender == "female" &&
+                                <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+
+                            {
+                                (user.gender == "other" || user.gender == null) &&
+                                <img src={defaultAvatar}></img>
+                            }
+
+
                         </div>
 
                         <div className={style.infor}>

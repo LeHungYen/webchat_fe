@@ -7,6 +7,7 @@ import { ChatMessageService } from "../../../serivces/ChatMessageService";
 import { StoreContext, actions } from "../../../store";
 import { getResourceImage } from "../../../utils";
 import { formatTime } from "../../../utils";
+import defaultAvatar from '../../../assets/imgs/defaultAvatar.jpg'
 // libary
 import { SlPlus } from "react-icons/sl";
 import { BsThreeDots } from "react-icons/bs";
@@ -238,7 +239,23 @@ export function NewMessage({
                   <li key={index} onClick={() => addReceiver(item)}>
                     <div className={style.user}>
                       <div className={style.avatar}>
-                        <img src="https://shopbanphim.com/wp-content/uploads/2023/11/hinh-anh-avatar-cap-doi-cute-de-thuong.jpg"></img>
+
+                        {
+                          item.gender == "male" &&
+                          <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                        }
+
+                        {
+                          item.gender == "female" &&
+                          <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                        }
+
+                        {
+                          (item.gender == "other" || item.gender == null) &&
+                          <img src={defaultAvatar}></img>
+                        }
+
+
                       </div>
 
                       <div className={style.infor}>

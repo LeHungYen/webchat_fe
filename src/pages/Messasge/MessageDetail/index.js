@@ -11,6 +11,7 @@ import ChangeChatName from "./ChangeChatNamePopUp";
 import { ChatMessageParticipantService } from "../../../serivces/ChatMessageParticipantService";
 import EmojiPopup from "../EmojiPopup";
 import ChangeEmojiPopup from "../ChangeEmojiPopup";
+import defaultAvatar from '../../../assets/imgs/defaultAvatar.jpg'
 // project stickers / bluefogs
 import comingsoon from "../../../assets/stickers/bluefogs/comingsoon.png";
 import didyouknow_ from "../../../assets/stickers/bluefogs/didyouknow_.png";
@@ -383,7 +384,23 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                   chatParticipant.userDTO.userId != user.userId && (
                     <div key={index} className={style.userInfor}>
                       <div className={style.avatar}>
-                        <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" />
+                        {/* <img src="https://i.pinimg.com/564x/df/ce/a7/dfcea7989195d3273c2bcb367fca0a83.jpg" /> */}
+
+                        {
+                          chatParticipant.userDTO.gender == "male" &&
+                          <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                        }
+
+                        {
+                          chatParticipant.userDTO.gender == "female" &&
+                          <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                        }
+
+                        {
+                          (chatParticipant.userDTO.gender == "other" || chatParticipant.userDTO.gender == null) &&
+                          <img src={defaultAvatar}></img>
+                        }
+
                         {chatParticipant.userDTO.alreadyBeFriend &&
                           chatParticipant.userDTO.status ==
                           userService.status.ONLINE && (
@@ -499,7 +516,21 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                         }
                       >
                         <div className={style.avatarChat}>
-                          <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+
+                          {
+                            item.gender == "male" &&
+                            <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                          }
+
+                          {
+                            item.gender == "female" &&
+                            <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                          }
+
+                          {
+                            (item.gender == "other" || item.gender == null) &&
+                            <img src={defaultAvatar}></img>
+                          }
                         </div>
 
                         {chatPage.type === chatService.type.PAIR && (
@@ -579,7 +610,21 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
                             <span>{chatMessageParticipantDTO.lastName}   đã xem lúc {formatTime(chatMessageParticipantDTO.lastViewedAt)}</span>
                           </div>
                           <div className={style.avatarPeopleViewed}>
-                            <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+
+                            {
+                              chatMessageParticipantDTO.gender == "male" &&
+                              <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                            }
+
+                            {
+                              chatMessageParticipantDTO.gender == "female" &&
+                              <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                            }
+
+                            {
+                              (chatMessageParticipantDTO.gender == "other" || chatMessageParticipantDTO.gender == null) &&
+                              <img src={defaultAvatar}></img>
+                            }
                           </div>
                         </li>
                       )
@@ -704,7 +749,21 @@ export function MessageDetail({ chatPage, getChatPages, currentTime }) {
               item.userId !== user.userId && (
                 <div key={index} className={style.otherUserInfor}>
                   <div className={style.avatar}>
-                    <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+
+                    {
+                      item.userDTO.gender == "male" &&
+                      <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+                    }
+
+                    {
+                      item.userDTO.gender == "female" &&
+                      <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+                    }
+
+                    {
+                      (item.userDTO.gender == "other" || item.userDTO.gender == null) &&
+                      <img src={defaultAvatar}></img>
+                    }
                   </div>
                   <p className={style.name}>{item.userDTO.firstName + " " + item.userDTO.lastName}</p>
                   <p className={style.gmail}>{item.userDTO.email}</p>

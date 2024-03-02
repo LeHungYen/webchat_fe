@@ -340,7 +340,22 @@ function UserWall() {
 
         <div className={style.infor}>
           <div className={style.avatar}>
-            <img src="https://antimatter.vn/wp-content/uploads/2022/04/hinh-anh-avatar-nu.jpg"></img>
+
+            {
+              currentUser.gender == "male" &&
+              <img src="https://i0.wp.com/thatnhucuocsong.com.vn/wp-content/uploads/2023/02/Hinh-anh-avatar-Facebook.jpg?ssl=1"></img>
+            }
+
+            {
+              currentUser.gender == "female" &&
+              <img src="https://cdn.alongwalk.info/info/wp-content/uploads/2022/11/16190605/image-99-hinh-avatar-cute-ngau-ca-tinh-de-thuong-nhat-cho-nam-nu-0096fcffd35002f7d89daff94d95ab6b.jpg"></img>
+            }
+
+            {
+              (currentUser.gender == "other" || user.gender == null) &&
+              <img src={defaultAvatar}></img>
+            }
+
             <div className={style.editAvatarPhoto}>
               <button disabled>
                 <SolidCameraIcon className={style.cameraIcon} />
