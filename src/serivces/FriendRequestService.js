@@ -90,6 +90,6 @@ export class FriendRequestService {
       );
 
       return this.defaultFriendRequest;
-    } catch (error) {}
+    } catch (error) { }
   };
 }

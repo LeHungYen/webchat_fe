@@ -461,3 +461,33 @@
     }
 
 }
+
+@media screen and (max-width: 1450px) {
+    .container {
+        .body {
+            .right>* {
+                display: none;
+            }
+
+            .left>* {
+                display: none;
+            }
+
+            .middle {
+                width: 95%;
+                min-width: 200px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .container {
+        .body {
+            .middle>* {
+                width: 95%;
+                min-width: auto;
+            }
+        }
+    }
+}

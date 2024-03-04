@@ -36,6 +36,10 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
   let user = JSON.parse(localStorage.getItem("user"));
   // const userIdRef = useRef(user.userId); // contain userId
   const userIdRef = useRef(null); // contain userId
+  if (user.userId) {
+    userIdRef.current = user.userId;
+  }
+
   const [locationPopupOpen, setLocationPopupOpen] = useState(false);
   // get current user infor
   const getUserInfor = async () => {
@@ -43,8 +47,9 @@ function DefaultLayout({ children, keySearch, setKeySearch }) {
       const response = await userService.getCurrentUser();
       localStorage.setItem("user", JSON.stringify(response))
       user = JSON.parse(localStorage.getItem("user"));
+      userIdRef.current = user.userId;
     } catch {
-      window.location.assign("http://localhost:3000/login")
+      window.location.assign("localhost:3000/login")
     }
   };
   getUserInfor();

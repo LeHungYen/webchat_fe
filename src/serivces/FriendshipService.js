@@ -63,9 +63,9 @@ export class FriendshipService {
       const response = await axios.delete(
         `http://localhost:8080/friendship?friendshipId=${friendshipId}&userId1=${userId1}&userId2=${userId2}`
       );
-        return this.defaultFriendShip;
+      return this.defaultFriendShip;
     } catch (error) {
-        console.log("Error:" , error);
+      console.log("Error:", error);
     }
   };
 }

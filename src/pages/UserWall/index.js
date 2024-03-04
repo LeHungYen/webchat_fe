@@ -226,7 +226,7 @@
 //                 senderId: state.user.userId,
 //                 receiverId: userId,
 //                 type: notificationType.sendFriendRequest,
-//                 link: `http://localhost:3000/userWall?id=${state.user.userId}`,
+//                 link: `localhost:3000/userWall?id=${state.user.userId}`,
 //                 isRead: false,
 //                 createAt: null
 //             }

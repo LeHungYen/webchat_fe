@@ -64,6 +64,6 @@ export class UserFollowingService {
       );
 
       return this.defaultUserFollowing;
-    } catch (error) {}
+    } catch (error) { }
   };
 }
